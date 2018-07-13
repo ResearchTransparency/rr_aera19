@@ -11,6 +11,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+Provide the course title and description. This information will be used on the AERA Annual Meeting Registration website, in promotional materials, and in the Annual Meeting Program. Developing a clear course description is very important as it is the only information the participant will see prior to registering for the course. Provide a concise description (250 words) that addresses the following:
+
 * Course content
 * Format (e.g. lecture, hands-on exercises, group work)
 * Course objectives
