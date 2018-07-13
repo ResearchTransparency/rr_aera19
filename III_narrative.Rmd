@@ -1,0 +1,21 @@
+---
+title: "Proposal Narrative"
+author: 
+  - "Daniel Anderson"
+  - "Joshua Rosenberg"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+The proposal narrative should address the following (3-pages single spaced limit):
+
+* Prerequisite skills or knowledge needed for course participation
+* Target course participants – Indicate what level of knowledge (e.g., basic, intermediate,
+advanced) the target audience (e.g., graduate students, emerging researchers, continuing researchers) must have in order to participate fully in the course. Also, indicate the number of course participants you can accommodate.
+* Rationale – Provide a rationale for this course. Why is this course important to education research and those who work in the field?
+* Learning objectives – List and clearly define the learning objectives and purpose(s) of the course.
+* Course content – Describe the topics and issues that the course examines. This should include a description of the course structure (i.e., lecture, small group interactions, hands-on demonstrations), overview of the course, discussion of the course focus, and an overview of the planned activities.
