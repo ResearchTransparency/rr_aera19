@@ -1,0 +1,20 @@
+---
+title: "Transparent and Reproducible Research with R"
+author: 
+  - "Daniel Anderson"
+  - "Joshua Rosenberg"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+* Course content
+* Format (e.g. lecture, hands-on exercises, group work)
+* Course objectives
+* Target audience (e.g., graduate students, early career scholars, advanced researchers)
+* Prerequisite skills or knowledge
+* Potential assignments
+* Required material and equipment (e.g., data sets and laptop)
