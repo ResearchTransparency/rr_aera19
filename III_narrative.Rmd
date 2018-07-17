@@ -43,6 +43,11 @@ This training concerns reproducibility in educational research. Reproducibility 
 
 *List and clearly define the learning objectives and purpose(s) of the course.*
 
+* Understand why reproducibility is an increasingly important consideration for educational researchers
+* Know about some of the efforts to make reproducible research more feasible and better supported within and outside of educational research
+* Learn about tools, particularly those related to the R software environment, for carrying out and distributing reproducible research
+* Build a network of others interested in reproducible research through involvement in a mailing list (not sure this is remotely a good idea :))
+
 ## Course content
 
 *Describe the topics and issues that the course examines. This should include a description of the course structure (i.e., lecture, small group interactions, hands-on demonstrations), overview of the course, discussion of the course focus, and an overview of the planned activities.*
