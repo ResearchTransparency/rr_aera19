@@ -11,7 +11,20 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-* List of instructor(s), with institutional affiliation(s) and e-mail address(es)
+## List of instructor(s), with institutional affiliation(s) and e-mail address(es)
+
 * Extended or mini-course format – Extended courses are 1–2 days in length and typically precede the Annual Meeting. Mini-courses are short courses, 4 hours in length, and are scheduled to take place during the Annual Meeting.
-* AERA- VRLC (optional) Proposals are welcome for courses that will be streamed live online and recorded during the Annual Meeting for both in-person and virtual
-participants. These courses may be of varying length and format, contain modules that facilitate online viewing. Please indicate if the proposed course should be considered for the AERA-VRLC. Hyperlinks with course descriptions to previously recorded courses are permitted for VRLC course proposals.
+  
+  * AERA- VRLC (optional) Proposals are welcome for courses that will be streamed live online and recorded during the Annual Meeting for both in-person and virtual participants. These courses may be of varying length and format, contain modules that facilitate online viewing. Please indicate if the proposed course should be considered for the AERA-VRLC. Hyperlinks with course descriptions to previously recorded courses are permitted for VRLC course proposals.
+
+Daniel Anderson
+University of Oregon
+daniela@uoregon.edu
+
+Joshua Rosenberg
+University of Tennessee, Knoxville
+jrosenb8@utk.edu
+
+Have given a [presentation on using R at Georgia Southern University](http://rpubs.com/jmichaelrosenberg/164105) and a [related presentation in the School of Criminal Justice at Michigan State University](/appendix/our-work/rosenberg-r_introduction_4-14-17.html).
+
+  

@@ -13,9 +13,36 @@ knitr::opts_chunk$set(echo = FALSE)
 
 The proposal narrative should address the following (3-pages single spaced limit):
 
-* Prerequisite skills or knowledge needed for course participation
-* Target course participants – Indicate what level of knowledge (e.g., basic, intermediate,
-advanced) the target audience (e.g., graduate students, emerging researchers, continuing researchers) must have in order to participate fully in the course. Also, indicate the number of course participants you can accommodate.
-* Rationale – Provide a rationale for this course. Why is this course important to education research and those who work in the field?
-* Learning objectives – List and clearly define the learning objectives and purpose(s) of the course.
-* Course content – Describe the topics and issues that the course examines. This should include a description of the course structure (i.e., lecture, small group interactions, hands-on demonstrations), overview of the course, discussion of the course focus, and an overview of the planned activities.
+## Prerequisite skills or knowledge needed for course participation
+
+Participants should have an interest in reproducibility. This training will be most useful to those with experience planning, carrying out, and writing up the results of a research project.
+
+## Target course participants
+
+*Indicate what level of knowledge (e.g., basic, intermediate, advanced) the target audience (e.g., graduate students, emerging researchers, continuing researchers) must have in order to participate fully in the course. Also, indicate the number of course participants you can accommodate.*
+
+Target audience includes graduate students, emerging or early-career researchers, and continuing researchers interested in their own or their students'/trainees' work becoming more reproducible. Because both an overview of ideas related to reproducibility as well as a number of quantitative and computational tools and approaches will be described, participants with less experience can benefit from developing a more conceptual understanding of open science; they can turn to the tools later on.
+
+## Rationale
+
+*Provide a rationale for this course. Why is this course important to education research and those who work in the field?*
+
+Recent research on open science in general (Bertling  Friesike, 2014; National Research Council, 2018) and in educational research (van der Zee & Reich, 2018) and about replication in particular (Gehlbach & Robinson, 2017). Research about building knowledge in the field, related to replication (Hedges, 2018).
+
+Recent research about preparing educational researchers and advancing the methodological capabilities of the field (Henson, Hull, & Williams, 2010)
+
+Recent calls for registered reports ([AERA Open](http://journals.sagepub.com/page/ero/collections/special-topic-collections/index), [Journal of Computer Assisted Learning](https://onlinelibrary.wiley.com/journal/13652729)).
+
+Societies emphasizing open science ([Society for the Improvement of Psychological Science](https://www.improvingpsych.org), [rOpenSci](https://ropensci.org/))
+
+*Note*. This is copied from the description.
+
+This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last.
+
+## Learning objectives
+
+*List and clearly define the learning objectives and purpose(s) of the course.*
+
+## Course content
+
+*Describe the topics and issues that the course examines. This should include a description of the course structure (i.e., lecture, small group interactions, hands-on demonstrations), overview of the course, discussion of the course focus, and an overview of the planned activities.*
