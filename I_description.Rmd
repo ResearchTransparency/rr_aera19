@@ -11,12 +11,16 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Provide the course title and description. This information will be used on the AERA Annual Meeting Registration website, in promotional materials, and in the Annual Meeting Program. Developing a clear course description is very important as it is the only information the participant will see prior to registering for the course. Provide a concise description (250 words) that addresses the following:
+> Provide the course title and description. This information will be used on the AERA Annual Meeting Registration website, in promotional materials, and in the Annual Meeting Program. Developing a clear course description is very important as it is the only information the participant will see prior to registering for the course. Provide a concise description (250 words) that addresses the following:
 
-* Course content
-* Format (e.g. lecture, hands-on exercises, group work)
-* Course objectives
-* Target audience (e.g., graduate students, early career scholars, advanced researchers)
-* Prerequisite skills or knowledge
-* Potential assignments
-* Required material and equipment (e.g., data sets and laptop)
+  * Course content
+  * Format (e.g. lecture, hands-on exercises, group work)
+  * Course objectives
+  * Target audience (e.g., graduate students, early career scholars, advanced researchers)
+  * Prerequisite skills or knowledge
+  * Potential assignments
+  * Required material and equipment (e.g., data sets and laptop)
+
+**Reproducibility and educational research: An overview and introduction to the tools that make reproducible research work**
+
+This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last.
