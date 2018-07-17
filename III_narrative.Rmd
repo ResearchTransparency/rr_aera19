@@ -32,15 +32,6 @@ Recent calls for registered reports ([AERA Open](http://journals.sagepub.com/pag
 
 Societies emphasizing open science ([Society for the Improvement of Psychological Science](https://www.improvingpsych.org), [rOpenSci](https://ropensci.org/))
 
-Practical resources:
-
-1. Notes on taking steps toward reproducibility from Karl Broman http://kbroman.org/steps2rr/
-2. Overview of open science via R Open Sci https://ropensci.github.io/reproducibility-guide/sections/introduction/
-3. Recent article on preregistration, but discusses and makes recommendations related to reproducibility / open science: http://www.tandfonline.com/doi/full/10.1080/19345747.2017.1387950
-4. Some simple guidelines for effective data management from Elizabeth Borer and co.: http://onlinelibrary.wiley.com/doi/10.1890/0012-9623-90.2.205/abstract
-5. How to share data with a statistician (Jeff Leek and co.): https://ojs.library.queensu.ca/index.php/IEE/article/view/4608/0
-6. Nine simple ways to make it easier to (re)use your data: https://ojs.library.queensu.ca/index.php/IEE/article/view/4608/0
-
 ## Learning objectives
 
 List and clearly define the learning objectives and purpose(s) of the course.
