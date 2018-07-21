@@ -1,30 +1,68 @@
 ---
 title: "Course Faculty Course Format"
-author: 
-  - "Daniel Anderson"
-  - "Joshua Rosenberg"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: pdf_document
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{xcolor}
+  - \definecolor{link}{rgb}{0, 0, 238}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(magrittr)
+library(knitr)
+library(kableExtra)
+opts_chunk$set(echo = FALSE)
 ```
 
-## List of instructor(s), with institutional affiliation(s) and e-mail address(es)
+<!-- ## List of instructor(s), with institutional affiliation(s) and e-mail address(es) -->
 
-* Extended or mini-course format – Extended courses are 1–2 days in length and typically precede the Annual Meeting. Mini-courses are short courses, 4 hours in length, and are scheduled to take place during the Annual Meeting.
-  
-  * AERA- VRLC (optional) Proposals are welcome for courses that will be streamed live online and recorded during the Annual Meeting for both in-person and virtual participants. These courses may be of varying length and format, contain modules that facilitate online viewing. Please indicate if the proposed course should be considered for the AERA-VRLC. Hyperlinks with course descriptions to previously recorded courses are permitted for VRLC course proposals.
+<!-- * Extended or mini-course format – Extended courses are 1–2 days in length and typically precede the Annual Meeting. Mini-courses are short courses, 4 hours in length, and are scheduled to take place during the Annual Meeting. -->
 
-Daniel Anderson
-University of Oregon
-daniela@uoregon.edu
+<!--   * AERA- VRLC (optional) Proposals are welcome for courses that will be streamed live online and recorded during the Annual Meeting for both in-person and virtual participants. These courses may be of varying length and format, contain modules that facilitate online viewing. Please indicate if the proposed course should be considered for the AERA-VRLC. Hyperlinks with course descriptions to previously recorded courses are permitted for VRLC course proposals. -->
 
-Joshua Rosenberg
-University of Tennessee, Knoxville
-jrosenb8@utk.edu
+```{r contactinfo}
+data.frame(Presenters = c("Daniel Anderson", "Joshua Rosenberg"),
+           Affiliation = c("University of Oregon", "University of Tennessee, Knoxville"),
+           Email = c("daniela@uoregon.edu", "jrosenb8@utk.edu")) %>% 
+  kable(booktabs = TRUE) %>% 
+  kable_styling(position = "center")
+```
 
-Have given a [presentation on using R at Georgia Southern University](http://rpubs.com/jmichaelrosenberg/164105) and a [related presentation in the School of Criminal Justice at Michigan State University](/appendix/our-work/rosenberg-r_introduction_4-14-17.html).
+This tutorial will be a **4-hour mini-course** on tools for conducting open and
+reproducible research with R. It will overview the idea and importance of
+reproducible research for educational researchers, cover R Markdown for weaving
+text with code, and discuss *git*/*GitHub* for version control and
+collaboration. Part of the benefit of R Markdown is that the syntax itself is
+relatively straightforward (learning to code with R is much more difficult than
+learning R Markdown), but is a powerful framework for presenting research
+findings in a variety of formats, including static web pages, slides, technical
+reports, and even APA-formatted journal articles. While the heart of our
+presentation will focus on getting participants familiar and comfortable with R
+Markdown and version control toward the ultimate goal of more open, 
+transparent, and reproducible analysis workflows, we also spend some time
+discussing these alternative output formats by way of motivating participants 
+to continue learning beyond the mini-course. Both of the authors are 
+experienced R users and have been using reproducible research principles in
+their applied work for a number of years.
 
+Dr. Anderson has taught R at the University of Oregon for each of the past two
+years and is currently leading a five-course data science specialization for 
+the University of Oregon's College of Education (see the current development 
+\color{link}[here](https://github.com/uo-datasci-specialization)
+\color{black}). In the classes Dr. Anderson teaches, he requires all work be
+completed in a reproducible way. Similarly, he has provided training both to
+faculty at the UO (for example, see \color{link}
+[here](https://youtu.be/n-M2ivdofbo)\color{black}) and at other institutions 
+in a consulting role (for example, see 
+\color{link}[here](https://github.com/datalorax/FSU_June16)\color{black}). He
+has also written multiple conference papers and led many conference
+presentations using R Markdown, *GitHub*, and reproducible practices (for 
+example, see \color{link} [his most recent presentation for NCME](https://github.com/datalorax/ncme_18)\color{black}).
+
+Dr. Rosen recently completed his entire doctoral dissertation using R Markdown
+and reproducible workflows with *GitHub* (see 
+\color{link}[here](https://github.com/jrosen48/dissertation)\color{black}). He
+has also given a \color{link}
+[presentation on using R at Georgia Southern University](http://rpubs.com/jmichaelrosenberg/164105) \color{black} and a \color{link} [related presentation in the School of Criminal Justice at Michigan State University](/appendix/our-work/rosenberg-r_introduction_4-14-17.html) 
+\color{black}.
   
