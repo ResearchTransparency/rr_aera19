@@ -1,26 +1,82 @@
 ---
 title: "Transparent and Reproducible Research with R"
-author: 
-  - "Daniel Anderson"
-  - "Joshua Rosenberg"
+shorttitle: "Reproducible Research R"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: pdf_document
+
+author: 
+  - name          : "Daniel Anderson"
+    affiliation   : "1"
+    corresponding : yes
+    email         : "daniela@uoregon.edu"
+    address       : "5262 University of Oregon"
+  - name          : "Joshua Rosenberg"
+    affiliation   : "2"
+    email         : "jrosenb8@utk.edu"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Oregon"
+  - id            : "2"
+    institution   : "University of Tennessee-Knoxville"
+
+bibliography      : refs.bib
+
+figsintext        : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+lineno            : no
+mask              : no
+
+class             : "doc"
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-> Provide the course title and description. This information will be used on the AERA Annual Meeting Registration website, in promotional materials, and in the Annual Meeting Program. Developing a clear course description is very important as it is the only information the participant will see prior to registering for the course. Provide a concise description (250 words) that addresses the following:
+<!-- > Provide the course title and description. This information will be used on the AERA Annual Meeting Registration website, in promotional materials, and in the Annual Meeting Program. Developing a clear course description is very important as it is the only information the participant will see prior to registering for the course. Provide a concise description (250 words) that addresses the following: -->
 
-  * Course content
-  * Format (e.g. lecture, hands-on exercises, group work)
-  * Course objectives
-  * Target audience (e.g., graduate students, early career scholars, advanced researchers)
-  * Prerequisite skills or knowledge
-  * Potential assignments
-  * Required material and equipment (e.g., data sets and laptop)
+<!--   * Course content -->
+<!--   * Format (e.g. lecture, hands-on exercises, group work) -->
+<!--   * Course objectives -->
+<!--   * Target audience (e.g., graduate students, early career scholars, advanced researchers) -->
+<!--   * Prerequisite skills or knowledge -->
+<!--   * Potential assignments -->
+<!--   * Required material and equipment (e.g., data sets and laptop) -->
 
-**Reproducibility and educational research: An overview and introduction to the tools that make reproducible research work**
+<!-- Is the below an alternative title? I was thinking just what we have as the title of the doc, but that's fine too. -->
+<!-- **Reproducibility and educational research: An overview and introduction to the tools that make reproducible research work**
 
-This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last.
+This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last. -->
+
+Reproducibility of research findings is critical to the validity of inferences 
+from studies. If an independent evaluator with access to the study data is
+unable to reproduce the published findings *exactly*, the trustworthiness of 
+the findings are called into question, as highlighted by several prominent
+examples[e.g., the Duke crisis; see @peng15]. Particularly in the age of "big
+data", the majority of analyses include a multitude of decisions and, despite 
+the best efforts of the individual researchers, all decisions are often not 
+communicated through the published journal article. In this training, we 
+provide an overview of reproducibility (and ideas related to open science) and 
+introduce participants to tools that increase the likelihood of a reproducible 
+and transparent analysis workflows. We emphasize tools from the R software 
+environment to weave text with analysis code (e.g., R Markdown), version
+control with *git*/*GitHub* to documents the entire history of a project, and
+platforms for sharing analysis workflows publicly (e.g., basic static 
+websites). 
+
+In the first hour of this four-hour training, we introduce participants (some
+familiarity with R assumed) to the idea and importance of open and reproducible
+research to further educational research. In the second and third hours, we
+discuss R Markdown and the various formats to which documents can be rendered.
+Finally, in the fourth hour, we provide a primer on version control using
+*GitHub* to document the history of a project and collaborate with others. Our
+target audience is early-career scholars, including doctoral students, or any
+researcher looking for tools to help increase the likelihood of their work 
+being reproducible. The format will include part lecture and part hands-on
+applied work. We will assume all participants have a laptop. 
+
+\newpage
+# References
