@@ -1,43 +1,169 @@
 ---
-title: "Proposal Narrative"
-author: 
-  - "Daniel Anderson"
-  - "Joshua Rosenberg"
+title: "Transparent and Reproducible Research with R"
+shorttitle: "Reproducible Research R"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: pdf_document
+author: 
+  - name          : "Daniel Anderson"
+    affiliation   : "1"
+    corresponding : yes
+    email         : "daniela@uoregon.edu"
+    address       : "5262 University of Oregon"
+  - name          : "Joshua Rosenberg"
+    affiliation   : "2"
+    email         : "jrosenb8@utk.edu"
+affiliation:
+  - id            : "1"
+    institution   : "University of Oregon"
+  - id            : "2"
+    institution   : "University of Tennessee, Knoxville"
+
+bibliography      : refs.bib
+
+figsintext        : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+lineno            : no
+mask              : no
+class             : "doc"
+output            : papaja::apa6_pdf
 ---
+
+\newpage
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+<!-- The proposal narrative should address the following (3-pages single spaced limit): -->
 
-The proposal narrative should address the following (3-pages single spaced limit):
+# Proposal narrative: AERA Professional Development Proposal
+
+The purpose of this proposal is to provide participants with an introduction to
+tools for open, transparent, and reproducible analysis workflows. Specifically,
+we discuss R Markdown for integrating text with code and *GitHub* for
+collaboration and documentation of the project history.
 
 ## Prerequisite skills or knowledge needed for course participation
 
-Participants should have an interest in reproducibility. This training will be most useful to those with experience planning, carrying out, and writing up the results of a research project.
+All participants should  have an interest in conducting open and
+transparent analyses. This training will be most useful to those with 
+experience planning, carrying out, and writing up the results of a research
+project. We will specifically discuss moving from existing frameworks to
+reproducible frameworks using R and R Markdown.
+
+All participants should also have at least a basic familiarity with R and be
+comfortable with the idea of working in a coding environment. Note that the
+presenters have partnered with Datacamp (https://www.datacamp.com) to help
+provide a platform for less experienced users to get "up to speed" prior to the
+training. Datacamp is an online learning platform for R (and related data
+science technologies) that includes direct instruction and opportunities to
+practice and apply the learned skills, all within an online platform. All
+participants will have access to the full suite of Datacamp modules for one
+month prior to, and one month following, our in-person training. 
+
+Users with less experience with R will be asked to complete
+the 
+[Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r), 
+[Working with the RStudio IDE: Part 1](https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-1), and 
+[Introduction to the *tidyverse*](https://www.datacamp.com/courses/introduction-to-the-tidyverse) 
+modules prior to the training. Following the training, we recommend all
+participants re-visit the skills they have learned by completing the 
+[Reporting with R Markdown](https://www.datacamp.com/courses/reporting-with-r-markdown) module.
 
 ## Target course participants
 
-*Indicate what level of knowledge (e.g., basic, intermediate, advanced) the target audience (e.g., graduate students, emerging researchers, continuing researchers) must have in order to participate fully in the course. Also, indicate the number of course participants you can accommodate.*
+<!-- Indicate what level of knowledge (e.g., basic, intermediate, advanced) the target audience (e.g., graduate students, emerging researchers, continuing researchers) must have in order to participate fully in the course. Also, indicate the number of course participants you can accommodate. -->
 
-Target audience includes graduate students, emerging or early-career researchers, and continuing researchers interested in their own or their students'/trainees' work becoming more reproducible. Because both an overview of ideas related to reproducibility as well as a number of quantitative and computational tools and approaches will be described, participants with less experience can benefit from developing a more conceptual understanding of open science; they can turn to the tools later on.
+Target audience includes graduate students, emerging or early-career
+researchers, and continuing researchers interested in their own or their
+students'/trainees' work becoming more open, transparent, and reproducible.
+Because both an overview of ideas related to reproducibility as well as a
+number of quantitative and computational tools and approaches will be 
+described, participants with less experience can benefit from developing a more
+conceptual understanding of open science; they can turn to the tools later on.
+This training is aimed at beginners who have little to no experience using R
+Markdown or version control with *git*/*GitHub*, but who feel comfortable
+learning code and at least a basic understanding of R.
 
 ## Rationale
 
-*Provide a rationale for this course. Why is this course important to education research and those who work in the field?*
+<!-- Provide a rationale for this course. Why is this course important to education research and those who work in the field? -->
 
-Recent research on open science in general (Bertling  Friesike, 2014; National Research Council, 2018) and in educational research (Cook et al., pre-print publication;  McBee, Makel, Peters, & Matthews, pre-print publication; van der Zee & Reich, 2018) and about replication in particular (Gehlbach & Robinson, 2017). Research about building knowledge in the field, related to replication (Hedges, 2018).
+The basic premise of reproducible research is that quantitative analyses should
+be conducted and documented with sufficient clarity that independent 
+researchers could reproduce all the results, exactly. Initially, this may 
+sound relatively straightforward---of course research findings should be
+reproducible---and we may like to think the most research in education adheres
+to these principles. Unfortunately, this is generally not the case. For
+example, in a large-scale review of growth models published from 2007-2012
+across 47 education and psychology journals, Stevens, Nese, and Tindal (2013)
+found that documenting even relatively routine procedures, such as how much
+missing data were involved and how the missing data were handled, was
+extraordinarily difficult. Indeed, in the vast majority of cases, this
+information was simply missing. These findings were likely the result of, at
+least in part, researchers attempting to summarize their study without getting
+bogged down in the details. The findings, however, are congruent with
+@buckheit95, who argue "an article about computational science in a
+scientific publication is **not** the scholarship itself, it is merely the
+**advertising** of the scholarship. The actual scholarship is the complete
+software development environment and the complete set of instructions which
+generated the figures" (p. 5, emphasis in the original). This may seem a
+somewhat extreme view, but it clearly articulates that a journal article on its
+own is generally insufficient for the accumulation of scientific evidence. That
+is, it is difficult to build off the work of others, or verify study results, 
+if you only have access to the published findings. It is important to note as
+well that reproducibility to not imply "correctness", but rather transparency
+in process. Indeed, part of the reason reproducible research is so important is
+that it allows other researchers a means to verify the process, analysis, and
+ultimately the validity of study findings.
 
-Recent research about preparing educational researchers and advancing the methodological capabilities of the field (Henson, Hull, & Williams, 2010)
+### Conducting reproducible research
+Considerable recent attention has been paid to open and reproducible
+research in science generally [@bartling14; @na18], but also in
+educational research [@cook18; @mcbee17; @van18]. What is often lacking,
+however, is a clear description and tutorial on how to actually begin
+engaging in open and reproducible research. This training seeks to fill that 
+gap by providing an initial introduction to tools to help make the process more
+tractable. In particular, we advocate for *conducting science publicly* through
+the publication of living code that is modified and updated as the project
+matures, along with *literate programming* a concept introduced by @knuth84 
+that weaves substantive text from the manuscript with analysis code. Although
+literate programming has its own learning curve, leading to an initial dip in
+productivity, it can eventually lead to massive gains in efficiency by all
+tables, figures, and in-text references to statistics (e.g., sample means)
+updated automatically each time the document is rendered. There is therefore no
+hand entering of model results into tables, which can be error prone, and any 
+tweaks to the model or data (including new data be added to the research)
+results in the entire document being updated automatically. The manuscript is
+therefore *dynamic* relative to the analysis [@xie16]. This process may 
+sound complicated to implement, and it was even a few short years ago. Yet, the
+toolkit for producing dynamic, reproducible documents is rapidly expanding
+and is now far more accessible for the applied researcher. When this process is
+paired with a version control system such as *git*, and made publicly available
+through platforms such as *GitHub*, the project and process is far more open 
+and transparent. Importantly, however, our training also discusses how to make
+specific parts of the project (e.g., the raw data) *not* available publicly to
+ensure research participant privacy.
 
-Recent calls for registered reports ([AERA Open](http://journals.sagepub.com/page/ero/collections/special-topic-collections/index), [Journal of Computer Assisted Learning](https://onlinelibrary.wiley.com/journal/13652729)).
 
-Societies emphasizing open science ([Society for the Improvement of Psychological Science](https://www.improvingpsych.org), [rOpenSci](https://ropensci.org/))
+<!-- and about replication in
+particular [@gehlbach18]. Research about building knowledge in the field,
+related to replication [@hedges18].
+ -->
 
+<!-- Recent research about preparing educational researchers and advancing the
+methodological capabilities of the field [@henson10].
+ -->
+
+ <!-- THESE MIGHT BE GOOD TO ADD IN THE FIRST SENTENCE IN THE PARAGRAPH ABOVE
+ -->
+<!-- Recent calls for registered reports ([AERA Open](http://journals.sagepub.com/page/ero/collections/special-topic-collections/index), [Journal of Computer Assisted Learning](https://onlinelibrary.wiley.com/journal/13652729)).
+
+Societies emphasizing open science ([Society for the Improvement of Psychological Science](https://www.improvingpsych.org), [rOpenSci](https://ropensci.org/)) -->
+<!-- 
 *Note*. This is copied from the description.
 
-This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last.
+This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last. -->
 
 ## Learning objectives
 
@@ -51,3 +177,6 @@ This training concerns reproducibility in educational research. Reproducibility 
 ## Course content
 
 *Describe the topics and issues that the course examines. This should include a description of the course structure (i.e., lecture, small group interactions, hands-on demonstrations), overview of the course, discussion of the course focus, and an overview of the planned activities.*
+
+\newpage
+# References
