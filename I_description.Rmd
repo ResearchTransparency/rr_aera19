@@ -51,14 +51,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 This training concerns reproducibility in educational research. Reproducibility is an important consideration for doing research that contributes to theory and builds our understanding of educational practice. While reproducibility has been the focus of other disciplines, where infrastructure and support for it are being developed, educational research has been somewhat slow to embrace reproducible research. The purpose of this workshop is to provide an overview of reproducibility (and ideas related to open science) and to introduce participants to tools that make doing reproducible work possible and efficient. In particular, we emphasize tools from the R software environment, which has multiple tools which work together (in conjunction with a supportive community) to support reproducibility, from the first stages of a data analysis and project to the last. -->
 
-Reproducibility of research findings is critical to the validity of inferences 
+Reproducibility of research findings is critical to the validity of inferences
 from studies. If an independent evaluator with access to the study data is
-unable to reproduce the published findings *exactly*, the trustworthiness of 
+unable to reproduce the published findings *exactly*, the trustworthiness of
 the findings are called into question, as highlighted by several prominent
 examples[e.g., the Duke crisis; see @peng15]. Particularly in the age of "big
-data", the majority of analyses include a multitude of decisions and, despite 
-the best efforts of the individual researchers, all decisions are often not 
-communicated through the published journal article. 
+data", the majority of analyses include a multitude of decisions and, despite
+the best efforts of the individual researchers, all decisions are often not
+communicated through the published journal article. Such issues are also
+essential in a time in which established findings are being called into question
+(i.e., concerns about the reproducibility of psychological science findings)
+because of choices made in the course of a research study.
 
 In this training, we provide an overview of reproducibility (and ideas
 related to open science) and introduce participants to tools that increase the
