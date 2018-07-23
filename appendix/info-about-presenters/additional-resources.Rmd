@@ -1,0 +1,36 @@
+---
+title: "Additional resources to be shared"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{xcolor}
+- \definecolor{link}{rgb}{0, 0, 238}
+---
+
+# Scholarly articles
+
+* Bartling, S., & Friesike, S. (2014). *Opening science: The evolving guide on how the internet is changing research, collaboration and scholarly publishing*. New York, NY: Springer. 
+* Cook, B. G., Lloyd, J. W., Nosek, B. A., & Therrien, W. J. (preprint). Promoting Open Science to Increase the Trustworthiness of Evidence in Special Education. Retrieved from https://osf.io/mh2rt/
+* Gehlbach, H., & Robinson, C. D. (2018). *Mitigating illusory results through preregistration in education. Journal of Research on Educational Effectiveness, 11*(2), 296-315.
+* Hedges, L. V. (2018). Challenges in building usable knowledge in education. *Journal of Research on Educational Effectiveness, 11*(1), 1-21.
+* Henson, R. K., Hull, D. M., & Williams, C. S. (2010). Methodology in our education research culture: Toward a stronger collective quantitative proficiency. *Educational Researcher, 39*(3), 229-240.
+* Lowndes, J. S. S., Best, B. D., Scarborough, C., Afflerbach, J. C., Frazier, M. R., O’Hara, C. C., ... & Halpern, B. S. (2017). Our path to better science in less time using open data science tools. *Nature Ecology & Evolution, 1*(6), 0160.
+* McBee, M., Makel, M., Peters, S. J., & Matthews, M. S. (2017). A manifesto for open science in giftedness research. Pre-print retrieved from https://psyarxiv.com/nhuv3/
+* National Research Council (2018). Open science by design: Realizing a vision for 21st century research. https://www.nap.edu/catalog/25116/open-science-by-design-realizing-a-vision-for-21st-century
+* van der Zee, T., & Reich, J. (2018). Open Education Science. *AERA Open, 4*(3), 
+* Zwaan, R. A., Etz, A., Lucas, R. E., & Donnellan, M. B. (2017). Making replication mainstream. *Behavioral and Brain Sciences, 10*, 1-50.
+
+# Articles with practical tips and advice
+
+* Notes on taking steps toward reproducibility by Broman: http://kbroman.org/steps2rr/
+* Overview of open science by R Open Sci: https://ropensci.github.io/reproducibility-guide/sections/introduction/
+* Recent article on preregistration, but discusses and makes recommendations related to reproducibility / open science: http://www.tandfonline.com/doi/full/10.1080/19345747.2017.1387950
+* Some simple guidelines for effective data management by Elizabeth Borer et al.: http://onlinelibrary.wiley.com/doi/10.1890/0012-9623-90.2.205/abstract
+* How to share data with a statistician by Leek et al.: https://ojs.library.queensu.ca/index.php/IEE/article/view/4608/0
+* Treading a new path for reproducible researh from Peng: https://simplystatistics.org/2013/08/21/treading-a-new-path-for-reproducible-research-part-1/
+* Assessing different meanings of reproducible research by Rokem et al.: https://www.practicereproducibleresearch.org/core-chapters/2-assessment.html
+* Open software for open science presentation by Hong et al.: https://figshare.com/articles/Open_Software_for_Open_Science/1424440
+
