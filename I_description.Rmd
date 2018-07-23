@@ -45,22 +45,21 @@ in which established findings are being called into question (i.e., concerns
 about the reproducibility of psychological science findings) because of choices
 made in the course of a research study.
 
-In this training, we provide an overview of reproducibility (and ideas
-related to open science) and introduce participants to tools that increase the
-likelihood of reproducible and transparent analysis workflows. We emphasize
+In this training, we provide an overview of reproducibility and open science,
+and introduce participants to tools that increase the
+likelihood of reproducible and transparent workflows. We emphasize
 tools from the R software environment to weave text with analysis code (e.g.,
-R Markdown), version control with *git*/*GitHub* to document the entire history
-of a project, and platforms for sharing analysis workflows publicly (e.g., basic
-static websites).
+R Markdown), version control to document the entire history
+of a project, and platforms for sharing analysis workflows publicly.
 
 In the first hour of this four-hour training, we introduce participants to
-the ideas motivating open and reproducible research in educational contexts.
-In the second and third hours, we discuss R Markdown and the various formats
-to which documents can be rendered. Finally, in the fourth hour, we provide a
-primer on version control using *GitHub*. Our target audience is early-career
-scholars as well as researchers at any stage looking for tools to help increase
-the likelihood of their work being reproducible. The format will include part
-lecture and part hands-on applied work.
+the ideas motivating open and reproducible research in educational research.
+In the second and third hours, we discuss the basics of R Markdown and the 
+various formats to which documents can be rendered. Finally, in the fourth hour, 
+we provide a primer on version control using *GitHub*. Our target audience is 
+early-career scholars as well as researchers at any stage looking for tools to 
+help increase the likelihood of their work being reproducible. The format will 
+include part lecture and part hands-on applied work.
 
 \newpage
 # References
