@@ -23,7 +23,7 @@ statistical software for R, including the \color{link}[konfound R package]
 sensitivity analysis, and a package that provides an interface to MPlus to make
 it easier to carry out certain kinds of mixture models as part of a reproducible
 analysis. Dr. Rosenberg has also given invited talks on using R \color{link}
-[at Georgia Southern University](http:// rpubs.com/jmichaelrosenberg/164105)
+[at Georgia Southern University](http://rpubs.com/jmichaelrosenberg/164105)
 \color{black} and \color{link} [at the School of Criminal Justice at Michigan
 State University](/appendix/our- work/rosenberg-r_introduction_4-14-17.html)
 \color{black}. At Michigan State University and now at the University of
