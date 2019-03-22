@@ -1,0 +1,609 @@
+---
+title: "flexdashboards"
+subtitle: "and slides (quickly-ish)"
+author: "Daniel Anderson "
+date: "Week 9, Class 1"
+output:
+  xaringan::moon_reader:
+    css: ["default", "uo", "uo-fonts", "hygge", "custom.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: atelier-dune-light
+      highlightLines: true
+      countIncrementalSlides: FALSE
+      beforeInit: "https://platform.twitter.com/widgets.js"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(dev="CairoPNG",
+                      fig.width = 13, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = TRUE)
+
+library(tidyverse)
+theme_set(theme_minimal(25))
+
+update_geom_defaults('path', list(size = 3))
+update_geom_defaults('point', list(size = 4))
+update_geom_defaults('text', list(size = 6))
+```
+# The definitive source!
+https://rmarkdown.rstudio.com/flexdashboard/
+
+![](img/flexdashboards.png)
+
+---
+class: inverse
+# Example
+
+![](https://arm.rbind.io/slides/img/flexdashboard-fatalpoliceshootings.png)
+
+.footnote[Credit: This example from [Alison Hill's rstudio::conf(2019L) class]()]
+
+--
+By [Julia Silge](https://juliasilge.com) (see the [blog post](https://juliasilge.com/blog/fatal-shootings/), [dashboard](https://beta.rstudioconnect.com/juliasilge/policeshooting/policeshooting.html),
+and [source code](https://gist.github.com/juliasilge/9acbe97c549502bac85404779edceba0))
+
+---
+class: inverse
+
+![](https://arm.rbind.io/slides/img/flexdashboard-mosaic.png)
+
+.footnote[Credit: This example from [Alison Hill's rstudio::conf(2019L) class]()]
+
+--
+By [Jennifer Thompson](https://jenthompson.me) (see the [blog post](https://jenthompson.me/2018/02/09/flexdashboards-monitoring/), [dashboard](https://jenthompson.me/examples/progressdash.html),
+and [source code](https://github.com/jenniferthompson/MOSAICProgress))
+
+
+---
+# Getting started
+```{r install, eval = FALSE}
+install.packages("flexdashboard")
+```
+
+![](https://rmarkdown.rstudio.com/flexdashboard/images/NewRMarkdown.png)
+
+
+---
+class: inverse middle center
+# Do it
+### knit right away
+### Add some plots
+### Play
+
+---
+# Columns
+
+* Define new column with 
+
+```
+Column
+----------------------------------
+```
+
+* Optionally specify the width with `{data-width}`
+
+--
+* Annoyingly, be careful with spacing! 
+
+`{data-width=650}` will work
+
+### but 
+
+`{data-width = 650}` will not work
+
+
+---
+# New squares
+
+```{md eval = FALSE}
+### Square title
+< r code chunk >
+```
+
+* Each time you add a square it will split the area evenly among all the squares
+
+---
+# Thinking in rows
+
+* Change the YAML to 
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+```
+
+--
+
+* Each `###` will then create a new column
+
+
+--
+* Add new rows with
+
+```md
+Row
+----------------------------------
+```
+
+--
+* Modify height with `{data-height=XXX}`
+
+
+---
+# Pages
+You can easily specify multiple pages by just specifying a Level 1 Header
+
+```md
+# Page 1
+
+Column {data-width=650}
+----------------------------
+### Chart A
+< r code>
+
+Column {data-width=350}
+----------------------------
+### Chart B
+< r code>
+
+### Chart C
+< r code>
+
+# Page 2
+
+```
+
+---
+# Sidebar
+* Julia Silge's had a nice sidebar where she explained things about the flexdashboard... You can have this too!
+
+```md
+Sidebar Title {.sidebar}
+--------
+
+Your text here. You can use markdown syntax, including 
+[links](http://blah.com), *italics*, **bolding**, etc.   
+```
+
+
+--
+* Title seems to show up (for me) in mobile version but not
+
+
+--
+* Multiple pages? Just change the separator to keep it there
+
+```md
+Sidebar {.sidebar}
+============
+
+Your text here. You can use markdown syntax, including [links](http://blah.com), *italics*, **bolding**, etc.   
+```
+
+
+---
+# Tabsets
+
+This is actually a standard R Markdown feature, but you can use it with flexdashboards as well
+
+
+```md
+Column {.tabset}
+----------------------------------------------------------------------
+
+### Chart 1
+< r code>
+
+### Chart 2
+< r code>
+
+### Data Table
+< r code>
+```
+
+---
+# Icons
+* Probably not the most important thing, but fun
+
+* Use Font awesome!
+
+```md
+# Years {data-icon="fa-calendar"}
+```
+
+---
+# HTML Widgets
+
+Add a touch of interactivity
+
+* Plenty of HTML widgets for R out there (see https://www.htmlwidgets.org/showcase_leaflet.html)
+
+* {plotly} is cool
+
+```{r plotly, eval = FALSE}
+library(plotly)
+p <- ggplot(mpg, aes(displ, cty)) +
+  geom_point() +
+  geom_smooth()
+
+ggplotly(p) #<<
+```
+
+---
+# Including Text
+
+* If you want to include text about an overall figure, just put the text in the R Markdown doc like you normally would
+
+```md
+# Base {data-icon="fa-calendar"}
+Here's a description about the plot that follows
+
+### A base R plot
+< r code>
+
+```
+
+---
+# What if you have tabsets?
+
+* Works great if you want to describe all the plots/tables/content in the tabset
+
+* If you want to provide text for an individual plot, use `>`
+
+```md
+
+Column {.tabset data-width=350}
+-------------------
+
+This text will describe the full tabset
+
+###  Chart 1
+< r code>
+
+> Here's some text for Chart 1
+
+###  Table 1
+< r code>
+
+> Here's some text for Table 1
+
+```
+
+---
+# Storyboarding
+
+* A little bit advanced, but pretty cool
+
+* First, change the YAML
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+```
+
+---
+```md
+# Method {.storyboard}
+
+### Sample Descriptives {data-commentary-width=400}
+< r code>
+
+**** 
+
+This is some text describing what's going on with the sample, and how we moved from the raw data tot he analytic sample. 
+
+### Correlation Matrix {data-commentary-width=200}
+< r code>
+
+****
+
+There is less to say here so I made the commentary box smaller
+
+# Results {.storyboard}
+
+### Plot 1 {data-commentary-width=600}
+< r code>
+
+****
+
+Lots to say here. There is important
+
+### Plot 2 {data-commentary-width=200}
+
+****
+
+Move along
+
+```
+
+---
+# Customization
+* Add font-awesome stuff
+* Change the [theme](https://rmarkdown.rstudio.com/flexdashboard/using.html#appearance)
+
+```md
+flexdashboard::flex_dashboard:
+  theme: readable
+```
+
+---
+# CSS
+Consider creating some custom CSS (Rather complicated in this case)
+
+Change the navigation bar to bright pink with thin blue border
+
+```css
+.navbar-inverse {
+  background-color: #FE08A5;
+  border-color: #0822FE;
+}
+```
+
+Save the above code in "custom.css" then specify in the YAML
+
+```md
+  flexdashboard::flex_dashboard:
+    css: custom.css
+```
+
+Making sure "custom.css" is in the same directory as your flexdashboard Rmd.
+
+
+---
+# Add a logo and favicon
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    logo: logo.png
+    favicon: favicon.png
+```
+
+---
+class: inverse center middle
+# Slides (briefly)
+
+--
+
+# xaringan
+
+### /ʃæ.'riŋ.ɡæn/
+
+---
+# Install
+* I'd recommend going with the GitHub version
+
+```{r install-xaringan-gh, eval = FALSE}
+devtools::install_github("yihui/xaringan")
+```
+
+* If you're more comfortable using fully stable software, install from CRAN
+
+```{r install-xaringan-cran, eval = FALSE}
+install.packages("xaringan")
+```
+
+---
+# What it is
+
+.pull-left[
+* HTML-based slides
+* Produced with R Markdown
+* Styled with CSS
+]
+
+.pull-right[
+![](img/rmd.png)
+]
+
+
+---
+# Themes
+This is the `uo` theme
+See All the available themes with `xaringan:::list_css()`
+
+```{r list_css}
+names(xaringan:::list_css())
+```
+
+---
+# Specify a theme
+
+.pull-left[
+.grey[.Large[**Default YAML**]]
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+]
+
+.pull-right[
+.grey[.Large[**Add a theme**]]
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+* css: ["default", "uo", "uo-fonts"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+]
+
+---
+# Where do the themes live?
+CSS Files
+
+![](img/css-files.png)
+.footnote[Slides available at [datalorax.com/talks/cascadia18](http://www.datalorax.com/talks/cascadia18/)]
+
+---
+## How do you create your own theme?
+
+<br/>
+### My advice
+1. Start with an existing theme
+1. Modify the CSS 
+  + Change .large[.bolder[.red[c].blue[o].green[l].yellow[o].purple[r].orange[s]]]!
+  + Change fonts! (see [here](https://github.com/yihui/xaringan/wiki/Changing-fonts), 
+  import fonts with [google fonts](https://fonts.google.com))
+  + Consider changes to the background
+1. Once you've found the parts you want to modify, copy them into a new CSS file, and reference it from your YAML
+
+
+---
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+* css: ["default", "uo", "uo-fonts", "my-customizations.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+
+
+---
+# Look at CSS for [existing themes](https://github.com/yihui/xaringan/tree/master/inst/rmarkdown/templates/xaringan/resources)
+
+![](img/existing-themes.png)
+
+---
+# Basically this
+
+.center[<img src = "https://i.pinimg.com/736x/33/fb/06/33fb067593a2a949e349a4e899c508d3--programming-humor-o-reilly.jpg",
+ height = 480 />]
+
+
+---
+# Some basic features
+* separate slides with `---`
+
+* Get incremental appearance of items on the slide with `--`
+
+* Separate into two-panel format with `pull-left[]` and `pull-right[]`
+
+* Titles with Level 1 header
+
+* Specify class of slides with `class`
+
+
+---
+```md
+<YAML>
+
+# Title slide 1
+
+Here's some text
+
+< r code >
+
+.pull-left[
+This part will be in the left panel
+]
+
+.pull-right[
+this part will be in the right panel
+]
+
+--
+
+This will be back to the default format, and appear on click
+
+---
+class: inverse center middle
+# Slide 2
+
++ New slide with a bullet in inverse, center, middle format
+
+```
+
+---
+class: inverse middle
+background-image: url(https://images.pexels.com/photos/257840/pexels-photo-257840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+background-size: cover
+
+# Background images
+
+---
+Code for previous slide looked like this
+
+```md
+class: inverse middle
+background-image: url(https://images.pexels.com/photos/257840/pexels-photo-257840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+background-size: cover
+```
+
+---
+# Publish
+
+Lots of options, but GitHub pages works great
+* Create a repo on GitHub with everything for your slides
+
+  + CSS files, image files, etc. (it all needs to be in there)
+
+* Make your HTML file named `index.html`
+
+* Change the GitHub pages setting to publish the master branch
+
+---
+# [slidex](https://github.com/datalorax/slidex)
+
+https://github.com/datalorax/slidex
+
+Transition PowerPoint slides to xaringan slides
+* Currently exports one function: 
+
+```{r slidex, eval = FALSE}
+convert_pptx("path/to/pptx", author = "Your Name")
+```
+
+--
+
+* Still a WIP - not perfect but can do a lot
+  + Maintains bulleting (basically)
+  + Maintains and reproduces tables 
+  + Maintains images
+  + Maintains links
+  + Easy selection of existing themes (additional `theme` argument).
+  
+---
+class: inverse
+background-image: url(https://github.com/datalorax/slidex/raw/master/docs/slidex-preview.gif)
+background-size: contain
+
+---
+background-image:url("https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+background-size:cover
+class: center
+# Go forth and share your work!

@@ -1,0 +1,323 @@
+---
+title: "Websites with R Markdown and Radix"
+subtitle: "Radix is now suddenly distill"
+author: "Daniel Anderson "
+date: "Week 8, Class 1"
+output:
+  xaringan::moon_reader:
+    css: ["default", "uo", "uo-fonts", "hygge"]
+    lib_dir: libs
+    nature:
+      highlightStyle: atelier-dune-light
+      highlightLines: true
+      countIncrementalSlides: FALSE
+      beforeInit: "https://platform.twitter.com/widgets.js"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(dev="CairoPNG",
+                      fig.width = 13, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = TRUE)
+
+library(tidyverse)
+library(dviz.supp)
+theme_set(theme_minimal(25))
+
+#source(here::here("resources", "wilke-redundant_coding.R"))
+#source(here::here("resources", "wilke-proportions.R"))
+
+update_geom_defaults('path', list(size = 3))
+update_geom_defaults('point', list(size = 4))
+#update_geom_defaults('text_repel', list(size = 6))
+update_geom_defaults('text', list(size = 6))
+```
+
+# Agenda 
+* Introduce Distill (formerly (as in a few days ago) called Radix)
+* Deployment
+
+
+--
+### Learning objectives
+* Get at least a basic site deployed
+
+---
+# Announcements
+* For this week's lab, we'll participate in [#tidytuesday](https://twitter.com/hashtag/tidytuesday?src=hash)!
+  + Note - I have no idea what the dataset will be
+
+* Goal for lab
+  + Play with unfamiliar data and produce something you're proud of
+  + Should be highly collaborative
+
+
+---
+class: inverse center middle
+
+# Distill
+https://rstudio.github.io/distill/
+
+---
+# Disclaimer and assumptions
+* This is a very basic (and probably fast) intro
+  + Distill can do a lot that we won't get to
+
+* I assume most of you have never created or deployed a website before
+  + If you have, some of this might be slow but you can help others
+
+* This "lecture" will be highly interactive
+
+---
+# Please follow along
+
+```{r eval = FALSE}
+#install.packages("radix")
+devtools::install_github("rstudio/distill")
+```
+
+* Go to GitHub and create a repo to store your website (which you'll also use
+for deployment)
+
+
+---
+# Back to RStudio
+.red[Don't clone your repo yet!]
+
+### Create new project
+<img src="https://rstudio.github.io/distill/images/create-website.png"
+height="300px"/>
+
+---
+# The steps
+* Create a new RStudio Project 
+
+* Select distill blog
+
+* Use gitkraken (or command line if you're comfortable with that) to initiate a
+repo locally and link it with your remote
+
+* Commit/push
+
+* Change GH settings for deployment
+
+[demo]
+
+---
+# Author a new article
+* `distill::create_post()`
+
+* Create another one!
+
+
+--
+### Listings
+Make sure your index file as
+
+```
+---
+listing: posts
+---
+```
+
+* Note that galleries are also possible
+
+---
+# Categories
+
+* You make up the category names. Tag posts with those categories, and they will be linkable
+
+```
+---
+categories:
+  - dataviz
+  - class
+---
+```
+
+![](img/categories.png)
+
+---
+# Navigation
+
+All controlled with `_site.yml`
+
+* Let's add a github log that links to our repo
+
+
+--
+```
+---
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - icon: fa fa-github
+      href: https://github.com/datalorax/class-site-example
+---
+```
+
+
+---
+# Create drop-down menus
+
+```
+---
+navbar:
+  left:
+    - text: "Labs"
+      menu:
+        - text: "Getting Started with R"
+          href: "lab1.html"
+        - text: "Visualizing Distributions"
+          href: "lab2.html"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - icon: fa fa-github
+      href: https://github.com/datalorax/class-site-example
+---
+```
+
+---
+# Base URL
+Once your site is deployed (or you know the link it will be deployed to), change the `base_url` in the `_site.yml`
+
+* Gives some nice sharing features (twitter cards)
+
+* Allows you to use [citations](https://rstudio.github.io/distill/citations.html)
+
+---
+# Drafts
+If you want to work on a post for a while without it being included in your website, use `draft = TRUE`
+
+`distill::create_post("My new post", draft = TRUE)`
+
+
+```
+---
+title: "My work on Lab 3"
+description: |
+  This lab was hard!
+draft: true
+---
+```
+
+---
+# Figures
+
+Change figure options with chunk options
+
+* `layout = "l-body"` (default)
+* `layout = "l-body-outset"`
+* `layout = "l-page"`
+* `layout = "l-screen"`
+  + `layout = "l-screen-inset"`
+  + `layout = "l-screen-inset shaded"`
+
+### Let's go try!
+
+---
+# Additional figure options
+
+* Rather than using `![]()`, you can use `knitr::include_graphics()` to have the same options.
+
+* Use `fig.cap` in chunk options to give nice figure captions.
+
+* Note these options should work for tables as well
+
+---
+# Side notes
+
+```
+<aside>
+This is some text that will appear in the margin - similar to Tufte's style. It is often used to provide extra detail.
+</aside>
+```
+
+--
+
+You can also use this to show small plots
+
+```
+<aside>
+
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram() +
+  labs(title = "Distribution of Miles Per Gallon")
+
+</aside>
+```
+
+---
+# Customizing the theme
+
+* Create a `style.css` file (or whatevs)
+
+* Modify `_site.yml` to 
+
+```
+output:
+  distill::distill_article:
+    css: style.css
+```
+
+---
+* Start with default CSS, and modify small elements
+
+```
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #455a64; 
+  font-size: 15px;
+  font-weight: 300;
+}
+```
+
+becomes
+
+```
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #FF5FDD; 
+  font-size: 15px;
+  font-weight: 300;
+}
+```
+
+---
+# This can be fun!
+Just be careful not to go too far
+
+`r knitr::include_url("https://slides.yihui.name/2018-blogdown-rstudio-conf-Yihui-Xie.html#33")`
+
+---
+# Equations
+
+Use latex notation and it should "just work"
+
+`$$` `\mu = \frac{1}{n}\sum_{i=0}^n{x_i}` `$$`
+
+becomes
+
+.Large[
+$$\mu = \frac{1}{n}\sum_{i=0}^n{x_i}$$
+]
+
+---
+# Other features
+* Table of Contents
+* Appendices
+* Citations
+  + Both how to cite your article and bibliographies
+
+---
+background-image:url("https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+background-size:cover
+class: center
+# Go forth and share your work!
