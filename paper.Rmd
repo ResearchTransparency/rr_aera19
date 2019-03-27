@@ -1,0 +1,80 @@
+---
+title             : "git commit 'oops': The tools and culture necessary to support open educational science"
+shorttitle        : "Title"
+
+author: 
+  - name          : ""
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : ""
+    email         : ""
+  - name          : ""
+    affiliation   : "1,2"
+
+affiliation:
+  - id            : "1"
+    institution   : ""
+  - id            : "2"
+    institution   : ""
+
+author_note: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  Enter abstract here. Each new line herein must be indented, like this line.
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+figsintext        : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+lineno            : yes
+mask              : no
+
+class             : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r load_packages, include = FALSE}
+library("papaja")
+```
+
+# Introduction
+
+
+
+# The aims of educational research
+
+
+
+# Open tools
+
+## An example
+
+# A culture of openness
+
+## An example
+
+# Conclusion
+
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup
