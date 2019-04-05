@@ -1,0 +1,39 @@
+.da {
+  background-color: #4F565A;
+  background-image:url(http://www.clker.com/cliparts/3/S/m/M/o/H/oregon-outline-hi.png);
+  background-size:contain;
+  text-shadow: none;
+  border-top: none;
+  border-bottom: none;
+}
+
+.da, .da h1, .da h2, .da a {
+  color: #FEE11A;
+}
+
+.jmr {
+  background-color: #58595B;
+  background-image:url(http://clipart-library.com/data_images/611370.png);
+  background-size:cover;
+  text-shadow: none;
+  border-top: none;
+  border-bottom: none;
+}
+
+.jmr, .jmr h1, .jmr h2, .jmr a {
+  color: #FF8200;
+}
+
+.jmr h2 {
+  padding-top:0px;
+  margin-top:0px;
+}
+
+.bolder { font-weight: 900; }
+
+.blue { color: #00AEEF; }
+
+.jmr h3,
+.da h3 {
+  color: #9A9C9F;
+}

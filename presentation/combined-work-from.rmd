@@ -1,0 +1,2432 @@
+
+
+## A couple caveats 
+* Much of what I'm going to be discussing represents an ideal that I have only recently begun working towards.
+* None of what I will talk about should be taken as a referendum on you or
+  your current practices. However, I hope to convince you that you should be working toward the reproducible research ideal, and that, as a field, we should be moving toward reproducible research being the *minimal standard*.
+* I will be focusing on reproducible research with R (obviously). Other
+  options are available but, in my view, none are as clear, comprehensive, and easy to implement as the tools at your disposal through R.
+
+----
+## What is reproducible research?
+* **Replicability** is the gold standard for research. Ideally, most research
+  would be verified through replication. 
+* Reproducibility represents a minimal standard, which itself can aid
+  replication (tremendously), by conducting and documenting the research sufficiently that **an independent researcher could reproduce all the results from a study**, provided the data were available
+
+----
+## Why should we care?
+* Reproducibility as an ethical standard
+  + More transparency
+  + More potential for results to be verified (and errors found/corrected)
+* If your work **is not** reproducible, it is usually not truly replicable.
+* If your work **is** reproducible, then others have a "recipe" for replication
+
+----
+## Are journal articles research? 
+* Initially, we may think of journal articles as research, but really the
+  research is everything that went into the article, not the article itself. 
+* Some (Buckheit & Donoho, 2015) conceive of the article as the
+  "advertisement".
+* If all we have is the advertisement, can we really fully understand the
+  steps and decisions made during the research?
+    + In large-scale data analysis, the answer is generally "no".  
+
+----
+## The Duke Reproducibility Crisis
+* 2006 investigation into "personalized" medicine.
+  + Can genetic makeup be used to identify therapeutic regimes?
+* Study claimed success, published in *Nature Medicine*
+  + Deemed a "remarkable breakthrough"
+  + Named one of the top publications of 2006 by *Discover*
+  + Provided hope for cancer patients
+* Original research article was followed by others in high-tier high-impact journals
+* Other excited researchers asked for their data and code
+* Analysis was found to be almost entirely not reproducible
+
+----
+## Is this a big deal? Is it isolated?
+* Between 2000 and 2010, a *conservative* estimate of 80,000 patients participated in clinical trials based on research that was incorrect, with papers retracted. (Ince, 2011)
+
+* We have an ethical responsibility to be transparent in our process and ensure that any reported findings are reproducible 
+
+* Reproducibility does not imply "correctness", it implies transparency
+
+----
+## Tangential benefits
+Striving toward reproducible research will:
+* Make your own code more efficient/easily interpretable
+  + Can help with collaboration on a project
+* Reduce errors
+* Increase efficiency by not having to redo tables and figures with each tweak
+  to a model.
+
+----
+## What does the process actually look like?
+* Start with a basic text document (not Word, text)
+* Use the text document to write your article
+* Embed code within the text document that corresponds to your analysis. Note
+  this is not just copying the code in. The code should be live and what you're working with while conducting your research.
+* Render the document into a different format (pdf, html, etc.).
+  + Select which code (if any) will be displayed
+  + Build tables of results and plots to be produced
+* Readers can then read the "advertisement", but if they are interested 
+  in reproducing your results (maybe because they disagree with you, or they think your results are weird and want to clearly see all the steps you took), they can access the text file that contains the computer code.
+* The end result is a single product that has the advertisement and the
+  research process embedded.
+
+----
+## Other reasons dynamic documents are useful
+Outside of reproducibility, you may want to use R Markdown to:
+* Produce slides
+    + Just be careful, I have a horror story
+* Keep track of your analysis (notes, essentially), even if you end up using 
+  something like Word
+* Share code with others
+* Quickly share results with others
+* etc... ideas?
+
+---- .segue
+# Demo
+
+
+---- &twocol
+## PDF output
+
+You will also need to install a TeX distribution.
+
+*** =left
+* Macs: MacTeX (http://tug.org/mactex/)
+![macTeX](./assets/img/macTeX.png)
+
+*** =right
+* Windows: MikTeX (http://miktex.org)
+![mikTeX](./assets/img/mikTeX.png)
+
+----
+## Summarizing
+* R Markdown is relatively simple and easy to learn (R is the hard part, R Markdown is easy in comparison). 
+* Tables are probably the most difficult piece.
+* Lots of options to get it to do what you want.
+* Great for sharing and documenting your work.
+
+**but...**
+
+* The more you ask from it, the more difficult it will become.
+* The *papaja* package is pretty incredible for producing APA output (https://github.com/crsh/papaja)
+
+----
+## Final remarks on R Markdown
+
+* Make sure to look at the documentation
+    + http://RMarkdown.rstudio.com
+    + http://RMarkdown.rstudio.com/authoring_basics.html
+    + http://RMarkdown.rstudio.com/authoring_rcodechunks.html
+
+* The more you ask from it, the more complicated it becomes.
+
+* Challenges
+    + Word is the industry standard (frustratingly so, to me) 
+        * Word output is less than ideal
+    + Can be difficult when collaborating with others
+    + Some journal articles *require* papers submitted in Word
+        * Potentially get a pdf to word converter, but still less than ideal
+    + Advanced features have a relatively steep learning curve
+
+---- &twocol
+## Take home message
+
+*** =left
+
+* Fairly straightforward as a method to produce reports/keep track of your
+  analysis ("lab" notes)
+* Start small and work your way up; don't get discouraged too easily
+* R Notebooks may be a good place to start
+* Writing *manuscripts* used to be a substantial challenge but that's starting to change with the *papaja* package.
+* I recommend Yihui's book, it's quite good.
+
+*** =right
+
+![dynamicDocumentsBook](./assets/img/dynamicDocumentsBook.png)
+
+---
+# R Markdown
+From within your R Studio Project:
+![](../img/rmd_template.png )
+
+---
+# First thing: Render!
+![](../img/knit.png)
+
+
+---
+# YAML Front Matter
+
+```
+---
+title: Example Markdown document
+author: Daniel Anderson
+date: "2015-09-17"
+---
+```
+
+![frontMatter](../img/frontMatter.png)
+
+* Three dashes before and after the YAML fields
+* Case sensitive
+* Many other fields are possible.
+  + For example, you may want to include an `output:` argument (`pdf_document`,
+    `html_document`, `word_document`). Must be specified as it is rendered, if
+    not supplied.
+
+
+---
+# Code chunks versus text
+
+![code_chunks](../img/code_chunks.png)
+
+---
+# Code chunks
+
+Start a code chunk with ` ```{r}`, then produce some r code, then close the
+
+  chunk with three additional back ticks ` ``` `.
+
+![codechunk1](../img/codeChunk1.png)
+
+--
+
+```{r add}
+a <- 3
+b <- 5
+
+a + b * (exp(a)/b)
+```
+
+
+---
+# Headings and Lists 
+### Not R-lists
+
+.pull-left[
+
+```
+# Level 1
+## Level 2 
+### Level 3 (etc.)
+```
+
+<br/>
+
+```
+ * Unordered list
+  - inset
+    + inset more
+  - etc.
+
+1. Ordered list
+  a. blah blah
+2. More stuff
+```
+
+]
+
+.pull-right[
+
+![headersLists](../img/headersLists.png)
+
+]
+
+
+---
+# Final Product
+
+.pull-left[
+<div >
+<img src = ../img/rMarkdownCode.png height = 500>
+</div>
+]
+
+.pull-right[
+<div >
+<img src = ../img/fullRMarkdownDoc.png height = 500>
+</div>
+]
+
+
+---
+# More advanced options
+
+* Chunk options
+* Setting global options
+* Inline code evaluation
+
+
+---
+# A few select chunk options
+
+```{r chunkOptions1, echo = FALSE, results = "asis"}
+library(knitr)
+library(kableExtra)
+ops <- c("eval", "echo", "results", "warning", "error", "message", "include", 
+            "tidy", "cache", "cache.comments", "dependson", "autodep", "fig.height/fig.width", "fig.show", "interval")
+args <- c("logical", "logical", "markup, asis, hold, hide", 
+            "logical", "logical", "logical", "logical", "logical", 
+            "logical, 0:3", "logical", 
+            "char, num", "logical", "numeric",
+            "asis, hold, animate, hide", "numeric")
+default <- c("TRUE", "TRUE", "markup", "TRUE", "TRUE", "TRUE", "TRUE",
+              "FALSE", "FALSE", "NULL", "NULL", "FALSE", "7, 7", "asis", "1")
+result <- c("Evaluate the code?", "Show the code?", "Render the results",
+              "Print warnings?", "Preserve errors? (if FALSE, quit)", 
+              "Print any messages?",
+              "Include any of the code or output or code?", 
+              "Tidy code? (see formatR package)", "Cache code chunks?",
+              "Cache invalidated by comment changes?",
+              "Current chunk depend on prior cached chunks?",
+              "Depends determined automatically? ",
+              "Height and width of figure", 
+              "How the figure should be displayed", 
+              "Animate speed")
+kable(data.frame(ops, args, default, result)[1:8, ], 
+      col.names = c("Options", "Arguments", "Default", "Result"),
+      format = "html") %>%
+  kable_styling()
+```
+
+---
+# (and a few more)
+
+```{r chunkOptions2, echo = FALSE, results = "asis"}
+knitr::kable(data.frame(ops, args, default, result)[9:15, ], 
+  col.names = c("Options", "Arguments", "Default", "Result"))
+```
+
+.footnote[For complete documentation, see http://yihui.name/knitr/options/]
+
+---
+# echo and eval
+
+.pull-left[
+
+You can show code without evaluating it, using `eval = FALSE`. 
+
+<div align = "left">
+<img src = ../img/codeChunk2.png height = 100>
+</div>
+
+
+```{r rCalc2, eval = FALSE}
+a + b * (exp(a)/b)
+```
+]
+
+.pull-right[
+
+Alternatively, you can evaluate the code without displaying it, using `echo = 
+  FALSE`.
+
+<div align = "left">
+<img src = ../img/codeChunk3.png height = 100>
+</div>
+
+```{r plotExample, echo = FALSE, fig.width = 11}
+data(mtcars)
+with(mtcars, plot(mpg, hp, 
+  xlab = "Miles Per Gallon", 
+  ylab = "Horsepower",
+  main = "Relation between Miles Per Gallon and Horsepower"))
+```
+
+]
+
+---
+# warning
+
+```{r loadggplot, include = FALSE}
+library(ggplot2)
+theme_set(theme_minimal(base_size = 25))
+```
+
+### Warning = `FALSE`
+```{r ggplotWarning2, warning = FALSE, fig.height = 5}
+ggplot(msleep, aes(sleep_rem, sleep_total)) + 
+  geom_point()
+```
+Warning is printed to the console when rendering.
+
+
+---
+
+### Warning = `TRUE`
+```{r ggplotWarning1, fig.height = 6, warning = TRUE}
+ggplot(msleep, aes(sleep_rem, sleep_total)) + 
+  geom_point()
+```
+
+---
+# Show errors
+
+`error = TRUE`
+```{r showErrors, fig.show = "hide", error = TRUE}
+ggplot(msleep, aes(sleep, sleep_total)) + 
+  geom_point()
+```
+
+--
+
+<br>
+
+If `error = FALSE`, the document won't render if it encounters an error.
+
+![errorRendering](../img/errorRendering.png)
+
+---
+# Message
+Some functions will return messages. You may want to suppress these.
+
+### message = `FALSE`
+```{r messages2, message = FALSE, fig.height = 4}
+ggplot(msleep, aes(sleep_total)) +
+  geom_histogram()
+```
+
+---
+# Message
+
+### message = `TRUE`
+```{r messages1, fig.height = 5, message = TRUE}
+ggplot(msleep, aes(sleep_total)) +
+  geom_histogram()
+```
+
+---
+# include
+
+![includeFALSE](../img/includeFALSE.png)
+
+The `include` argument is used to evaluate code that is not included in the
+document at all. For example, when setting up your global options.
+
+
+---
+# Setting global options
+Change the default behavior
+
+```{r globalOps1, eval = FALSE}
+opts_chunk$set(options)
+```
+
+For example, you can set `echo = FALSE` and `fig.width = 6.5` and `fig.height = 8` with the following code.
+
+```{r globalOps2, eval = FALSE}
+opts_chunk$set(echo = FALSE, fig.width = 6.5, fig.height = 8)
+```
+
+This is most useful when producing a report for somebody who doesn't use R and has no use or knowledge of the code.
+
+
+You can always override the global options within a particular chunk, e.g.
+
+` ```{r, chunkName, echo = TRUE}` 
+
+` ``` `
+
+---
+## Other things to consider setting globally:
+* `warnings = FALSE`
+* `message = FALSE`
+* `errors = TRUE`
+* `echo = FALSE`
+* Caching options (next slides)
+
+
+---
+# Inline code
+
+A single back tick followed by `r` produces inline code to be evaluated.
+
+<div align = "center">
+<img src = ../img/inlineCode.png width = 1000>
+</div>
+<br>
+
+This is an example of inline code, where I want to refer to the sum of `a` and
+  `b`, which is `r a + b`.
+
+This is *extremely* useful in writing reports. Never have to update any numbers in text, regardless of changes to your models or data (if you are careful about it).
+
+---
+# Real example
+
+![ell_means](../img/ell_means.png)
+
+
+---
+# Want to customize further?
+The YAML will control a lot of how a document looks. For example, if you wanted to render with a different syntax highlighter:
+
+.pull-left[
+### Standard Rmd
+
+```
+---
+title: "Doc Title"
+output: pdf_document
+---
+```
+]
+
+
+.pull-right[
+### kate 
+
+```
+---
+title: "Doc Title"
+output: 
+  pdf_document:
+    highlight: kate
+---
+```
+]
+
+---
+# Last bit
+### Formats
+* R Markdown will render to HTML and PDF really well
+  + Word kinda-sorta supported
+  + You can also create websites, slides (like these), books, etc.
+
+--
+* Need a tex (pronounced tek) distribution
+  + My recommendation for this class, and probs everything you'll ever need: 
+    {tinytex}
+    
+--
+```{r tinytex, eval = FALSE}
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
+This is another amazing package by Yihui Xie. See more about it
+[here](https://yihui.name/tinytex/)
+
+---
+# Full distributions
+* MacTex: http://www.tug.org/mactex/
+* MikTex: https://miktex.org/download
+* TexLive: http://www.tug.org/texlive/
+
+
+--
+### Modify the YAML
+Get the same document to render to different formats by modifying the YAML
+
+```
+output:
+  pdf_document: 
+    highlight: kate
+  html_document: 
+    highlight: tango
+  word_document: default
+```
+
+---
+class: inverse center middle
+# Lab
+
+
+--
+### Learning objectives for today
+* Understand the basics of git and git vocabulary
+* Be able to create repos, push projects, commit changes
+* Begin collaborating on a project
+
+---
+class: inverse middle center
+background-image:url(../img/chalkboard.jpg)
+background-size:cover
+
+# What questions do you have?
+
+
+---
+class: inverse middle
+background-image:url(../img/final-doc.png)
+background-size:contain
+
+.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
+
+
+---
+### From swcarpentry
+![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
+
+We can think of the changes as separate from the document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
+
+This means there are many possible versions of the same document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
+
+Unless there are conflicts, two changes from the same document can be merged
+together
+
+---
+# How?
+That's what we'll talk about today!
+
+--
+
+Goals: 
+* Get you to understand the structure of git
+* Actual method of completing the tasks is up to you
+  + GUI? Command line? RStudio?
+
+--
+* If you go with a GUI, I'd recommend [GitKraken](https://www.gitkraken.com)
+  + In fact, I'd recommend everybody download/use it, even if for merge
+    conflicts alone.
+
+---
+# Some basic terminology
+* Version Control System
+  + A tool to help us track changes. *git* is one such system (but there
+    are others).
+--
+* Commit
+  + Changes that have been made to the file(s)
+
+--
+* Repository (repo)
+  + The files, full commit history, and associated metadata for a project
+
+
+--
+### When working with git
+* Each collaborator has the *entire* repo on their local machine
+* There is also a cloud-based server hosing the repo (that's GitHub)
+* The online version of the repo is call the *remote*
+
+---
+# Some key points
+
+* Because *git* tracks the **entire** history of a project it is akin to
+  unlimited "undo"
+* *git* allows many people to work in parallel
+
+---
+# Creating a repository
+
+* A couple of different options...
+
+
+--
+### Rstudio
+Let's focus on the RStudio version first. 
+
+---
+# GitHub
+Go to GitHub
+* Select drop down by your profile, then "New Repository"
+* I'd suggest also adding the R .gitignore and a README
+
+<div >
+<img src = ../img/newrepo.png height = 300>
+</div>
+
+
+
+---
+# Name it
+
+<div >
+<img src = ../img/newrepo-name.png height = 500>
+</div>
+
+
+---
+# Copy path
+
+![](../img/clone.png)
+
+---
+### Create a new RStudio Project
+
+![](../img/new-ver-control.png)
+
+---
+
+![](../img/new-git.png)
+
+---
+
+![](../img/git-repo-rstudio.png)
+
+---
+
+![](../img/git-plugin.png)
+
+---
+class: inverse center middle
+
+# [demo]
+
+Let's look atthe git plugin
+
+---
+# Tracking
+
+Notice the hidden `.git` folder
+
+
+--
+On mac, show hidden files with
+
+```
+cmd + shift + .
+```
+
+(Note, I have hidden files shown all the time)
+
+--
+
+* As long as that folder exists, the **entire** folder will be
+tracked.
+  + **Do not create repos inside of repos**
+  + If you want a folder to show up, there needs to be something in it (e.g., 
+    a `README.md`)
+
+
+---
+# Ignoring Files
+* When we initialized the repo, we started it with a `.gitignore` file
+* The `.gitignore` file tells the repo not to track certain files
+  + e.g., proprietary data
+
+
+--
+Probably not super important for now, but if you need to ignore a file in your repo for whatever reason, just put the name of the file in the `.gitignore` 
+
+
+---
+# Adding a file
+* Let's create an R Markdown file and put it in our repo.
+* Open terminal, type `git status`. What do you see?
+* Use the RStudio `git` plugin. What do you see?
+
+---
+# Staging
+* When you add files to a repo you are *staging* them for tracking.
+
+[demo gitkraken & RStudio staging]
+
+
+--
+Command line version is `git add <file>`
+
+---
+# Commits
+After staging, you *commit* changes to the file
+
+![](http://swcarpentry.github.io/git-novice/fig/git-staging-area.svg)
+
+
+---
+# Push
+After you've committed the changes you want, push them to the remote
+
+--
+![](https://i.kym-cdn.com/photos/images/newsfeed/001/141/162/456.gif)
+
+Wait what's a remote again?
+
+
+--
+The cloud-based repo
+
+---
+# Refresh the repo
+
+![](../img/active-repo.png)
+
+---
+class: inverse right
+background-image:url(../img/gitkraken.png)
+background-size:cover
+
+# gitkraken approach
+
+---
+# An overall view
+
+![](https://github.com/mbjoseph/git-intro/raw/master/fig/git.png)
+
+
+---
+# Revisiting some vocabulary
+* stage
+* commit
+* push
+* pull
+* clone
+
+
+--
+At least half the difficulty with *git* is all the weird words
+
+---
+### Simple git through command line
+
+90% of your workflow requires just a few commands.
+
+* `git clone <path>`
+  + Used once - gets the remote repo on your local.
+
+--
+* `git pull`
+  + First command each time - syncs your local repo with the remote
+
+--
+* `git add`
+  + Stages files in your local repo to be tracked
+
+--
+* `git commit <file> -m "my commit message"`
+  + Commits changes to files in the repository, along with a commit message
+
+--
+* `git push`
+  + Pushes the changes you've made from your local repo to the remote
+
+--
+* `git status`
+  + Gives you an update on your local repo (what files still need to be added, 
+    what changes have been made since last commit, etc.)
+
+---
+# Collaborating
+Need to get proper permissions. Two methods:
+* Add users to a repo: Settings => Collaborators => add user w/ username
+
+![](../img/add-collab.png)
+
+
+---
+# Collaborating
+Second method: 
+* Create an organization
+
+<div >
+<img src = ../img/new-org.png height = 400>
+</div>
+
+---
+# Cloning
+Means you're downloading the repo
+
+--
+* Can also start a new RStudio project
+
+--
+
+```{bash, eval = FALSE}
+git clone <path>
+```
+
+<div >
+<img src = ../img/clone.png height = 300>
+</div>
+
+---
+# Merge conflicts
+* Remember to always `git pull` first
+* Let's create a merge conflict!
+
+(Note the GUI from *gitkraken* is really nice for resolving them)
+
+---
+# Merge conflict activity
+1. Get a partner
+1. Partner1 add Partner2 as a collaborator
+1. Partner2 clone the repo
+1. Partner1 make changes to the file in the repo, commit, and push
+1. Partner2 make different changes to the same parts of the file. Commit the changes. Try to push. What happens? Why?
+1. Open up the files - do you see some weird stuff that's been added?
+
+### Wait for next steps
+
+---
+class: inverse middle center
+
+## Merge conflicts w/gitkraken
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R1iWJNyRpQE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+---
+# Some takeaways
+Basic workflow is
+* Create a repo
+* Add collaborators
+* Add files
+* Commit changes
+* Push changes to remote
+
+---
+# Advice on avoiding merge conflicts
+* Always `git pull` (or the GUI equivalent) before you start working
+* Try to stay in communication and don't work on the **exact** same thing at the same time
+* Use a GUI to help you manage what merge conflicts you do run into
+
+---
+# Remember, today is an intro
+We'll talk more about other `git` features later
+* branching
+* forking
+* pull requests
+* filing issues
+* etc.
+
+---
+# Lab
+* For lab today, just submit a link to the repo you created
+* If we still have time, work with your group to get a shared repo
+  + Discuss organization
+  + Maybe get your outline uploaded?
+* Chat with me before you leave if you're still confused (note, I expect you to
+  be at least a little confused)
+
+---
+# Additional info
+
+* Initializing a local repo through the command line
+
+```{bash, eval = FALSE}
+mkdir newrepo
+cd newrepo
+git init
+```
+
+--
+You should get a message similar to 
+`Initialized empty Git repository in /Users/Daniel/newrepo/.git/`
+
+
+---
+# Name it
+Doesn't have to be the same name as the folder on your local, but probably a
+good idea.
+
+<div >
+<img src = ../img/newrepo-name.png height = 400>
+</div>
+
+---
+# Connect it
+
+![](../img/connect-remote.png)
+---
+
+
+--
+### Learning objectives for today
+* Understand how to render R Markdown documents into APA manuscripts
+* Understand how to include citations in an R Markdown document
+
+
+--
+### Objectives
+* Render an R Markdown document as an APA manuscript
+
+---
+class: inverse middle center
+background-image:url(../img/chalkboard.jpg)
+background-size:cover
+
+# What questions do you have?
+
+
+---
+# Revisiting *git*
+Talk with neighbor. What do these terms mean?
+
+* clone
+* pull
+* stage
+* commit
+* push
+* repo
+* remote
+
+---
+class: inverse middle 
+background-image:url(../img/wood.jpg)
+background-size:cover
+
+# [demo]
+### I will
+* Create a repo
+* Clone into an R Project
+* Create a file - stage, commit, push
+
+### You then
+* Clone the repo
+* We'll have one person make a change
+* Everybody .green[git pull] and see the changes
+* Purposefully create a merge conflict, use gitkraken to deal with it.
+
+
+---
+# {papaja}
+
+Despite having been around for  about 4 years 
+[{papaja}](https://github.com/crsh/papaja) is still not on CRAN. 
+
+More evidence that some of the best packages are not on CRAN.
+
+
+--
+Install with devtools
+
+```{r install, eval = FALSE}
+devtools::install_github("crsh/papaja")
+```
+
+---
+# WIP
+
+The package is seemingly perpetually under development. What does this mean?
+
+--
+* Re-install regularly.
+
+--
+* Not everything may work perfect - don't worry though, most things do
+
+--
+* You may want to peruse the current [issues](https://github.com/crsh/papaja/issues)
+  + If you run into one (and you're sure it's an issue) consider opening one
+  yourself
+  + Bonus - the developer is very kind, so even if you open up a silly 
+  issue, he's likely to be understanding
+
+---
+# Use the template
+
+.pull-left[
+![](../img/new-rmd.png)
+]
+
+.pull-right[
+![](../img/from-template.png)
+]
+
+---
+# YAML
+A few more options than the default
+
+<div>
+<img src = ../img/papaja-yaml.png height = 450>
+</div>
+
+
+---
+# First thing - Render!
+
+<div>
+<img src = ../img/papaja-pdf1.png height = 450>
+</div>
+
+---
+# Modifications
+* Obvious ones
+  + title
+  + author & author info
+  + abstract
+  + keywords
+
+--
+* Less obvious
+  + `shorttitle` (running head)
+  + `authornote` (can fully delete or modify)
+  + `wordcount` (fairly useless at this point imo)
+  + `bibliography` (we'll talk more about this momentarily)
+  + `linenumbers`
+  + floats 
+  + mask (for blind peer-review)
+  + `classoption`
+
+---
+# Let's play for a minute!
+Modify some of the options on the previous slide. 
+
+Specifically, try changing `classoption` from `man` to `jou`. Try other things
+too.
+
+
+---
+class: inverse middle center
+# Citations
+
+---
+## Citations
+To include references in your paper, you must:
+* Create an external .bib file using LaTeX formatting (we'll get to this)
+* Include `bibliography: nameOfYourBibFile.bib` in your YAML front matter.
+* Refer to the citations in text using `@`
+
+---
+# Creating a .bib doc
+
+![](../img/googleScholarSearch.png)
+
+--
+<div>
+<img src = ../img/googleCite.png height = 300>
+</div>
+
+
+---
+![](../img/googleBibTex.png)
+
+--
+
+![](../img/bibEntry.png)
+
+
+---
+# In text citations
+
+```{r inTextCitesTable, echo = FALSE}
+style <- c("@Briggs11", "[see @Baldwin2014; @Caruso2000]", "[@Linn02, p. 9]", 
+          "[-@Goldhaber08]")
+out <- c("Briggs and Weeks (2011)", "(see Baldwin et al. 2014; Caruso 2000)",
+         "(Linn and Haug 2002, 9)", "(2008)")
+knitr::kable(data.frame(style, out), 
+        col.names = c("Citation Style", "Output"),
+        format = "html")
+```
+<br>
+
+Note this is not APA. However, references are included automatically at the end of the document. Include `# References` as the last line of your document to give it a title.
+
+---
+## A few real examples
+![](../img/intext_ref1.png)
+![](../img/intext_ref2.png)
+![](../img/intext_ref3.png)
+
+---
+## References
+![](../img/references.png)
+
+---
+## Let's try!
+[demo first]
+* Open R Studio
+    + Open a new Rmd document
+* In your YAML, add a new line for `bibliography:`. Follow this with the name of your bibliography file, which should be in the same directory, and should be the bare name (not in quotes).
+* Open a text file, save it with a `.bib` extension.
+* Go to google Scholar and find a reference to cite. Copy and paste the citation into your .bib file using google's cite option.
+* Include a reference to the citation in your Rmd file and render it. Include a page break so your citations are on a separate page.
+
+---
+## Other potential option
+* Add a GUI-like interface with *citr* 
+    + written by the same author who wrote the APA R Markdown documentation
+
+See [here](https://github.com/crsh/citr)
+
+---
+# Tables
+Not my favorite thing - figures generally better.
+
+Some options
+* `papaja::apa_table` for basic APA tables
+* `knitr::kable` for basic tables of any sort
+  + Use [{kableExtra}](https://github.com/haozhu233/kableExtra) for extensions 
+  (see [here](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)
+  for extensions in html and
+  [here](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf) for
+  extensions in pdf)
+* [{huxtable}](https://github.com/hughjonesd/huxtable)
+
+---
+# Chunk options
+For tables, you may have to specify `results = "asis"` or you can end up with
+something like 
+
+```{r echo = FALSE}
+papaja::apa_table(mtcars)
+```
+
+---
+# Careful on formats
+* Make sure you specify the format you want
+  + PDF or HTML?
+
+
+--
+From `?kable`
+* `format = "latex"` for PDF
+* `format = "html"` for HTML output
+
+---
+# Things to cover still
+* equations
+* extending options a bit
+
+---
+class: inverse center middle
+# Lab
+---
+
+---
+class: inverse
+background-image:url(https://github.com/rstudio/gt/raw/master/man/figures/logo.svg?sanitize=TRUE)
+background-size: contain
+
+---
+# Overview
+* New package (still very actively under development) by RStudio
+
+* Really promising
+  + Pipe-oriented
+  + Beautiful tables easy
+  + Spanner heads/grouping used to be a total pain - not so anymore
+  + Renders to HTML/PDF without even thinking abou tit
+
+* Has a few limitations relative to {papaja}
+
+* May run into bumps because of the active development
+
+---
+# Install
+
+```{r install-gt, eval = FALSE}
+remotes::install_github("rstudio/gt")
+```
+
+---
+# The hard part
+* Getting your data in the format you want a table in
+
+* Utilize your `gather`/`spread` skills regularly
+
+```{r flying}
+library(fivethirtyeight)
+flying
+```
+
+---
+```{r flying2}
+smry <- flying %>% 
+  count(gender, age, recline_frequency) %>% 
+  filter(!is.na(age),
+         !is.na(recline_frequency)) %>% 
+  spread(age, n) 
+
+smry
+```
+
+
+---
+# Turn into table
+### Disclaimer 
+These all look slightly different on the slides
+
+.pull-left[
+```{r gt1-echo, eval = FALSE}
+library(gt)
+smry %>% 
+  gt()
+```
+]
+
+.pull-right[
+```{r gt1-eval, echo = FALSE}
+library(gt)
+smry %>% 
+  gt()
+```
+]
+
+---
+## Add gender as a grouping variable
+
+.pull-left[
+```{r gt2-echo, eval = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt()
+```
+]
+
+.pull-right[
+```{r gt2-eval, echo = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt()
+```
+]
+
+---
+# Add a spanner head
+
+```{r gt3-echo, eval = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`))
+```
+
+---
+```{r gt3-eval, echo = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`))
+```
+
+---
+# Change column names
+
+```{r gt4-echo, eval = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline")
+```
+
+---
+```{r gt4-eval, echo = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline")
+```
+
+---
+# Align columns
+
+```{r gt4-aligned-echo, eval = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency))
+```
+
+---
+```{r gt4-aligned-eval, echo = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency))
+```
+
+---
+# Add a title
+
+```{r gt4-title-echo, eval = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+```{r gt4-title-eval, echo = FALSE}
+smry %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+# Format columns
+
+```{r gt5-echo, eval = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+```{r gt5-eval, echo = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+# Add a source note
+
+```{r gt6-echo, eval = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %>% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+```{r gt6-eval, echo = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %>% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+# Color cells
+```{r gt7-echo, eval = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  data_color(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+             colors = scales::col_numeric(palette = c(c("#FFFFFF", "#FF0000")), domain = NULL)) %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %>% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+```{r gt7-eval, echo = FALSE}
+smry %>% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `> 60`), ~./100) %>% 
+  group_by(gender) %>% 
+  gt() %>% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `> 60`)) %>% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+              decimals = 0) %>% 
+  cols_label(recline_frequency = "Recline") %>% 
+  data_color(vars(`18-29`, `30-44`, `45-60`, `> 60`),
+             colors = scales::col_numeric(palette = c(c("#FFFFFF", "#FF0000")), domain = NULL)) %>% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %>% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %>% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+# What else?
+* Lots more it can do, and lots more in development
+* See the [website](https://gt.rstudio.com)
+
+--
+* gtcars case study is worth going through
+
+.pull-right[
+![](https://gt.rstudio.com/articles/images/gtcars.svg)
+]
+
+---
+class:inverse center middle
+# Fonts
+
+---
+# General advice
+* Use different fonts to distinguish things - specifically code
+
+* .bolder[Always] choose a sans-serif font for code
+
+* Explore and try - it makes a big impact on the overall look/feel (bigger than
+you may expect if you haven't played with fonts much before)
+
+* Try not to get sucked into too deep of a rabbit hole
+
+---
+# Google fonts
+
+https://fonts.google.com
+
+* Open source, designed for the web
+
+* Good place to explore fonts
+
+* Can be incorporated via the `{showtext}` package!
+
+---
+# {showtext} example
+
+```{r showtext1-echo, eval = FALSE}
+devtools::install_github("yixuan/showtext")
+
+library(showtext)
+
+font_add_google('Monsieur La Doulaise', "mld")
+font_add_google('Special Elite', "se")
+
+showtext_auto()
+quartz()
+
+ggplot(mtcars, aes(disp, mpg)) +
+  geom_point() + 
+  labs(title = "An amazing title", 
+       subtitle = "with the world's most boring dataset") + 
+  theme(plot.subtitle = element_text(size = 18, family = "se"), 
+        plot.title = element_text(size = 22, family = "mld"),
+        axis.title = element_text(size = 18, family = "mld"), 
+        axis.text.x = element_text(size = 12, family = "se"), 
+        axis.text.y = element_text(size = 12, family = "se"))
+```
+
+
+---
+background-image:url("w7p2_files/figure-html/font-change.png")
+background-size: contain
+
+
+---
+# extrafont
+* Primary downside - you have to have the fonts installed on your computer
+* Look at the install documentation - it's pretty good and fairly comprehensive
+
+--
+```{r extrafont-echo, eval = FALSE}
+library(extrafont)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
+  ggtitle("Fuel Efficiency of 32 Cars") +
+  xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+  theme_bw() +
+  theme(text=element_text(family="Garamond", size=14))
+```
+
+---
+```{r extrafont-eval, echo = FALSE}
+library(extrafont)
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
+  ggtitle("Fuel Efficiency of 32 Cars") +
+  xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+  theme_bw() +
+  theme(text=element_text(family="Garamond", size=14))
+```
+
+
+---
+# Announcements
+* For this week's lab, we'll participate in [#tidytuesday](https://twitter.com/hashtag/tidytuesday?src=hash)!
+  + Note - I have no idea what the dataset will be
+
+* Goal for lab
+  + Play with unfamiliar data and produce something you're proud of
+  + Should be highly collaborative
+
+
+---
+class: inverse center middle
+
+# Distill
+https://rstudio.github.io/distill/
+
+---
+# Disclaimer and assumptions
+* This is a very basic (and probably fast) intro
+  + Distill can do a lot that we won't get to
+
+* I assume most of you have never created or deployed a website before
+  + If you have, some of this might be slow but you can help others
+
+* This "lecture" will be highly interactive
+
+---
+# Please follow along
+
+```{r eval = FALSE}
+#install.packages("radix")
+devtools::install_github("rstudio/distill")
+```
+
+* Go to GitHub and create a repo to store your website (which you'll also use
+for deployment)
+
+
+---
+# Back to RStudio
+.red[Don't clone your repo yet!]
+
+### Create new project
+<img src="https://rstudio.github.io/distill/images/create-website.png"
+height="300px"/>
+
+---
+# The steps
+* Create a new RStudio Project 
+
+* Select distill blog
+
+* Use gitkraken (or command line if you're comfortable with that) to initiate a
+repo locally and link it with your remote
+
+* Commit/push
+
+* Change GH settings for deployment
+
+[demo]
+
+---
+# Author a new article
+* `distill::create_post()`
+
+* Create another one!
+
+
+--
+### Listings
+Make sure your index file as
+
+```
+---
+listing: posts
+---
+```
+
+* Note that galleries are also possible
+
+---
+# Categories
+
+* You make up the category names. Tag posts with those categories, and they will be linkable
+
+```
+---
+categories:
+  - dataviz
+  - class
+---
+```
+
+![](img/categories.png)
+
+---
+# Navigation
+
+All controlled with `_site.yml`
+
+* Let's add a github log that links to our repo
+
+
+--
+```
+---
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - icon: fa fa-github
+      href: https://github.com/datalorax/class-site-example
+---
+```
+
+
+---
+# Create drop-down menus
+
+```
+---
+navbar:
+  left:
+    - text: "Labs"
+      menu:
+        - text: "Getting Started with R"
+          href: "lab1.html"
+        - text: "Visualizing Distributions"
+          href: "lab2.html"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - icon: fa fa-github
+      href: https://github.com/datalorax/class-site-example
+---
+```
+
+---
+# Base URL
+Once your site is deployed (or you know the link it will be deployed to), change the `base_url` in the `_site.yml`
+
+* Gives some nice sharing features (twitter cards)
+
+* Allows you to use [citations](https://rstudio.github.io/distill/citations.html)
+
+---
+# Drafts
+If you want to work on a post for a while without it being included in your website, use `draft = TRUE`
+
+`distill::create_post("My new post", draft = TRUE)`
+
+
+```
+---
+title: "My work on Lab 3"
+description: |
+  This lab was hard!
+draft: true
+---
+```
+
+---
+# Figures
+
+Change figure options with chunk options
+
+* `layout = "l-body"` (default)
+* `layout = "l-body-outset"`
+* `layout = "l-page"`
+* `layout = "l-screen"`
+  + `layout = "l-screen-inset"`
+  + `layout = "l-screen-inset shaded"`
+
+### Let's go try!
+
+---
+# Additional figure options
+
+* Rather than using `![]()`, you can use `knitr::include_graphics()` to have the same options.
+
+* Use `fig.cap` in chunk options to give nice figure captions.
+
+* Note these options should work for tables as well
+
+---
+# Side notes
+
+```
+<aside>
+This is some text that will appear in the margin - similar to Tufte's style. It is often used to provide extra detail.
+</aside>
+```
+
+--
+
+You can also use this to show small plots
+
+```
+<aside>
+
+ggplot(mtcars, aes(mpg)) +
+  geom_histogram() +
+  labs(title = "Distribution of Miles Per Gallon")
+
+</aside>
+```
+
+---
+# Customizing the theme
+
+* Create a `style.css` file (or whatevs)
+
+* Modify `_site.yml` to 
+
+```
+output:
+  distill::distill_article:
+    css: style.css
+```
+
+---
+* Start with default CSS, and modify small elements
+
+```
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #455a64; 
+  font-size: 15px;
+  font-weight: 300;
+}
+```
+
+becomes
+
+```
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #FF5FDD; 
+  font-size: 15px;
+  font-weight: 300;
+}
+```
+
+---
+# This can be fun!
+Just be careful not to go too far
+
+`r knitr::include_url("https://slides.yihui.name/2018-blogdown-rstudio-conf-Yihui-Xie.html#33")`
+
+---
+# Equations
+
+Use latex notation and it should "just work"
+
+`$$` `\mu = \frac{1}{n}\sum_{i=0}^n{x_i}` `$$`
+
+becomes
+
+.Large[
+$$\mu = \frac{1}{n}\sum_{i=0}^n{x_i}$$
+]
+
+---
+# Other features
+* Table of Contents
+* Appendices
+* Citations
+  + Both how to cite your article and bibliographies
+
+---
+background-image:url("https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+background-size:cover
+class: center
+# Go forth and share your work!
+---
+# The definitive source!
+https://rmarkdown.rstudio.com/flexdashboard/
+
+![](img/flexdashboards.png)
+
+---
+class: inverse
+# Example
+
+![](https://arm.rbind.io/slides/img/flexdashboard-fatalpoliceshootings.png)
+
+.footnote[Credit: This example from [Alison Hill's rstudio::conf(2019L) class]()]
+
+--
+By [Julia Silge](https://juliasilge.com) (see the [blog post](https://juliasilge.com/blog/fatal-shootings/), [dashboard](https://beta.rstudioconnect.com/juliasilge/policeshooting/policeshooting.html),
+and [source code](https://gist.github.com/juliasilge/9acbe97c549502bac85404779edceba0))
+
+---
+class: inverse
+
+![](https://arm.rbind.io/slides/img/flexdashboard-mosaic.png)
+
+.footnote[Credit: This example from [Alison Hill's rstudio::conf(2019L) class]()]
+
+--
+By [Jennifer Thompson](https://jenthompson.me) (see the [blog post](https://jenthompson.me/2018/02/09/flexdashboards-monitoring/), [dashboard](https://jenthompson.me/examples/progressdash.html),
+and [source code](https://github.com/jenniferthompson/MOSAICProgress))
+
+
+---
+# Getting started
+```{r install, eval = FALSE}
+install.packages("flexdashboard")
+```
+
+![](https://rmarkdown.rstudio.com/flexdashboard/images/NewRMarkdown.png)
+
+
+---
+class: inverse middle center
+# Do it
+### knit right away
+### Add some plots
+### Play
+
+---
+# Columns
+
+* Define new column with 
+
+```
+Column
+----------------------------------
+```
+
+* Optionally specify the width with `{data-width}`
+
+--
+* Annoyingly, be careful with spacing! 
+
+`{data-width=650}` will work
+
+### but 
+
+`{data-width = 650}` will not work
+
+
+---
+# New squares
+
+```{md eval = FALSE}
+### Square title
+< r code chunk >
+```
+
+* Each time you add a square it will split the area evenly among all the squares
+
+---
+# Thinking in rows
+
+* Change the YAML to 
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+```
+
+--
+
+* Each `###` will then create a new column
+
+
+--
+* Add new rows with
+
+```md
+Row
+----------------------------------
+```
+
+--
+* Modify height with `{data-height=XXX}`
+
+
+---
+# Pages
+You can easily specify multiple pages by just specifying a Level 1 Header
+
+```md
+# Page 1
+
+Column {data-width=650}
+----------------------------
+### Chart A
+< r code>
+
+Column {data-width=350}
+----------------------------
+### Chart B
+< r code>
+
+### Chart C
+< r code>
+
+# Page 2
+
+```
+
+---
+# Sidebar
+* Julia Silge's had a nice sidebar where she explained things about the flexdashboard... You can have this too!
+
+```md
+Sidebar Title {.sidebar}
+--------
+
+Your text here. You can use markdown syntax, including 
+[links](http://blah.com), *italics*, **bolding**, etc.   
+```
+
+
+--
+* Title seems to show up (for me) in mobile version but not
+
+
+--
+* Multiple pages? Just change the separator to keep it there
+
+```md
+Sidebar {.sidebar}
+============
+
+Your text here. You can use markdown syntax, including [links](http://blah.com), *italics*, **bolding**, etc.   
+```
+
+
+---
+# Tabsets
+
+This is actually a standard R Markdown feature, but you can use it with flexdashboards as well
+
+
+```md
+Column {.tabset}
+----------------------------------------------------------------------
+
+### Chart 1
+< r code>
+
+### Chart 2
+< r code>
+
+### Data Table
+< r code>
+```
+
+---
+# Icons
+* Probably not the most important thing, but fun
+
+* Use Font awesome!
+
+```md
+# Years {data-icon="fa-calendar"}
+```
+
+---
+# HTML Widgets
+
+Add a touch of interactivity
+
+* Plenty of HTML widgets for R out there (see https://www.htmlwidgets.org/showcase_leaflet.html)
+
+* {plotly} is cool
+
+```{r plotly, eval = FALSE}
+library(plotly)
+p <- ggplot(mpg, aes(displ, cty)) +
+  geom_point() +
+  geom_smooth()
+
+ggplotly(p) #<<
+```
+
+---
+# Including Text
+
+* If you want to include text about an overall figure, just put the text in the R Markdown doc like you normally would
+
+```md
+# Base {data-icon="fa-calendar"}
+Here's a description about the plot that follows
+
+### A base R plot
+< r code>
+
+```
+
+---
+# What if you have tabsets?
+
+* Works great if you want to describe all the plots/tables/content in the tabset
+
+* If you want to provide text for an individual plot, use `>`
+
+```md
+
+Column {.tabset data-width=350}
+-------------------
+
+This text will describe the full tabset
+
+###  Chart 1
+< r code>
+
+> Here's some text for Chart 1
+
+###  Table 1
+< r code>
+
+> Here's some text for Table 1
+
+```
+
+---
+# Storyboarding
+
+* A little bit advanced, but pretty cool
+
+* First, change the YAML
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+```
+
+---
+```md
+# Method {.storyboard}
+
+### Sample Descriptives {data-commentary-width=400}
+< r code>
+
+**** 
+
+This is some text describing what's going on with the sample, and how we moved from the raw data tot he analytic sample. 
+
+### Correlation Matrix {data-commentary-width=200}
+< r code>
+
+****
+
+There is less to say here so I made the commentary box smaller
+
+# Results {.storyboard}
+
+### Plot 1 {data-commentary-width=600}
+< r code>
+
+****
+
+Lots to say here. There is important
+
+### Plot 2 {data-commentary-width=200}
+
+****
+
+Move along
+
+```
+
+---
+# Customization
+* Add font-awesome stuff
+* Change the [theme](https://rmarkdown.rstudio.com/flexdashboard/using.html#appearance)
+
+```md
+flexdashboard::flex_dashboard:
+  theme: readable
+```
+
+---
+# CSS
+Consider creating some custom CSS (Rather complicated in this case)
+
+Change the navigation bar to bright pink with thin blue border
+
+```css
+.navbar-inverse {
+  background-color: #FE08A5;
+  border-color: #0822FE;
+}
+```
+
+Save the above code in "custom.css" then specify in the YAML
+
+```md
+  flexdashboard::flex_dashboard:
+    css: custom.css
+```
+
+Making sure "custom.css" is in the same directory as your flexdashboard Rmd.
+
+
+---
+# Add a logo and favicon
+
+```md
+output: 
+  flexdashboard::flex_dashboard:
+    logo: logo.png
+    favicon: favicon.png
+```
+
+---
+class: inverse center middle
+# Slides (briefly)
+
+--
+
+# xaringan
+
+### /ʃæ.'riŋ.ɡæn/
+
+---
+# Install
+* I'd recommend going with the GitHub version
+
+```{r install-xaringan-gh, eval = FALSE}
+devtools::install_github("yihui/xaringan")
+```
+
+* If you're more comfortable using fully stable software, install from CRAN
+
+```{r install-xaringan-cran, eval = FALSE}
+install.packages("xaringan")
+```
+
+---
+# What it is
+
+.pull-left[
+* HTML-based slides
+* Produced with R Markdown
+* Styled with CSS
+]
+
+.pull-right[
+![](img/rmd.png)
+]
+
+
+---
+# Themes
+This is the `uo` theme
+See All the available themes with `xaringan:::list_css()`
+
+```{r list_css}
+names(xaringan:::list_css())
+```
+
+---
+# Specify a theme
+
+.pull-left[
+.grey[.Large[**Default YAML**]]
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+]
+
+.pull-right[
+.grey[.Large[**Add a theme**]]
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+* css: ["default", "uo", "uo-fonts"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+]
+
+---
+# Where do the themes live?
+CSS Files
+
+![](img/css-files.png)
+.footnote[Slides available at [datalorax.com/talks/cascadia18](http://www.datalorax.com/talks/cascadia18/)]
+
+---
+## How do you create your own theme?
+
+<br/>
+### My advice
+1. Start with an existing theme
+1. Modify the CSS 
+  + Change .large[.bolder[.red[c].blue[o].green[l].yellow[o].purple[r].orange[s]]]!
+  + Change fonts! (see [here](https://github.com/yihui/xaringan/wiki/Changing-fonts), 
+  import fonts with [google fonts](https://fonts.google.com))
+  + Consider changes to the background
+1. Once you've found the parts you want to modify, copy them into a new CSS file, and reference it from your YAML
+
+
+---
+```
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+date: "2016/12/12"
+output:
+  xaringan::moon_reader:
+* css: ["default", "uo", "uo-fonts", "my-customizations.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```
+
+
+---
+# Look at CSS for [existing themes](https://github.com/yihui/xaringan/tree/master/inst/rmarkdown/templates/xaringan/resources)
+
+![](img/existing-themes.png)
+
+---
+# Basically this
+
+.center[<img src = "https://i.pinimg.com/736x/33/fb/06/33fb067593a2a949e349a4e899c508d3--programming-humor-o-reilly.jpg",
+ height = 480 />]
+
+
+---
+# Some basic features
+* separate slides with `---`
+
+* Get incremental appearance of items on the slide with `--`
+
+* Separate into two-panel format with `pull-left[]` and `pull-right[]`
+
+* Titles with Level 1 header
+
+* Specify class of slides with `class`
+
+
+---
+```md
+<YAML>
+
+# Title slide 1
+
+Here's some text
+
+< r code >
+
+.pull-left[
+This part will be in the left panel
+]
+
+.pull-right[
+this part will be in the right panel
+]
+
+--
+
+This will be back to the default format, and appear on click
+
+---
+class: inverse center middle
+# Slide 2
+
++ New slide with a bullet in inverse, center, middle format
+
+```
+
+---
+class: inverse middle
+background-image: url(https://images.pexels.com/photos/257840/pexels-photo-257840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+background-size: cover
+
+# Background images
+
+---
+Code for previous slide looked like this
+
+```md
+class: inverse middle
+background-image: url(https://images.pexels.com/photos/257840/pexels-photo-257840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+background-size: cover
+```
+
+---
+# Publish
+
+Lots of options, but GitHub pages works great
+* Create a repo on GitHub with everything for your slides
+
+  + CSS files, image files, etc. (it all needs to be in there)
+
+* Make your HTML file named `index.html`
+
+* Change the GitHub pages setting to publish the master branch
+
+---
+# [slidex](https://github.com/datalorax/slidex)
+
+https://github.com/datalorax/slidex
+
+Transition PowerPoint slides to xaringan slides
+* Currently exports one function: 
+
+```{r slidex, eval = FALSE}
+convert_pptx("path/to/pptx", author = "Your Name")
+```
+
+--
+
+* Still a WIP - not perfect but can do a lot
+  + Maintains bulleting (basically)
+  + Maintains and reproduces tables 
+  + Maintains images
+  + Maintains links
+  + Easy selection of existing themes (additional `theme` argument).
+  
+---
+class: inverse
+background-image: url(https://github.com/datalorax/slidex/raw/master/docs/slidex-preview.gif)
+background-size: contain
+
+---
+background-image:url("https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+background-size:cover
+class: center
+# Go forth and share your work!
