@@ -11,7 +11,6 @@ output:
     lib_dir: libs
     nature:
       chakra: libs/remark.min.js
-      ratio: "16:9"
       highlightStyle: atelier-dune-light
       highlightLines: true
       countIncrementalSlides: false
@@ -22,8 +21,9 @@ background-image:url(https://media.giphy.com/media/yoJC2A59OCZHs1LXvW/giphy.gif)
 background-size:contain
 
 ```{r setup, include = FALSE}
-library(knitr)
 library(tidyverse)
+library(knitr)
+opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
 
@@ -31,23 +31,19 @@ library(tidyverse)
 # Agenda 
 
 ### First two hours
-- Introduction (8:00 - 8:40)
-  - Who we are, who participants are and why they're here (10 min.)
-  - Reproducible research and literate programming (20 min.)
-  - Conducting science in the public and in an open way (10 min.)
+- Introduction (8:00 - 8:45)
+  - Who we are, who participants are and why they're here (15 min.) 
+  - Reproducible research and literate programming (20 min.) <!-- DA -->
+  - Conducting science in the public and in an open way & OSF (10 min.) <!-- JMR -->
 
 --
-- R Markdown (8:40 - 9:40)
-  - Delineating code chunks from plain text (10 min.)
-  - Creating headers (10 min.)
-  - Creating lists and using other features of markdown (10 min.)
-  - Whole-document and code chunk-specific options (10 min.)
-  - Rendering and sharing documents in different formats (20 min.)
-
---
-- Advanced R Markdown functionality (9:40 - 10:00 minutes)
-  - Formatting tables (10 min.)
-  - Creating manuscripts to submit for publication (via {papaja} & {tinytex}; 10 min.)
+- R Markdown (8:45 - 10:00)
+  - Delineating code chunks from plain text (15 min.) <!-- JMR -->
+  - Creating headers (5 min.) <!-- JMR -->
+  - Creating lists and using other features of markdown (10 min.) <!-- DA -->
+  - Whole-document and code chunk-specific options (15 min.) <!-- DA -->
+  - Rendering and sharing documents in different formats (15 min.) <!-- JMR -->
+  - Lab (practice) (15 min.)
 
 ---
 class:inverse right
@@ -58,21 +54,17 @@ background-size:cover
 
 
 ---
-### Last two hours
-- Use of git/GitHub for version control and collaboration (10:15 - 11:15)
-  - Introduction to GitHub, RStudio interface, and GitKraken GUI (15
-  min.) 
-  - Creating a git repository (15 min.)
-  - Making changes, committing them, and pushing them to the repository (15 min.)
-  - Use of GitHub (and ignoring specific files via `.gitignore`; 15 min.)
+# Last two hours
+- Advanced R Markdown functionality (10:15 - 11:00 minutes)
+  - Formatting tables (20 min.) <!-- DA -->
+  - Creating manuscripts to submit for publication (via {papaja}; 25 min.)
 
---
-- Use of Open Science Framework to store private data (11:15 - 11:30; JMR)
+- Use of git/GitHub for version control and collaboration (11:00 - 11:45)
+  - Introduction to GitHub, RStudio interface, and GitKraken GUI (20
+  min.) <!-- DA -->
+  - Making changes, committing them, and pushing them to the repository (15 min.) <!-- DA -->
+  - Use of GitHub (and ignoring specific files via `.gitignore`; 10 min.) <!-- JMR -->
 
---
-- Creation of websites and dashboards (11:30 - 11:45 min.; DJA)
-
---
 - Wrap-up/ideas for next steps/staying in touch (11:45 - 12:00)
 
 ---
@@ -107,7 +99,9 @@ background-size: cover
 
 # #whoyouis
 
-
+Introduce yourself
+What's your prior experience with R/R Markdown and git/GitHub?
+Why are you here?
 
 ---
 class: da center middle
@@ -188,43 +182,6 @@ research would be verified through replication.
     + In large-scale data analysis, the answer is generally "no".  
 
 ---
-# The Duke Reproducibility Crisis
-* 2006 investigation into "personalized" medicine.
-
-  + Can genetic makeup be used to identify therapeutic regimes?
-
-
---
-* Study claimed success, published in *Nature Medicine*
-  + Deemed a "remarkable breakthrough"
-  + Named one of the top publications of 2006 by *Discover*
-  + Provided hope for cancer patients
-
-
---
-* Original research article was followed by others in high-tier high-impact journals
-
-
---
-* Other excited researchers asked for their data and code
-
-
---
-* Analysis was found to be almost entirely not reproducible
-
----
-# Is this a big deal? Is it isolated?
-* Between 2000 and 2010, a *conservative* estimate of 80,000 patients participated in clinical trials based on research that was incorrect, with papers retracted. (Ince, 2011)
-
-
---
-* We have an ethical responsibility to be transparent in our process and ensure that any reported findings are reproducible 
-
-
---
-* Reproducibility does not imply "correctness", it implies transparency
-
----
 # Tangential benefits
 Striving toward reproducible research will:
 * Make your own code more efficient/easily interpretable
@@ -292,22 +249,12 @@ Outside of reproducibility, you may want to use R Markdown to:
 
 ---
 class: jmr center middle
-# Conducting public 
-# and open science
-
-<br>
-
-### 8:30 - 8:40
-
-
----
-class: jmr center middle
 # R Markdown basics 
 ## Code Chunks & headers
 
 <br>
 
-### 8:40 - 9:00
+### 8:30 - 8:50
 
 
 ---
@@ -379,12 +326,11 @@ output:
 ```
 ]
 
----
 
 ---
 # Code chunks versus text
 
-![code_chunks](img/code_chunks.png)
+![](img/code_chunks.png)
 
 ---
 # Code chunks
@@ -560,7 +506,7 @@ document at all. For example, when setting up your global options.
 Change the default behavior
 
 ```{r globalOps1, eval = FALSE}
-opts_chunk$set(options)
+opts_chunk$set(...) # insert options here
 ```
 
 For example, you can set `echo = FALSE` and `fig.width = 6.5` and `fig.height = 8` with the following code.
@@ -590,7 +536,7 @@ You can always override the global options within a particular chunk, e.g.
 ---
 # More complete chunk options
 
-```{r chunkOptions1, echo = FALSE, results = "asis"}
+```{r chunkOptions1, echo = FALSE, results = "asis", message = FALSE}
 library(knitr)
 library(kableExtra)
 ops <- c("eval", "echo", "results", "warning", "error", "message", "include", 
@@ -622,7 +568,7 @@ kable(data.frame(ops, args, default, result)[1:8, ],
 ---
 # (and a few more)
 
-```{r chunkOptions2, echo = FALSE, results = "asis"}
+```{r chunkOptions2, echo = FALSE, results = "asis", message = FALSE}
 knitr::kable(data.frame(ops, args, default, result)[9:15, ], 
   col.names = c("Options", "Arguments", "Default", "Result"))
 ```
@@ -648,7 +594,7 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 ---
 # Real example
 
-![ell_means](img/ell_means.png)
+![](img/ell_means.png)
 
 
 ---
@@ -669,43 +615,58 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 
 ---
 class: jmr center middle
-# R Markdown basics 
-## Render to different formats
+# Public work
+## And rendering to different formats
 
 <br>
 
 ### 9:20 - 9:40
 
-
 ---
-class: da center middle
-# Beyond the basics 
-## Tables & APA manuscripts
-
-<br>
-
-### 9:40 - 10:00
-
-
----
-# Chunk options
-For tables, you may have to specify `results = "asis"` or you can end up with
-something like 
-
-```{r echo = FALSE}
-papaja::apa_table(mtcars)
+# {tinytex}
+* Need a tex (pronounced tek) distribution
+  + My recommendation for this class, and probs everything you'll ever need: 
+    {tinytex}
+    
+--
+```{r tinytex, eval = FALSE}
+install.packages("tinytex")
+tinytex::install_tinytex()
 ```
 
+This is another amazing package by Yihui Xie. See more about it
+[here](https://yihui.name/tinytex/)
+
 ---
-# Careful on formats
-* Make sure you specify the format you want
-  + PDF or HTML?
+# Full distributions
+* MacTex: http://www.tug.org/mactex/
+* MikTex: https://miktex.org/download
+* TexLive: http://www.tug.org/texlive/
 
 
 --
-From `?kable`
-* `format = "latex"` for PDF
-* `format = "html"` for HTML output
+### Modify the YAML
+Get the same document to render to different formats by modifying the YAML
+
+```
+output:
+  pdf_document: 
+    highlight: kate
+  html_document: 
+    highlight: tango
+  word_document: default
+```
+
+
+
+---
+class: da center middle
+# R Markdown Tables 
+
+
+<br>
+
+### 9:40 - 9:50
 
 ---
 class: inverse
@@ -720,9 +681,7 @@ background-size: contain
   + Pipe-oriented
   + Beautiful tables easy
   + Spanner heads/grouping used to be a total pain - not so anymore
-  + Renders to HTML/PDF without even thinking abou tit
-
-* Has a few limitations relative to {papaja}
+  + Renders to HTML/PDF without even thinking about it
 
 * May run into bumps because of the active development
 
@@ -1001,15 +960,21 @@ smry %>%
 
 ---
 # What else?
+.pull-left[
 * Lots more it can do, and lots more in development
 * See the [website](https://gt.rstudio.com)
+]
 
 --
-* gtcars case study is worth going through
-
 .pull-right[
+gtcars case study is worth going through
 ![](https://gt.rstudio.com/articles/images/gtcars.svg)
 ]
+
+
+---
+class: da center middle
+# APA Manuscripts 
 
 
 ---
@@ -1050,11 +1015,11 @@ The package is seemingly perpetually under development. What does this mean?
 # Use the template
 
 .pull-left[
-![](../img/new-rmd.png)
+![](img/new-rmd.png)
 ]
 
 .pull-right[
-![](../img/from-template.png)
+![](img/from-template.png)
 ]
 
 ---
@@ -1062,7 +1027,7 @@ The package is seemingly perpetually under development. What does this mean?
 A few more options than the default
 
 <div>
-<img src = ../img/papaja-yaml.png height = 450>
+<img src = img/papaja-yaml.png height = 450>
 </div>
 
 
@@ -1070,7 +1035,7 @@ A few more options than the default
 # First thing - Render!
 
 <div>
-<img src = ../img/papaja-pdf1.png height = 450>
+<img src = img/papaja-pdf1.png height = 450>
 </div>
 
 ---
@@ -1098,6 +1063,107 @@ Modify some of the options on the previous slide.
 
 Specifically, try changing `classoption` from `man` to `jou`. Try other things
 too.
+
+
+---
+# Add some LaTeX option
+
+```
+header-includes:
+  - \raggedbottom
+  - \setlength{\parskip}{0pt}
+```
+
+This will help .gray[(save you lots of time googling)] remove the extra space
+between paragraphs.
+
+
+
+---
+class: inverse center middle
+# Break
+
+### 10:00 - 10:15
+
+---
+class: da center middle
+# git/GitHub 
+## An Introduction
+
+<br>
+
+### 10:15 - 11:00
+
+---
+class: inverse middle
+background-image:url(img/final-doc.png)
+background-size:contain
+
+.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
+
+
+---
+### From swcarpentry
+![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
+
+We can think of the changes as separate from the document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
+
+This means there are many possible versions of the same document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
+
+Unless there are conflicts, two changes from the same document can be merged
+together
+
+<!-- Show repo for NCME pres & talk about publishing -->
+
+---
+class: inverse middle center
+# How?
+That's what we'll do today!
+
+---
+# Some basic terminology
+* Version Control System
+  + A tool to help us track changes. *git* is one such system (but there
+    are others).
+--
+* Commit
+  + Changes that have been made to the file(s)
+
+--
+* Repository (repo)
+  + The files, full commit history, and associated metadata for a project
+
+---
+# Demo (30 minutes)
+### Goal: Get your work from this morning in a GitHub repo!
+* Create new repo
+* Clone it locally
+* Add your files
+* Commit
+* Push
+* Publish
+
+---
+# Ignoring Files
+* When we initialized the repo, we started it with a `.gitignore` file
+* The `.gitignore` file tells the repo not to track certain files
+  + e.g., proprietary data
+
+
+---
+class: inverse center middle
+# Wrap up
+
+
+---
+class: inverse
+# Appendix
 
 
 ---
@@ -1155,335 +1221,4 @@ Note this is not APA. However, references are included automatically at the end 
 ---
 ## References
 ![](img/references.png)
-
-
----
-class: inverse center middle
-# Break
-
-### 10:00 - 10:15
-
----
-class: da center middle
-# git/GitHub 
-## An Introduction
-
-<br>
-
-### 10:15 - 11:00
-
----
-class: inverse middle
-background-image:url(img/final-doc.png)
-background-size:contain
-
-.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
-
-
----
-### From swcarpentry
-![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
-
-We can think of the changes as separate from the document
-
----
-![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
-
-This means there are many possible versions of the same document
-
----
-![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
-
-Unless there are conflicts, two changes from the same document can be merged
-together
-
----
-# How?
-That's what we'll talk about today!
-
---
-
-Goals: 
-* Get you to understand the structure of git
-* Actual method of completing the tasks is up to you
-  + GUI? Command line? RStudio?
-
---
-* If you go with a GUI, I'd recommend [GitKraken](https://www.gitkraken.com)
-  + In fact, I'd recommend everybody download/use it, even if for merge
-    conflicts alone.
-
----
-# Some basic terminology
-* Version Control System
-  + A tool to help us track changes. *git* is one such system (but there
-    are others).
---
-* Commit
-  + Changes that have been made to the file(s)
-
---
-* Repository (repo)
-  + The files, full commit history, and associated metadata for a project
-
-
---
-### When working with git
-* Each collaborator has the *entire* repo on their local machine
-* There is also a cloud-based server hosing the repo (that's GitHub)
-* The online version of the repo is call the *remote*
-
----
-# Some key points
-
-* Because *git* tracks the **entire** history of a project it is akin to
-  unlimited "undo"
-* *git* allows many people to work in parallel
-
----
-# Creating a repository
-
-* A couple of different options...
-
-
---
-### Rstudio
-Let's focus on the RStudio version first. 
-
----
-# GitHub
-Go to GitHub
-* Select drop down by your profile, then "New Repository"
-* I'd suggest also adding the R .gitignore and a README
-
-<div >
-<img src = img/newrepo.png height = 300>
-</div>
-
-
-
----
-# Name it
-
-<div >
-<img src = img/newrepo-name.png height = 500>
-</div>
-
-
----
-# Copy path
-
-![](img/clone.png)
-
----
-### Create a new RStudio Project
-
-![](img/new-ver-control.png)
-
----
-
-![](img/new-git.png)
-
----
-
-![](img/git-repo-rstudio.png)
-
----
-
-![](img/git-plugin.png)
-
----
-class: inverse center middle
-
-# [demo]
-
-Let's look atthe git plugin
-
----
-# Tracking
-
-Notice the hidden `.git` folder
-
-
---
-On mac, show hidden files with
-
-```
-cmd + shift + .
-```
-
-(Note, I have hidden files shown all the time)
-
---
-
-* As long as that folder exists, the **entire** folder will be
-tracked.
-  + **Do not create repos inside of repos**
-  + If you want a folder to show up, there needs to be something in it (e.g., 
-    a `README.md`)
-
-
----
-# Ignoring Files
-* When we initialized the repo, we started it with a `.gitignore` file
-* The `.gitignore` file tells the repo not to track certain files
-  + e.g., proprietary data
-
-
-
----
-# Adding a file
-* Let's create an R Markdown file and put it in our repo.
-* Open terminal, type `git status`. What do you see?
-* Use the RStudio `git` plugin. What do you see?
-
----
-# Staging
-* When you add files to a repo you are *staging* them for tracking.
-
-[demo gitkraken & RStudio staging]
-
-
----
-# Commits
-After staging, you *commit* changes to the file
-
-![](http://swcarpentry.github.io/git-novice/fig/git-staging-area.svg)
-
-
----
-# Push
-After you've committed the changes you want, push them to the remote
-
---
-![](https://i.kym-cdn.com/photos/images/newsfeed/001/141/162/456.gif)
-
-Wait what's a remote again?
-
-
---
-The cloud-based repo
-
----
-# Refresh the repo
-
-![](img/active-repo.png)
-
----
-class: inverse right
-background-image:url(img/gitkraken.png)
-background-size:cover
-
-# gitkraken approach
-
----
-# An overall view
-
-![](https://github.com/mbjoseph/git-intro/raw/master/fig/git.png)
-
-
----
-# Revisiting some vocabulary
-* stage
-* commit
-* push
-* pull
-* clone
-
-
---
-At least half the difficulty with *git* is all the weird words
-
-
----
-# Collaborating
-Need to get proper permissions. Two methods:
-* Add users to a repo: Settings => Collaborators => add user w/ username
-
-![](img/add-collab.png)
-
-
----
-# Collaborating
-Second method: 
-* Create an organization
-
-<div >
-<img src = img/new-org.png height = 400>
-</div>
-
----
-# Cloning
-Means you're downloading the repo
-
---
-* Can also start a new RStudio project
-
---
-
-```{bash, eval = FALSE}
-git clone <path>
-```
-
-<div >
-<img src = img/clone.png height = 300>
-</div>
-
----
-# Merge conflicts
-* Remember to always `git pull` first
-* Let's create a merge conflict!
-
-(Note the GUI from *gitkraken* is really nice for resolving them)
-
-
----
-# Advice on avoiding merge conflicts
-* Always `git pull` (or the GUI equivalent) before you start working
-* Try to stay in communication and don't work on the **exact** same thing at the same time
-* Use a GUI to help you manage what merge conflicts you do run into
-
---
-### Remember - this is an intro!
-
----
-
-
----
-class: jmr center middle
-# .gitignore 
-
-
-<br>
-
-### 11:00 - 11:15
-
-
----
-class: jmr center middle
-# OSF 
-
-
-<br>
-
-### 11:15 - 11:30
-
-
----
-class: da center middle
-# Advanced Rmd 
-## Websites & dashboards
-
-<br>
-
-### 11:30 - 11:45
-
-
----
-class:inverse center middle
-# [demo]
-
----
-class: inverse center middle
-# Wrap up
 

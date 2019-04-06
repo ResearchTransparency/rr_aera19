@@ -37,3 +37,11 @@
 .da h3 {
   color: #9A9C9F;
 }
+
+.remark-slide table {
+  font-size: 0.8em;
+}
+
+.title-slide h1 {
+  padding-top: 200px;
+}
