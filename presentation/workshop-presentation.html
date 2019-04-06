@@ -9,6 +9,7 @@
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/uo.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/uo-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link rel="stylesheet" href="custom.css" type="text/css" />
   </head>
   <body>
@@ -54,7 +55,7 @@ background-size:contain
 
 ---
 class:inverse right
-background-image:url(assets/img/break.jpg)
+background-image:url(img/break.jpg)
 background-size:cover
 
 # Break (10:00 - 10:15)
@@ -92,7 +93,7 @@ Oregon ([#goducks](https://twitter.com/search?q=%23goducks&amp;src=typd))
     between educational institutions (particularly spatially)
 ]
 
-&lt;img src="assets/img/thefam.jpg" width="350px" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/thefam.jpg" width="350px" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -283,6 +284,15 @@ Outside of reproducibility, you may want to use R Markdown to:
 
 
 ---
+# Challenges
+* Word is the industry standard (frustratingly so, to me) 
+  + Word output is less than ideal
+* Can be difficult when collaborating with others
+* Some journal articles *require* papers submitted in Word
+  + Potentially get a pdf to word converter, but still less than ideal
+* Advanced features have a relatively steep learning curve
+
+---
 class: jmr center middle
 # Conducting public 
 # and open science
@@ -301,14 +311,493 @@ class: jmr center middle
 
 ### 8:40 - 9:00
 
+
+---
+# R Markdown
+From within your R Studio Project:
+![](img/rmd_template.png )
+
+---
+# First thing: Render!
+![](img/knit.png)
+
+
+---
+class: inverse center middle
+# Create new R Markdown doc
+
+### Demo
+
+
+---
+# YAML Front Matter
+
+```
+---
+title: Example Markdown document
+author: 
+  - Daniel Anderson
+  - Joshua M. Rosen
+date: "2019-05-07"
+---
+```
+
+![](img/frontMatter.png)
+
+* Three dashes before and after the YAML fields
+* Case sensitive
+* Many other fields are possible.
+  + For example, you may want to include an `output:` argument (`pdf_document`,
+    `html_document`, `word_document`). Must be specified as it is rendered, if
+    not supplied.
+
+
+---
+# Example: Change syntax highlighting
+The YAML will control a lot of how a document looks. For example, if you wanted to render with a different syntax highlighter:
+
+.pull-left[
+### Standard Rmd
+
+```
+---
+title: "Doc Title"
+output: pdf_document
+---
+```
+]
+
+
+.pull-right[
+### kate 
+
+```
+---
+title: "Doc Title"
+output: 
+  pdf_document:
+    highlight: kate
+---
+```
+]
+
+---
+
+---
+# Code chunks versus text
+
+![code_chunks](img/code_chunks.png)
+
+---
+# Code chunks
+
+Start a code chunk with ` ```{r}`, then produce some r code, then close the
+
+  chunk with three additional back ticks ` ``` `.
+
+![](img/codeChunk1.png)
+
+--
+
+
+```r
+a &lt;- 3
+b &lt;- 5
+
+a + b * (exp(a)/b)
+```
+
+```
+## [1] 23.08554
+```
+
+
+
 ---
 class: da center middle
 # R Markdown basics 
-## Lists &amp; global options
+## Lists &amp; chunk options
 
 &lt;br&gt;
 
 ### 9:00 - 9:20
+
+
+---
+# Headings and Lists 
+### Not R-lists
+
+.pull-left[
+
+```
+# Level 1
+## Level 2 
+### Level 3 (etc.)
+```
+
+&lt;br/&gt;
+
+```
+ * Unordered list
+  - inset
+    + inset more
+  - etc.
+
+1. Ordered list
+  a. blah blah
+2. More stuff
+```
+
+]
+
+.pull-right[
+
+![](img/headersLists.png)
+
+]
+
+
+---
+# echo and eval
+
+.pull-left[
+
+You can show code without evaluating it, using `eval = FALSE`. 
+
+&lt;div align = "left"&gt;
+&lt;img src = img/codeChunk2.png height = 100&gt;
+&lt;/div&gt;
+
+
+
+```r
+a + b * (exp(a)/b)
+```
+]
+
+.pull-right[
+
+Alternatively, you can evaluate the code without displaying it, using `echo = 
+  FALSE`.
+
+&lt;div align = "left"&gt;
+&lt;img src = img/codeChunk3.png height = 100&gt;
+&lt;/div&gt;
+
+![](workshop-presentation_files/figure-html/plotExample-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# warning
+
+
+
+### Warning = `FALSE`
+
+```r
+ggplot(msleep, aes(sleep_rem, sleep_total)) + 
+  geom_point()
+```
+
+![](workshop-presentation_files/figure-html/ggplotWarning2-1.png)&lt;!-- --&gt;
+Warning is printed to the console when rendering.
+
+
+---
+
+### Warning = `TRUE`
+
+```r
+ggplot(msleep, aes(sleep_rem, sleep_total)) + 
+  geom_point()
+```
+
+```
+## Warning: Removed 22 rows containing missing values (geom_point).
+```
+
+![](workshop-presentation_files/figure-html/ggplotWarning1-1.png)&lt;!-- --&gt;
+
+---
+# Show errors
+
+`error = TRUE`
+
+```r
+ggplot(msleep, aes(sleep, sleep_total)) + 
+  geom_point()
+```
+
+```
+## Don't know how to automatically pick scale for object of type data.frame. Defaulting to continuous.
+```
+
+```
+## Error: Aesthetics must be either length 1 or the same as the data (83): x
+```
+
+--
+
+&lt;br&gt;
+
+If `error = FALSE`, the document won't render if it encounters an error.
+
+![](img/errorRendering.png)
+
+---
+# Message
+Some functions will return messages. You may want to suppress these.
+
+### message = `FALSE`
+
+```r
+ggplot(msleep, aes(sleep_total)) +
+  geom_histogram()
+```
+
+![](workshop-presentation_files/figure-html/messages2-1.png)&lt;!-- --&gt;
+
+---
+# Message
+
+### message = `TRUE`
+
+```r
+ggplot(msleep, aes(sleep_total)) +
+  geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](workshop-presentation_files/figure-html/messages1-1.png)&lt;!-- --&gt;
+
+---
+# include
+
+![](img/includeFALSE.png)
+
+The `include` argument is used to evaluate code that is not included in the
+document at all. For example, when setting up your global options.
+
+
+---
+# Setting global options
+Change the default behavior
+
+
+```r
+opts_chunk$set(options)
+```
+
+For example, you can set `echo = FALSE` and `fig.width = 6.5` and `fig.height = 8` with the following code.
+
+
+```r
+opts_chunk$set(echo = FALSE, fig.width = 6.5, fig.height = 8)
+```
+
+This is most useful when producing a report for somebody who doesn't use R and has no use or knowledge of the code.
+
+
+You can always override the global options within a particular chunk, e.g.
+
+` ```{r, chunkName, echo = TRUE}` 
+
+` ``` `
+
+---
+## Other things to consider setting globally:
+* `warnings = FALSE`
+* `message = FALSE`
+* `errors = TRUE`
+* `echo = FALSE`
+* Caching options (next slides)
+
+
+---
+# More complete chunk options
+
+
+```
+## 
+## Attaching package: 'kableExtra'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+```
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Options &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Arguments &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Default &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Result &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; eval &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Evaluate the code? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; echo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Show the code? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; results &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; markup, asis, hold, hide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; markup &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Render the results &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; warning &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Print warnings? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Preserve errors? (if FALSE, quit) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; message &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Print any messages? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; include &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Include any of the code or output or code? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; tidy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tidy code? (see formatR package) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# (and a few more)
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Options &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Arguments &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Default &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Result &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; cache &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical, 0:3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cache code chunks? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; cache.comments &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cache invalidated by comment changes? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; dependson &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; char, num &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Current chunk depend on prior cached chunks? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; autodep &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; logical &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depends determined automatically? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; fig.height/fig.width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; numeric &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7, 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Height and width of figure &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; fig.show &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; asis, hold, animate, hide &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; asis &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; How the figure should be displayed &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; interval &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; numeric &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Animate speed &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.footnote[For complete documentation, see http://yihui.name/knitr/options/]
+
+
+---
+# Inline code
+
+A single back tick followed by `r` produces inline code to be evaluated.
+
+&lt;div align = "center"&gt;
+&lt;img src = img/inlineCode.png width = 1000&gt;
+&lt;/div&gt;
+&lt;br&gt;
+
+This is an example of inline code, where I want to refer to the sum of `a` and
+  `b`, which is 8.
+
+This is *extremely* useful in writing reports. Never have to update any numbers in text, regardless of changes to your models or data (if you are careful about it).
+
+---
+# Real example
+
+![ell_means](img/ell_means.png)
+
+
+---
+# Final Product
+
+.pull-left[
+&lt;div &gt;
+&lt;img src = img/rMarkdownCode.png height = 500&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div &gt;
+&lt;img src = img/fullRMarkdownDoc.png height = 500&gt;
+&lt;/div&gt;
+]
+
 
 ---
 class: jmr center middle
@@ -331,6 +820,3482 @@ class: da center middle
 
 
 ---
+# Chunk options
+For tables, you may have to specify `results = "asis"` or you can end up with
+something like 
+
+
+```
+## &lt;caption&gt;(\#tab:unnamed-chunk-2)&lt;/caption&gt;
+## 
+## &lt;caption&gt;**&lt;/caption&gt;
+## 
+## 
+## 
+##                       mpg     cyl    disp     hp       drat   wt     qsec    vs     am     gear   carb 
+## --------------------  ------  -----  -------  -------  -----  -----  ------  -----  -----  -----  -----
+## Mazda RX4             21.00   6.00   160.00   110.00   3.90   2.62   16.46   0.00   1.00   4.00   4.00 
+## Mazda RX4 Wag         21.00   6.00   160.00   110.00   3.90   2.88   17.02   0.00   1.00   4.00   4.00 
+## Datsun 710            22.80   4.00   108.00   93.00    3.85   2.32   18.61   1.00   1.00   4.00   1.00 
+## Hornet 4 Drive        21.40   6.00   258.00   110.00   3.08   3.21   19.44   1.00   0.00   3.00   1.00 
+## Hornet Sportabout     18.70   8.00   360.00   175.00   3.15   3.44   17.02   0.00   0.00   3.00   2.00 
+## Valiant               18.10   6.00   225.00   105.00   2.76   3.46   20.22   1.00   0.00   3.00   1.00 
+## Duster 360            14.30   8.00   360.00   245.00   3.21   3.57   15.84   0.00   0.00   3.00   4.00 
+## Merc 240D             24.40   4.00   146.70   62.00    3.69   3.19   20.00   1.00   0.00   4.00   2.00 
+## Merc 230              22.80   4.00   140.80   95.00    3.92   3.15   22.90   1.00   0.00   4.00   2.00 
+## Merc 280              19.20   6.00   167.60   123.00   3.92   3.44   18.30   1.00   0.00   4.00   4.00 
+## Merc 280C             17.80   6.00   167.60   123.00   3.92   3.44   18.90   1.00   0.00   4.00   4.00 
+## Merc 450SE            16.40   8.00   275.80   180.00   3.07   4.07   17.40   0.00   0.00   3.00   3.00 
+## Merc 450SL            17.30   8.00   275.80   180.00   3.07   3.73   17.60   0.00   0.00   3.00   3.00 
+## Merc 450SLC           15.20   8.00   275.80   180.00   3.07   3.78   18.00   0.00   0.00   3.00   3.00 
+## Cadillac Fleetwood    10.40   8.00   472.00   205.00   2.93   5.25   17.98   0.00   0.00   3.00   4.00 
+## Lincoln Continental   10.40   8.00   460.00   215.00   3.00   5.42   17.82   0.00   0.00   3.00   4.00 
+## Chrysler Imperial     14.70   8.00   440.00   230.00   3.23   5.34   17.42   0.00   0.00   3.00   4.00 
+## Fiat 128              32.40   4.00   78.70    66.00    4.08   2.20   19.47   1.00   1.00   4.00   1.00 
+## Honda Civic           30.40   4.00   75.70    52.00    4.93   1.62   18.52   1.00   1.00   4.00   2.00 
+## Toyota Corolla        33.90   4.00   71.10    65.00    4.22   1.84   19.90   1.00   1.00   4.00   1.00 
+## Toyota Corona         21.50   4.00   120.10   97.00    3.70   2.46   20.01   1.00   0.00   3.00   1.00 
+## Dodge Challenger      15.50   8.00   318.00   150.00   2.76   3.52   16.87   0.00   0.00   3.00   2.00 
+## AMC Javelin           15.20   8.00   304.00   150.00   3.15   3.44   17.30   0.00   0.00   3.00   2.00 
+## Camaro Z28            13.30   8.00   350.00   245.00   3.73   3.84   15.41   0.00   0.00   3.00   4.00 
+## Pontiac Firebird      19.20   8.00   400.00   175.00   3.08   3.85   17.05   0.00   0.00   3.00   2.00 
+## Fiat X1-9             27.30   4.00   79.00    66.00    4.08   1.94   18.90   1.00   1.00   4.00   1.00 
+## Porsche 914-2         26.00   4.00   120.30   91.00    4.43   2.14   16.70   0.00   1.00   5.00   2.00 
+## Lotus Europa          30.40   4.00   95.10    113.00   3.77   1.51   16.90   1.00   1.00   5.00   2.00 
+## Ford Pantera L        15.80   8.00   351.00   264.00   4.22   3.17   14.50   0.00   1.00   5.00   4.00 
+## Ferrari Dino          19.70   6.00   145.00   175.00   3.62   2.77   15.50   0.00   1.00   5.00   6.00 
+## Maserati Bora         15.00   8.00   301.00   335.00   3.54   3.57   14.60   0.00   1.00   5.00   8.00 
+## Volvo 142E            21.40   4.00   121.00   109.00   4.11   2.78   18.60   1.00   1.00   4.00   2.00
+```
+
+---
+# Careful on formats
+* Make sure you specify the format you want
+  + PDF or HTML?
+
+
+--
+From `?kable`
+* `format = "latex"` for PDF
+* `format = "html"` for HTML output
+
+---
+class: inverse
+background-image:url(https://github.com/rstudio/gt/raw/master/man/figures/logo.svg?sanitize=TRUE)
+background-size: contain
+
+---
+# Overview
+* New package (still very actively under development) by RStudio
+
+* Really promising
+  + Pipe-oriented
+  + Beautiful tables easy
+  + Spanner heads/grouping used to be a total pain - not so anymore
+  + Renders to HTML/PDF without even thinking abou tit
+
+* Has a few limitations relative to {papaja}
+
+* May run into bumps because of the active development
+
+---
+# Install
+
+
+```r
+remotes::install_github("rstudio/gt")
+```
+
+---
+# The hard part
+* Getting your data in the format you want a table in
+
+* Utilize your `gather`/`spread` skills regularly
+
+
+```r
+library(fivethirtyeight)
+flying
+```
+
+```
+## # A tibble: 1,040 x 27
+##    respondent_id gender age   height children_under_18 household_income
+##            &lt;dbl&gt; &lt;chr&gt;  &lt;ord&gt; &lt;ord&gt;  &lt;lgl&gt;             &lt;ord&gt;           
+##  1    3436139758 &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   NA                &lt;NA&gt;            
+##  2    3434278696 Male   30-44 "6'3\… TRUE              &lt;NA&gt;            
+##  3    3434275578 Male   30-44 "5'8\… FALSE             $100,000 - $149…
+##  4    3434268208 Male   30-44 "5'11… FALSE             $0 - $24,999    
+##  5    3434250245 Male   30-44 "5'7\… FALSE             $50,000 - $99,9…
+##  6    3434245875 Male   30-44 "5'9\… TRUE              $25,000 - $49,9…
+##  7    3434235351 Male   30-44 "6'2\… TRUE              &lt;NA&gt;            
+##  8    3434218031 Male   30-44 "6'0\… TRUE              $0 - $24,999    
+##  9    3434213681 &lt;NA&gt;   &lt;NA&gt;  "6'0\… TRUE              &lt;NA&gt;            
+## 10    3434172894 Male   30-44 "5'6\… FALSE             $0 - $24,999    
+## # … with 1,030 more rows, and 21 more variables: education &lt;ord&gt;,
+## #   location &lt;chr&gt;, frequency &lt;ord&gt;, recline_frequency &lt;ord&gt;,
+## #   recline_obligation &lt;lgl&gt;, recline_rude &lt;ord&gt;, recline_eliminate &lt;lgl&gt;,
+## #   switch_seats_friends &lt;ord&gt;, switch_seats_family &lt;ord&gt;,
+## #   wake_up_bathroom &lt;ord&gt;, wake_up_walk &lt;ord&gt;, baby &lt;ord&gt;,
+## #   unruly_child &lt;ord&gt;, two_arm_rests &lt;chr&gt;, middle_arm_rest &lt;chr&gt;,
+## #   shade &lt;chr&gt;, unsold_seat &lt;ord&gt;, talk_stranger &lt;ord&gt;, get_up &lt;ord&gt;,
+## #   electronics &lt;lgl&gt;, smoked &lt;lgl&gt;
+```
+
+---
+
+```r
+smry &lt;- flying %&gt;% 
+  count(gender, age, recline_frequency) %&gt;% 
+  filter(!is.na(age),
+         !is.na(recline_frequency)) %&gt;% 
+  spread(age, n) 
+```
+
+```
+## Warning: Factor `age` contains implicit NA, consider using
+## `forcats::fct_explicit_na`
+```
+
+```
+## Warning: Factor `recline_frequency` contains implicit NA, consider using
+## `forcats::fct_explicit_na`
+```
+
+```r
+smry
+```
+
+```
+## # A tibble: 10 x 6
+##    gender recline_frequency   `18-29` `30-44` `45-60` `&gt; 60`
+##    &lt;chr&gt;  &lt;ord&gt;                 &lt;int&gt;   &lt;int&gt;   &lt;int&gt;  &lt;int&gt;
+##  1 Female Never                    24      21      19     23
+##  2 Female Once in a while          36      25      30     36
+##  3 Female About half the time      10      22      18     17
+##  4 Female Usually                  13      22      26     28
+##  5 Female Always                   10      21      29     12
+##  6 Male   Never                    24      17      20     18
+##  7 Male   Once in a while          19      39      40     29
+##  8 Male   About half the time      11      11      16     11
+##  9 Male   Usually                  14      30      15     27
+## 10 Male   Always                   11      14      21     14
+```
+
+
+---
+# Turn into table
+### Disclaimer 
+These all look slightly different on the slides
+
+.pull-left[
+
+```r
+library(gt)
+smry %&gt;% 
+  gt()
+```
+]
+
+.pull-right[
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#vxowwnemzn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#vxowwnemzn .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#vxowwnemzn .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vxowwnemzn .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vxowwnemzn .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#vxowwnemzn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vxowwnemzn .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#vxowwnemzn .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#vxowwnemzn .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#vxowwnemzn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#vxowwnemzn .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#vxowwnemzn .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#vxowwnemzn .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#vxowwnemzn .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#vxowwnemzn .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#vxowwnemzn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#vxowwnemzn .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#vxowwnemzn .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#vxowwnemzn .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#vxowwnemzn .gt_center {
+  text-align: center;
+}
+
+#vxowwnemzn .gt_left {
+  text-align: left;
+}
+
+#vxowwnemzn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vxowwnemzn .gt_font_normal {
+  font-weight: normal;
+}
+
+#vxowwnemzn .gt_font_bold {
+  font-weight: bold;
+}
+
+#vxowwnemzn .gt_font_italic {
+  font-style: italic;
+}
+
+#vxowwnemzn .gt_super {
+  font-size: 65%;
+}
+
+#vxowwnemzn .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="vxowwnemzn" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_left' rowspan='1' colspan='1'>gender</th>
+<th class='gt_col_heading gt_center' rowspan='1' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Female</td>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Female</td>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Male</td>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Male</td>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+]
+
+---
+## Add gender as a grouping variable
+
+.pull-left[
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt()
+```
+]
+
+.pull-right[
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#hywxcmznty .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#hywxcmznty .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#hywxcmznty .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hywxcmznty .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hywxcmznty .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#hywxcmznty .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hywxcmznty .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#hywxcmznty .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#hywxcmznty .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#hywxcmznty .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#hywxcmznty .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#hywxcmznty .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#hywxcmznty .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#hywxcmznty .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#hywxcmznty .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#hywxcmznty .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#hywxcmznty .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#hywxcmznty .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#hywxcmznty .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#hywxcmznty .gt_center {
+  text-align: center;
+}
+
+#hywxcmznty .gt_left {
+  text-align: left;
+}
+
+#hywxcmznty .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hywxcmznty .gt_font_normal {
+  font-weight: normal;
+}
+
+#hywxcmznty .gt_font_bold {
+  font-weight: bold;
+}
+
+#hywxcmznty .gt_font_italic {
+  font-style: italic;
+}
+
+#hywxcmznty .gt_super {
+  font-size: 65%;
+}
+
+#hywxcmznty .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="hywxcmznty" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='1' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+]
+
+---
+# Add a spanner head
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#gnuxbulvhr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#gnuxbulvhr .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#gnuxbulvhr .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gnuxbulvhr .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gnuxbulvhr .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#gnuxbulvhr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#gnuxbulvhr .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#gnuxbulvhr .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#gnuxbulvhr .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#gnuxbulvhr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#gnuxbulvhr .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#gnuxbulvhr .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#gnuxbulvhr .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#gnuxbulvhr .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#gnuxbulvhr .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#gnuxbulvhr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#gnuxbulvhr .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#gnuxbulvhr .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#gnuxbulvhr .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#gnuxbulvhr .gt_center {
+  text-align: center;
+}
+
+#gnuxbulvhr .gt_left {
+  text-align: left;
+}
+
+#gnuxbulvhr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gnuxbulvhr .gt_font_normal {
+  font-weight: normal;
+}
+
+#gnuxbulvhr .gt_font_bold {
+  font-weight: bold;
+}
+
+#gnuxbulvhr .gt_font_italic {
+  font-style: italic;
+}
+
+#gnuxbulvhr .gt_super {
+  font-size: 65%;
+}
+
+#gnuxbulvhr .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="gnuxbulvhr" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Change column names
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#hynxvytdyu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#hynxvytdyu .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#hynxvytdyu .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hynxvytdyu .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hynxvytdyu .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#hynxvytdyu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#hynxvytdyu .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#hynxvytdyu .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#hynxvytdyu .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#hynxvytdyu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#hynxvytdyu .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#hynxvytdyu .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#hynxvytdyu .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#hynxvytdyu .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#hynxvytdyu .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#hynxvytdyu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#hynxvytdyu .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#hynxvytdyu .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#hynxvytdyu .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#hynxvytdyu .gt_center {
+  text-align: center;
+}
+
+#hynxvytdyu .gt_left {
+  text-align: left;
+}
+
+#hynxvytdyu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hynxvytdyu .gt_font_normal {
+  font-weight: normal;
+}
+
+#hynxvytdyu .gt_font_bold {
+  font-weight: bold;
+}
+
+#hynxvytdyu .gt_font_italic {
+  font-style: italic;
+}
+
+#hynxvytdyu .gt_super {
+  font-size: 65%;
+}
+
+#hynxvytdyu .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="hynxvytdyu" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Align columns
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#zvhjvmfmyi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#zvhjvmfmyi .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#zvhjvmfmyi .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zvhjvmfmyi .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zvhjvmfmyi .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#zvhjvmfmyi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#zvhjvmfmyi .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#zvhjvmfmyi .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#zvhjvmfmyi .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#zvhjvmfmyi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#zvhjvmfmyi .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#zvhjvmfmyi .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#zvhjvmfmyi .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#zvhjvmfmyi .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#zvhjvmfmyi .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#zvhjvmfmyi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#zvhjvmfmyi .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#zvhjvmfmyi .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#zvhjvmfmyi .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#zvhjvmfmyi .gt_center {
+  text-align: center;
+}
+
+#zvhjvmfmyi .gt_left {
+  text-align: left;
+}
+
+#zvhjvmfmyi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zvhjvmfmyi .gt_font_normal {
+  font-weight: normal;
+}
+
+#zvhjvmfmyi .gt_font_bold {
+  font-weight: bold;
+}
+
+#zvhjvmfmyi .gt_font_italic {
+  font-style: italic;
+}
+
+#zvhjvmfmyi .gt_super {
+  font-size: 65%;
+}
+
+#zvhjvmfmyi .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="zvhjvmfmyi" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Add a title
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#oqniasewnz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#oqniasewnz .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#oqniasewnz .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#oqniasewnz .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#oqniasewnz .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#oqniasewnz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#oqniasewnz .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#oqniasewnz .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#oqniasewnz .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#oqniasewnz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#oqniasewnz .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#oqniasewnz .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#oqniasewnz .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#oqniasewnz .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#oqniasewnz .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#oqniasewnz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#oqniasewnz .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#oqniasewnz .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#oqniasewnz .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#oqniasewnz .gt_center {
+  text-align: center;
+}
+
+#oqniasewnz .gt_left {
+  text-align: left;
+}
+
+#oqniasewnz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#oqniasewnz .gt_font_normal {
+  font-weight: normal;
+}
+
+#oqniasewnz .gt_font_bold {
+  font-weight: bold;
+}
+
+#oqniasewnz .gt_font_italic {
+  font-style: italic;
+}
+
+#oqniasewnz .gt_super {
+  font-size: 65%;
+}
+
+#oqniasewnz .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="oqniasewnz" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Format columns
+
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#ibvfvuwnwd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#ibvfvuwnwd .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#ibvfvuwnwd .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ibvfvuwnwd .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ibvfvuwnwd .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#ibvfvuwnwd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ibvfvuwnwd .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#ibvfvuwnwd .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#ibvfvuwnwd .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#ibvfvuwnwd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#ibvfvuwnwd .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#ibvfvuwnwd .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#ibvfvuwnwd .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#ibvfvuwnwd .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#ibvfvuwnwd .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#ibvfvuwnwd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#ibvfvuwnwd .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#ibvfvuwnwd .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#ibvfvuwnwd .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#ibvfvuwnwd .gt_center {
+  text-align: center;
+}
+
+#ibvfvuwnwd .gt_left {
+  text-align: left;
+}
+
+#ibvfvuwnwd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ibvfvuwnwd .gt_font_normal {
+  font-weight: normal;
+}
+
+#ibvfvuwnwd .gt_font_bold {
+  font-weight: bold;
+}
+
+#ibvfvuwnwd .gt_font_italic {
+  font-style: italic;
+}
+
+#ibvfvuwnwd .gt_super {
+  font-size: 65%;
+}
+
+#ibvfvuwnwd .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="ibvfvuwnwd" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>23%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+<td class='gt_row gt_right gt_striped'>25%</td>
+<td class='gt_row gt_right gt_striped'>30%</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>22%</td>
+<td class='gt_row gt_right'>18%</td>
+<td class='gt_row gt_right'>17%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13%</td>
+<td class='gt_row gt_right gt_striped'>22%</td>
+<td class='gt_row gt_right gt_striped'>26%</td>
+<td class='gt_row gt_right gt_striped'>28%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>29%</td>
+<td class='gt_row gt_right'>12%</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24%</td>
+<td class='gt_row gt_right gt_striped'>17%</td>
+<td class='gt_row gt_right gt_striped'>20%</td>
+<td class='gt_row gt_right gt_striped'>18%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>39%</td>
+<td class='gt_row gt_right'>40%</td>
+<td class='gt_row gt_right'>29%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>16%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14%</td>
+<td class='gt_row gt_right'>30%</td>
+<td class='gt_row gt_right'>15%</td>
+<td class='gt_row gt_right'>27%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+<td class='gt_row gt_right gt_striped'>21%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Add a source note
+
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %&gt;% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#sgykraoaha .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#sgykraoaha .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#sgykraoaha .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sgykraoaha .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sgykraoaha .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#sgykraoaha .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sgykraoaha .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#sgykraoaha .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#sgykraoaha .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#sgykraoaha .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#sgykraoaha .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#sgykraoaha .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#sgykraoaha .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#sgykraoaha .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#sgykraoaha .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#sgykraoaha .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#sgykraoaha .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#sgykraoaha .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#sgykraoaha .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#sgykraoaha .gt_center {
+  text-align: center;
+}
+
+#sgykraoaha .gt_left {
+  text-align: left;
+}
+
+#sgykraoaha .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sgykraoaha .gt_font_normal {
+  font-weight: normal;
+}
+
+#sgykraoaha .gt_font_bold {
+  font-weight: bold;
+}
+
+#sgykraoaha .gt_font_italic {
+  font-style: italic;
+}
+
+#sgykraoaha .gt_super {
+  font-size: 65%;
+}
+
+#sgykraoaha .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="sgykraoaha" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>23%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+<td class='gt_row gt_right gt_striped'>25%</td>
+<td class='gt_row gt_right gt_striped'>30%</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>22%</td>
+<td class='gt_row gt_right'>18%</td>
+<td class='gt_row gt_right'>17%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13%</td>
+<td class='gt_row gt_right gt_striped'>22%</td>
+<td class='gt_row gt_right gt_striped'>26%</td>
+<td class='gt_row gt_right gt_striped'>28%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>29%</td>
+<td class='gt_row gt_right'>12%</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24%</td>
+<td class='gt_row gt_right gt_striped'>17%</td>
+<td class='gt_row gt_right gt_striped'>20%</td>
+<td class='gt_row gt_right gt_striped'>18%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>39%</td>
+<td class='gt_row gt_right'>40%</td>
+<td class='gt_row gt_right'>29%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>16%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14%</td>
+<td class='gt_row gt_right'>30%</td>
+<td class='gt_row gt_right'>15%</td>
+<td class='gt_row gt_right'>27%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+<td class='gt_row gt_right gt_striped'>21%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan='6' class='gt_sourcenote'>Data from <a href="https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/">fivethirtyeight</a></td>
+</tr>
+</tfoot>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Color cells
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  data_color(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+             colors = scales::col_numeric(palette = c(c("#FFFFFF", "#FF0000")), domain = NULL)) %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %&gt;% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#moldyxliwg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#moldyxliwg .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#moldyxliwg .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#moldyxliwg .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#moldyxliwg .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#moldyxliwg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#moldyxliwg .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#moldyxliwg .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#moldyxliwg .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#moldyxliwg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* stub_group.background.color */
+  font-size: 16px;
+  /* stub_group.font.size */
+  font-weight: initial;
+  /* stub_group.font.weight */
+  border-top-style: solid;
+  /* stub_group.border.top.style */
+  border-top-width: 2px;
+  /* stub_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* stub_group.border.top.color */
+  border-bottom-style: solid;
+  /* stub_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* stub_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* stub_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#moldyxliwg .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#moldyxliwg .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#moldyxliwg .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#moldyxliwg .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#moldyxliwg .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#moldyxliwg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#moldyxliwg .gt_table_body {
+  border-top-style: solid;
+  /* field.border.top.style */
+  border-top-width: 2px;
+  /* field.border.top.width */
+  border-top-color: #A8A8A8;
+  /* field.border.top.color */
+  border-bottom-style: solid;
+  /* field.border.bottom.style */
+  border-bottom-width: 2px;
+  /* field.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* field.border.bottom.color */
+}
+
+#moldyxliwg .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#moldyxliwg .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#moldyxliwg .gt_center {
+  text-align: center;
+}
+
+#moldyxliwg .gt_left {
+  text-align: left;
+}
+
+#moldyxliwg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#moldyxliwg .gt_font_normal {
+  font-weight: normal;
+}
+
+#moldyxliwg .gt_font_bold {
+  font-weight: bold;
+}
+
+#moldyxliwg .gt_font_italic {
+  font-style: italic;
+}
+
+#moldyxliwg .gt_super {
+  font-size: 65%;
+}
+
+#moldyxliwg .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="moldyxliwg" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right' style="background-color:#FF9678;color:#000000FF;">24%</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21%</td>
+<td class='gt_row gt_right' style="background-color:#FFE1D6;color:#000000FF;">19%</td>
+<td class='gt_row gt_right' style="background-color:#FFA286;color:#000000FF;">23%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9E81;color:#000000FF;">25%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF896A;color:#000000FF;">30%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10%</td>
+<td class='gt_row gt_right' style="background-color:#FFB39B;color:#000000FF;">22%</td>
+<td class='gt_row gt_right' style="background-color:#FFE8E0;color:#000000FF;">18%</td>
+<td class='gt_row gt_right' style="background-color:#FFD1C1;color:#000000FF;">17%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE9E1;color:#000000FF;">13%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFB39B;color:#000000FF;">22%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFAA90;color:#000000FF;">26%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF7857;color:#000000FF;">28%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10%</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21%</td>
+<td class='gt_row gt_right' style="background-color:#FF9273;color:#000000FF;">29%</td>
+<td class='gt_row gt_right' style="background-color:#FFF7F5;color:#000000FF;">12%</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9678;color:#000000FF;">24%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD6C8;color:#000000FF;">17%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD9CB;color:#000000FF;">20%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFC9B7;color:#000000FF;">18%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right' style="background-color:#FFBDA7;color:#000000FF;">19%</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">39%</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">40%</td>
+<td class='gt_row gt_right' style="background-color:#FF6F4D;color:#000000FF;">29%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF7F5;color:#000000FF;">16%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right' style="background-color:#FFE2D7;color:#000000FF;">14%</td>
+<td class='gt_row gt_right' style="background-color:#FF7857;color:#000000FF;">30%</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">15%</td>
+<td class='gt_row gt_right' style="background-color:#FF8160;color:#000000FF;">27%</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFEBE3;color:#000000FF;">14%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD1C1;color:#000000FF;">21%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE8E0;color:#000000FF;">14%</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan='6' class='gt_sourcenote'>Data from <a href="https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/">fivethirtyeight</a></td>
+</tr>
+</tfoot>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# What else?
+* Lots more it can do, and lots more in development
+* See the [website](https://gt.rstudio.com)
+
+--
+* gtcars case study is worth going through
+
+.pull-right[
+![](https://gt.rstudio.com/articles/images/gtcars.svg)
+]
+
+
+---
+# {papaja}
+
+Despite having been around for  about 4 years 
+[{papaja}](https://github.com/crsh/papaja) is still not on CRAN. 
+
+More evidence that some of the best packages are not on CRAN.
+
+
+--
+Install with devtools
+
+
+```r
+devtools::install_github("crsh/papaja")
+```
+
+---
+# WIP
+
+The package is seemingly perpetually under development. What does this mean?
+
+--
+* Re-install regularly.
+
+--
+* Not everything may work perfect - don't worry though, most things do
+
+--
+* You may want to peruse the current [issues](https://github.com/crsh/papaja/issues)
+  + If you run into one (and you're sure it's an issue) consider opening one
+  yourself
+  + Bonus - the developer is very kind, so even if you open up a silly 
+  issue, he's likely to be understanding
+
+---
+# Use the template
+
+.pull-left[
+![](../img/new-rmd.png)
+]
+
+.pull-right[
+![](../img/from-template.png)
+]
+
+---
+# YAML
+A few more options than the default
+
+&lt;div&gt;
+&lt;img src = ../img/papaja-yaml.png height = 450&gt;
+&lt;/div&gt;
+
+
+---
+# First thing - Render!
+
+&lt;div&gt;
+&lt;img src = ../img/papaja-pdf1.png height = 450&gt;
+&lt;/div&gt;
+
+---
+# Modifications
+* Obvious ones
+  + title
+  + author &amp; author info
+  + abstract
+  + keywords
+
+--
+* Less obvious
+  + `shorttitle` (running head)
+  + `authornote` (can fully delete or modify)
+  + `wordcount` (fairly useless at this point imo)
+  + `bibliography` (we'll talk more about this momentarily)
+  + `linenumbers`
+  + floats 
+  + mask (for blind peer-review)
+  + `classoption`
+
+---
+# Let's play for a minute!
+Modify some of the options on the previous slide. 
+
+Specifically, try changing `classoption` from `man` to `jou`. Try other things
+too.
+
+
+---
+class: inverse middle center
+# Citations
+
+---
+## Citations
+To include references in your paper, you must:
+* Create an external .bib file using LaTeX formatting (we'll get to this)
+* Include `bibliography: nameOfYourBibFile.bib` in your YAML front matter.
+* Refer to the citations in text using `@`
+
+---
+# Creating a .bib doc
+
+![](../img/googleScholarSearch.png)
+
+--
+&lt;div&gt;
+&lt;img src = ../img/googleCite.png height = 300&gt;
+&lt;/div&gt;
+
+
+---
+![](img/googleBibTex.png)
+
+--
+
+![](img/bibEntry.png)
+
+
+---
+# In text citations
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Citation Style &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Output &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; @Briggs11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Briggs and Weeks (2011) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [see @Baldwin2014; @Caruso2000] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (see Baldwin et al. 2014; Caruso 2000) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [@Linn02, p. 9] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Linn and Haug 2002, 9) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [-@Goldhaber08] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (2008) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br&gt;
+
+Note this is not APA. However, references are included automatically at the end of the document. Include `# References` as the last line of your document to give it a title.
+
+---
+## A few real examples
+![](img/intext_ref1.png)
+![](img/intext_ref2.png)
+![](img/intext_ref3.png)
+
+---
+## References
+![](img/references.png)
+
+
+---
 class: inverse center middle
 # Break
 
@@ -344,6 +4309,283 @@ class: da center middle
 &lt;br&gt;
 
 ### 10:15 - 11:00
+
+---
+class: inverse middle
+background-image:url(img/final-doc.png)
+background-size:contain
+
+.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
+
+
+---
+### From swcarpentry
+![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
+
+We can think of the changes as separate from the document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
+
+This means there are many possible versions of the same document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
+
+Unless there are conflicts, two changes from the same document can be merged
+together
+
+---
+# How?
+That's what we'll talk about today!
+
+--
+
+Goals: 
+* Get you to understand the structure of git
+* Actual method of completing the tasks is up to you
+  + GUI? Command line? RStudio?
+
+--
+* If you go with a GUI, I'd recommend [GitKraken](https://www.gitkraken.com)
+  + In fact, I'd recommend everybody download/use it, even if for merge
+    conflicts alone.
+
+---
+# Some basic terminology
+* Version Control System
+  + A tool to help us track changes. *git* is one such system (but there
+    are others).
+--
+* Commit
+  + Changes that have been made to the file(s)
+
+--
+* Repository (repo)
+  + The files, full commit history, and associated metadata for a project
+
+
+--
+### When working with git
+* Each collaborator has the *entire* repo on their local machine
+* There is also a cloud-based server hosing the repo (that's GitHub)
+* The online version of the repo is call the *remote*
+
+---
+# Some key points
+
+* Because *git* tracks the **entire** history of a project it is akin to
+  unlimited "undo"
+* *git* allows many people to work in parallel
+
+---
+# Creating a repository
+
+* A couple of different options...
+
+
+--
+### Rstudio
+Let's focus on the RStudio version first. 
+
+---
+# GitHub
+Go to GitHub
+* Select drop down by your profile, then "New Repository"
+* I'd suggest also adding the R .gitignore and a README
+
+&lt;div &gt;
+&lt;img src = img/newrepo.png height = 300&gt;
+&lt;/div&gt;
+
+
+
+---
+# Name it
+
+&lt;div &gt;
+&lt;img src = img/newrepo-name.png height = 500&gt;
+&lt;/div&gt;
+
+
+---
+# Copy path
+
+![](img/clone.png)
+
+---
+### Create a new RStudio Project
+
+![](img/new-ver-control.png)
+
+---
+
+![](img/new-git.png)
+
+---
+
+![](img/git-repo-rstudio.png)
+
+---
+
+![](img/git-plugin.png)
+
+---
+class: inverse center middle
+
+# [demo]
+
+Let's look atthe git plugin
+
+---
+# Tracking
+
+Notice the hidden `.git` folder
+
+
+--
+On mac, show hidden files with
+
+```
+cmd + shift + .
+```
+
+(Note, I have hidden files shown all the time)
+
+--
+
+* As long as that folder exists, the **entire** folder will be
+tracked.
+  + **Do not create repos inside of repos**
+  + If you want a folder to show up, there needs to be something in it (e.g., 
+    a `README.md`)
+
+
+---
+# Ignoring Files
+* When we initialized the repo, we started it with a `.gitignore` file
+* The `.gitignore` file tells the repo not to track certain files
+  + e.g., proprietary data
+
+
+
+---
+# Adding a file
+* Let's create an R Markdown file and put it in our repo.
+* Open terminal, type `git status`. What do you see?
+* Use the RStudio `git` plugin. What do you see?
+
+---
+# Staging
+* When you add files to a repo you are *staging* them for tracking.
+
+[demo gitkraken &amp; RStudio staging]
+
+
+---
+# Commits
+After staging, you *commit* changes to the file
+
+![](http://swcarpentry.github.io/git-novice/fig/git-staging-area.svg)
+
+
+---
+# Push
+After you've committed the changes you want, push them to the remote
+
+--
+![](https://i.kym-cdn.com/photos/images/newsfeed/001/141/162/456.gif)
+
+Wait what's a remote again?
+
+
+--
+The cloud-based repo
+
+---
+# Refresh the repo
+
+![](img/active-repo.png)
+
+---
+class: inverse right
+background-image:url(img/gitkraken.png)
+background-size:cover
+
+# gitkraken approach
+
+---
+# An overall view
+
+![](https://github.com/mbjoseph/git-intro/raw/master/fig/git.png)
+
+
+---
+# Revisiting some vocabulary
+* stage
+* commit
+* push
+* pull
+* clone
+
+
+--
+At least half the difficulty with *git* is all the weird words
+
+
+---
+# Collaborating
+Need to get proper permissions. Two methods:
+* Add users to a repo: Settings =&gt; Collaborators =&gt; add user w/ username
+
+![](img/add-collab.png)
+
+
+---
+# Collaborating
+Second method: 
+* Create an organization
+
+&lt;div &gt;
+&lt;img src = img/new-org.png height = 400&gt;
+&lt;/div&gt;
+
+---
+# Cloning
+Means you're downloading the repo
+
+--
+* Can also start a new RStudio project
+
+--
+
+
+```bash
+git clone &lt;path&gt;
+```
+
+&lt;div &gt;
+&lt;img src = img/clone.png height = 300&gt;
+&lt;/div&gt;
+
+---
+# Merge conflicts
+* Remember to always `git pull` first
+* Let's create a merge conflict!
+
+(Note the GUI from *gitkraken* is really nice for resolving them)
+
+
+---
+# Advice on avoiding merge conflicts
+* Always `git pull` (or the GUI equivalent) before you start working
+* Try to stay in communication and don't work on the **exact** same thing at the same time
+* Use a GUI to help you manage what merge conflicts you do run into
+
+--
+### Remember - this is an intro!
+
+---
 
 
 ---
@@ -369,11 +4611,16 @@ class: jmr center middle
 ---
 class: da center middle
 # Advanced Rmd 
-## Websites/dashboards
+## Websites &amp; dashboards
 
 &lt;br&gt;
 
 ### 11:30 - 11:45
+
+
+---
+class:inverse center middle
+# [demo]
 
 ---
 class: inverse center middle
