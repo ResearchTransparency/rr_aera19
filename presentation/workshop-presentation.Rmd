@@ -111,7 +111,31 @@ class: da center middle
 ---
 class: jmr center middle
 # This slide means we're 
-# transitioning to Josh
+## transitioning to Josh
+
+
+---
+# Before we really get started
+* Realize this is all going to be an intro
+  
+  + Covering a lot of content - that's purposeful
+  
+  + Idea is to give you exposure and some basic familiarity
+
+--
+* Resources to learn more
+  
+  + Daniel's class(es)
+    + [Intro course](http://www.datalorax.com/vita/ds/ds1/)
+    + [Data viz course](https://uo-datasci-specialization.github.io/c2-communicate_transform_data/)
+    + [Functional programming](https://uo-datasci-specialization.github.io/c3-fun_program_r/)
+
+  + [r4ds](https://r4ds.had.co.nz)
+
+  + [R Markdown book](https://bookdown.org/yihui/rmarkdown/)
+
+  + .gray[(plenty of others out there too)]
+
 
 ---
 class: da center middle
@@ -251,8 +275,6 @@ Outside of reproducibility, you may want to use R Markdown to:
 class: jmr center middle
 # R Markdown basics 
 ## Code Chunks & headers
-
-<br>
 
 ### 8:30 - 8:50
 
@@ -616,9 +638,7 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 ---
 class: jmr center middle
 # Public work
-## And rendering to different formats
-
-<br>
+## And different output formats
 
 ### 9:20 - 9:40
 
@@ -1094,6 +1114,8 @@ class: da center middle
 
 ### 10:15 - 11:00
 
+More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
+
 ---
 class: inverse middle
 background-image:url(img/final-doc.png)
@@ -1129,15 +1151,27 @@ That's what we'll do today!
 ---
 # Some basic terminology
 * Version Control System
-  + A tool to help us track changes. *git* is one such system (but there
-    are others).
+  + A tool to help us track changes. *git* is one such system.
+
 --
 * Commit
   + Changes that have been made to the file(s)
 
 --
 * Repository (repo)
-  + The files, full commit history, and associated metadata for a project
+  + Entire project (including history)
+
+--
+* Clone
+  + Download files locally
+
+--
+* Pull
+  + Get latest changes
+
+--
+* Push
+  + Send latest commits to remote repo
 
 ---
 # Demo (30 minutes)
@@ -1150,11 +1184,15 @@ That's what we'll do today!
 * Publish
 
 ---
+class: jmr center middle
+# .gitignore
+
+
+---
 # Ignoring Files
 * When we initialized the repo, we started it with a `.gitignore` file
 * The `.gitignore` file tells the repo not to track certain files
   + e.g., proprietary data
-
 
 ---
 class: inverse center middle
@@ -1162,7 +1200,7 @@ class: inverse center middle
 
 
 ---
-class: inverse
+class: inverse center middle
 # Appendix
 
 
