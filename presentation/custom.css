@@ -56,4 +56,7 @@
   padding-top: 180px;
 }
 
-https://brand.utk.edu/wp-content/uploads/sites/8/2015/04/University_-_CenteredLogo_RGB_1.gif
+.title-slide {
+  background-image: url('https://raw.githubusercontent.com/ResearchTransparency/rr_aera19/master/presentation/img/uo-ut-logo.png');
+  background-position: 95% 95%;
+}

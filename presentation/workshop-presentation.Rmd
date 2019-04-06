@@ -153,7 +153,7 @@ class: da center middle
 
 <br>
 
-### 8:10 - 8:30
+### 8:15 - 8:30am
 
 
 ---
@@ -283,9 +283,7 @@ Outside of reproducibility, you may want to use R Markdown to:
 ---
 class: jmr center middle
 # R Markdown basics 
-## Code Chunks & headers
-
-### 8:30 - 8:50
+## Code Chunks & he# 8:45 - 9:00
 
 
 ---
@@ -386,16 +384,14 @@ a + b * (exp(a)/b)
 ---
 class: da center middle
 # R Markdown basics 
-## Lists & chunk options
+## ListHeadings, l & c,nk options
 
-<br>
+<b, and inline coder> 9:00 - 9:05
 
-### 9:00 - 9:20
-
-
----
+30am--
 # Headings and Lists 
-### Not R-lists
+
+### Not Not R-lists
 
 .pull-left[
 
@@ -428,7 +424,7 @@ class: da center middle
 
 
 ---
-# echo and eval
+ho and eval
 
 .pull-left[
 
@@ -607,8 +603,7 @@ knitr::kable(data.frame(ops, args, default, result)[9:15, ],
 .footnote[For complete documentation, see http://yihui.name/knitr/options/]
 
 
----
-# Inline code
+---# Inline code
 
 A single back tick followed by `r` produces inline code to be evaluated.
 
@@ -628,8 +623,43 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 ![](img/ell_means.png)
 
 
+------
+class: jr center middle
+# Rendering and sharing documents
+
+# Fi# Rendering R Markdown documents
+
+### Modify the YAML
+Get the same document to render to different formats by modifying the YAML to output HTML, PDF, and .docx
+
+From:
+
+```
 ---
-# Final Product
+title: "My Document"
+author: "Stephanie Lawson"
+output: html_document
+---
+```
+
+To:
+
+```
+---
+title: "My Document"
+author: "Stephanie Lawson"
+output: pdf_document
+---
+```
+
+---
+
+# Rendering to HTML
+
+
+
+---
+nal Product
 
 .pull-left[
 <div >
@@ -649,9 +679,7 @@ class: jmr center middle
 # Public work
 ## And different output formats
 
-### 9:20 - 9:40
-
----
+### 9:20 -3--
 # {tinytex}
 * Need a tex (pronounced tek) distribution
   + My recommendation for this class, and probs everything you'll ever need: 
@@ -667,29 +695,7 @@ This is another amazing package by Yihui Xie. See more about it
 [here](https://yihui.name/tinytex/)
 
 ---
-# Full distributions
-* MacTex: http://www.tug.org/mactex/
-* MikTex: https://miktex.org/download
-* TexLive: http://www.tug.org/texlive/
-
-
---
-### Modify the YAML
-Get the same document to render to different formats by modifying the YAML
-
-```
-output:
-  pdf_document: 
-    highlight: kate
-  html_document: 
-    highlight: tango
-  word_document: default
-```
-
-
-
----
-class: da center middle
+# Fus: da center middle
 # R Markdown Tables 
 
 
