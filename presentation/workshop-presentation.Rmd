@@ -89,8 +89,17 @@ include_graphics("img/thefam.jpg")
 ---
 # #whoami 2
 
-[Josh stuff]
+.pull-left[
+* Assistant Professor: STEM Education, University of Tennessee, Knoxville
+* Also a Dad (one-year-old toddler!)
+* Primary areas of interest
+  + Data science in education (network analytic methods, experience sampling method, computational grounded theory)
+  + Data science education (integrating data science and science education)
+]
 
+```{r, out.width = "350px", echo = FALSE, fig.align = "center"}
+include_graphics("img/thefkr-joro")
+```
 
 ---
 class: inverse bottom right
