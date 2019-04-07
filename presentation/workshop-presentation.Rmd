@@ -634,6 +634,8 @@ class: jr center middle
 ### Modify the YAML
 Get the same document to render to different formats by modifying the YAML to output HTML, PDF, and .docx
 
+.pull-left[
+
 From:
 
 ```
@@ -643,6 +645,9 @@ author: "Stephanie Lawson"
 output: html_document
 ---
 ```
+]
+
+.pull-right[
 
 To:
 
@@ -653,6 +658,8 @@ author: "Stephanie Lawson"
 output: pdf_document
 ---
 ```
+]
+
 
 ---
 
