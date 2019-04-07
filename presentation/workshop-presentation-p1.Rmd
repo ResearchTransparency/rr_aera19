@@ -142,6 +142,8 @@ class: jmr center middle
 
   + [R Markdown book](https://bookdown.org/yihui/rmarkdown/)
 
+  + [(Developing) data science in education book](https://github.com/data-edu/data-science-in-education)
+  
   + .gray[(plenty of others out there too)]
 
 
@@ -157,17 +159,17 @@ class: da center middle
 
 ---
 # A couple caveats 
-* Much of what I'm going to be discussing represents an ideal that I have only recently begun working towards.
+* Much of what we're going to be discussing represents an ideal that we have only recently begun working towards.
 
 --
 
-* None of what I will talk about should be taken as a referendum on you or
-  your current practices. However, I hope to convince you that you should be working toward the reproducible research ideal, and that, as a field, we should be moving toward reproducible research being the *minimal standard*.
+* None of what we will talk about should be taken as a referendum on you or
+  your current practices. However, we hope to help to convince you that you should be working toward the reproducible research ideal, and that, as a field, we should be moving toward reproducible research being the *minimal standard*.
 
 
 --
-* I will be focusing on reproducible research with R (obviously). Other
-  options are available but, in my view, none are as clear, comprehensive, and easy to implement as the tools at your disposal through R.
+* We will be focusing on reproducible research with R (obviously). Other
+  options are available but, in our view, none are as clear, comprehensive, and easy to implement as the tools at your disposal through R.
 
 ---
 # What is reproducible research?
@@ -195,10 +197,11 @@ research would be verified through replication.
 
 
 --
-* If your work **is** reproducible, then others have a "recipe" for replication
+* If your work **is** reproducible, then others have a "recipe" for replication.
 
 
 ---
+
 # Are journal articles research? 
 * Initially, we may think of journal articles as research, but really the
   research is everything that went into the article, not the article itself. 
@@ -238,8 +241,7 @@ Striving toward reproducible research will:
 
 
 --
-3. Embed code within the text document that corresponds to your analysis. Note
-  this is not just copying the code in. The code should be live and what you're working with while conducting your research.
+3. Embed code within the text document that corresponds to your analysis. Note this is not just copying the code in. The code should be live and what you're working with while conducting your research.
 
 
 --
@@ -272,7 +274,7 @@ Outside of reproducibility, you may want to use R Markdown to:
 
 ---
 # Challenges
-* Word is the industry standard (frustratingly so, to me) 
+* Word is the industry standard (frustratingly so, to us) 
   + Word output is less than ideal
 * Can be difficult when collaborating with others
 * Some journal articles *require* papers submitted in Word
@@ -281,11 +283,45 @@ Outside of reproducibility, you may want to use R Markdown to:
 
 ---
 class: jmr center middle
-# R Markdown basics 
-## Code Chunks & headers
 
-### 8:45 - 9:00
+# Open science and R Markdown basics 
 
+### 8:35 - 8:45 am
+---
+
+# Open science and public work
+
+.pull-left[
+### Benefits
+* Working in the public has potential benefits:
+  * People know what your expertise is
+  * Potential colleagues can reach out to you for collaborations
+  * Allow others to build upon your work
+  * Build a network
+]
+
+.pull-right[
+### Dilemmas
+* Working in the public has *some* potential dilemmas/drawbacks to manage:
+  * Sometimes difficult to share pre-prints (due to copyright issues)
+  * Getting 'scooped'
+  * Often difficult to share data
+]
+---
+
+# Open Science Framework
+
+- Offers a platform in which you can store *private* data
+
+- Has an Application Programming Interface (API) to connect with R
+
+- Example: [https://osf.io/9ex7k/](https://osf.io/9ex7k/)
+
+---
+
+# R Markdown Basics
+
+## 8:45 - 9:00
 
 ---
 # R Markdown
@@ -296,15 +332,13 @@ From within your R Studio Project:
 # First thing: Render!
 ![](img/knit.png)
 
-
 ---
 class: inverse center middle
-# Create new R Markdown doc
+# Create new a R Markdown doc
 
-### Demo
+### ### Try it out!
 
 
----
 # YAML Front Matter
 
 ```
@@ -312,8 +346,7 @@ class: inverse center middle
 title: Example Markdown document
 author: 
   - Daniel Anderson
-  - Joshua M. Rosen
-date: "2019-05-07"
+  - : "2019-05-07"
 ---
 ```
 
@@ -624,10 +657,11 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 ![](img/ell_means.png)
 
 ---
-class: jr center middle
-# Rendering and sharing documents
+class: jmr center middle
 
----
+# Rendering and documents
+
+## 9:30 - 10:00am-
 # Rendering R Markdown documents
 
 ## Modify the YAML
@@ -672,6 +706,7 @@ output:
     toc_depth: 2
     toc_float: true
     number_sections: true
+    higlight: kate
 ---
 ```
 
@@ -687,12 +722,15 @@ output:
   pdf_document:
     toc: true
     number_sections: true
+    higlight: kate
 ---
 ```
 
 ---
 
 # Rendering to .docx
+
+A key feature is the ability to use a reference document; see [here](https://bookdown.org/yihui/rmarkdown/word-document.html)
 
 ```
 ---
@@ -702,60 +740,14 @@ output: word_document
 ---
 ```
 
----
-# Final Product
 
-.pull-left[
-<div >
-<img src = img/rMarkdownCode.png height = 500>
-</div>
-]
 
-.pull-right[
-<div >
-<img src = img/fullRMarkdownDoc.png height = 500>
-</div>
-]
 
 
 ---
-class: jmr center middle
-# Public work
-## And different output formats
-
-### 9:35 - 9:45 am
----
-
-# Public work
-
-.pull-left[
-### Benefits
-* Working in the public has potential benefits:
-  * People know what your expertise is
-  * Potential colleagues can reach out to you for collaborations
-  * Allow others to build upon your work
-]
-
-.  * Build a network
-pull-right[
-### Dilemmas
-* Working in the public has *some* potential dilemmas/drawbacks to manage:
-  
-]
--* Sometimes difficult to share pre-prints (due to copyright issues)
-  * Getting 'scooped'
-  * Often difficult to share data--
-
-# Open Science Framework
-
----
-- Offers a platform in which you can store *private* data
-- Allows you to import GitHub repositories (which can be public)
-- Has an Application Programming Interface (API) to connect with R
-
 # {tinytex}
 * Need a tex (pronounced tek) distribution
-  + My recommendation for this class, and probs everything you'll ever need: 
+  + Our recommendation for this workshop with probably everything you'll ever need: 
     {tinytex}
     
 --
