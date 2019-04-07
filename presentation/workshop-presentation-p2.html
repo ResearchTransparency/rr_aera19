@@ -41,13 +41,3443 @@ class: center, middle, inverse, title-slide
 - Wrap-up/ideas for next steps/staying in touch (11:45 - 12:00)
 
 ---
+
+
+class: da center middle
+# R Markdown Tables 
+
+
+&lt;br&gt;
+
+### 10:15 - 10:35am
+
+---
+class: inverse
+background-image:url(https://github.com/rstudio/gt/raw/master/man/figures/logo.svg?sanitize=TRUE)
+background-size: contain
+
+---
+# Overview
+* New package (still very actively under development) by RStudio
+
+* Really promising
+  + Pipe-oriented
+  + Beautiful tables easy
+  + Spanner heads/grouping used to be a total pain - not so anymore
+  + Renders to HTML/PDF without even thinking about it
+
+* May run into bumps because of the active development
+
+---
+# Install
+
+
+```r
+remotes::install_github("rstudio/gt")
+```
+
+---
+# The hard part
+* Getting your data in the format you want a table in
+
+* Utilize your `gather`/`spread` skills regularly
+
+
+```r
+library(fivethirtyeight)
+flying
+```
+
+```
+## # A tibble: 1,040 x 27
+##    respondent_id gender age   height children_under_… household_income
+##            &lt;dbl&gt; &lt;chr&gt;  &lt;ord&gt; &lt;ord&gt;  &lt;lgl&gt;            &lt;ord&gt;           
+##  1    3436139758 &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   NA               &lt;NA&gt;            
+##  2    3434278696 Male   30-44 "6'3\… TRUE             &lt;NA&gt;            
+##  3    3434275578 Male   30-44 "5'8\… FALSE            $100,000 - $149…
+##  4    3434268208 Male   30-44 "5'11… FALSE            $0 - $24,999    
+##  5    3434250245 Male   30-44 "5'7\… FALSE            $50,000 - $99,9…
+##  6    3434245875 Male   30-44 "5'9\… TRUE             $25,000 - $49,9…
+##  7    3434235351 Male   30-44 "6'2\… TRUE             &lt;NA&gt;            
+##  8    3434218031 Male   30-44 "6'0\… TRUE             $0 - $24,999    
+##  9    3434213681 &lt;NA&gt;   &lt;NA&gt;  "6'0\… TRUE             &lt;NA&gt;            
+## 10    3434172894 Male   30-44 "5'6\… FALSE            $0 - $24,999    
+## # … with 1,030 more rows, and 21 more variables: education &lt;ord&gt;,
+## #   location &lt;chr&gt;, frequency &lt;ord&gt;, recline_frequency &lt;ord&gt;,
+## #   recline_obligation &lt;lgl&gt;, recline_rude &lt;ord&gt;, recline_eliminate &lt;lgl&gt;,
+## #   switch_seats_friends &lt;ord&gt;, switch_seats_family &lt;ord&gt;,
+## #   wake_up_bathroom &lt;ord&gt;, wake_up_walk &lt;ord&gt;, baby &lt;ord&gt;,
+## #   unruly_child &lt;ord&gt;, two_arm_rests &lt;chr&gt;, middle_arm_rest &lt;chr&gt;,
+## #   shade &lt;chr&gt;, unsold_seat &lt;ord&gt;, talk_stranger &lt;ord&gt;, get_up &lt;ord&gt;,
+## #   electronics &lt;lgl&gt;, smoked &lt;lgl&gt;
+```
+
+---
+
+```r
+smry &lt;- flying %&gt;% 
+  count(gender, age, recline_frequency) %&gt;% 
+  filter(!is.na(age),
+         !is.na(recline_frequency)) %&gt;% 
+  spread(age, n) 
+
+smry
+```
+
+```
+## # A tibble: 10 x 6
+##    gender recline_frequency   `18-29` `30-44` `45-60` `&gt; 60`
+##    &lt;chr&gt;  &lt;ord&gt;                 &lt;int&gt;   &lt;int&gt;   &lt;int&gt;  &lt;int&gt;
+##  1 Female Never                    24      21      19     23
+##  2 Female Once in a while          36      25      30     36
+##  3 Female About half the time      10      22      18     17
+##  4 Female Usually                  13      22      26     28
+##  5 Female Always                   10      21      29     12
+##  6 Male   Never                    24      17      20     18
+##  7 Male   Once in a while          19      39      40     29
+##  8 Male   About half the time      11      11      16     11
+##  9 Male   Usually                  14      30      15     27
+## 10 Male   Always                   11      14      21     14
+```
+
+
+---
+# Turn into table
+### Disclaimer 
+These all look slightly different on the slides
+
+.pull-left[
+
+```r
+library(gt)
+smry %&gt;% 
+  gt()
+```
+]
+
+.pull-right[
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#nuqfleodbp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#nuqfleodbp .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#nuqfleodbp .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nuqfleodbp .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nuqfleodbp .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#nuqfleodbp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nuqfleodbp .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#nuqfleodbp .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#nuqfleodbp .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#nuqfleodbp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#nuqfleodbp .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#nuqfleodbp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nuqfleodbp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nuqfleodbp .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#nuqfleodbp .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#nuqfleodbp .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#nuqfleodbp .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#nuqfleodbp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#nuqfleodbp .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#nuqfleodbp .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#nuqfleodbp .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#nuqfleodbp .gt_center {
+  text-align: center;
+}
+
+#nuqfleodbp .gt_left {
+  text-align: left;
+}
+
+#nuqfleodbp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nuqfleodbp .gt_font_normal {
+  font-weight: normal;
+}
+
+#nuqfleodbp .gt_font_bold {
+  font-weight: bold;
+}
+
+#nuqfleodbp .gt_font_italic {
+  font-style: italic;
+}
+
+#nuqfleodbp .gt_super {
+  font-size: 65%;
+}
+
+#nuqfleodbp .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="nuqfleodbp" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_left' rowspan='1' colspan='1'>gender</th>
+<th class='gt_col_heading gt_center' rowspan='1' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Female</td>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Female</td>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Female</td>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Male</td>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Male</td>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Male</td>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+]
+
+---
+## Add gender as a grouping variable
+
+.pull-left[
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt()
+```
+]
+
+.pull-right[
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#pwuerauljm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#pwuerauljm .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#pwuerauljm .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pwuerauljm .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pwuerauljm .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#pwuerauljm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pwuerauljm .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#pwuerauljm .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#pwuerauljm .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#pwuerauljm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#pwuerauljm .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#pwuerauljm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pwuerauljm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pwuerauljm .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#pwuerauljm .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#pwuerauljm .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#pwuerauljm .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#pwuerauljm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#pwuerauljm .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#pwuerauljm .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#pwuerauljm .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#pwuerauljm .gt_center {
+  text-align: center;
+}
+
+#pwuerauljm .gt_left {
+  text-align: left;
+}
+
+#pwuerauljm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pwuerauljm .gt_font_normal {
+  font-weight: normal;
+}
+
+#pwuerauljm .gt_font_bold {
+  font-weight: bold;
+}
+
+#pwuerauljm .gt_font_italic {
+  font-style: italic;
+}
+
+#pwuerauljm .gt_super {
+  font-size: 65%;
+}
+
+#pwuerauljm .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="pwuerauljm" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='1' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+]
+
+---
+# Add a spanner head
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#wpfveqewdr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#wpfveqewdr .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#wpfveqewdr .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wpfveqewdr .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wpfveqewdr .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#wpfveqewdr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wpfveqewdr .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#wpfveqewdr .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#wpfveqewdr .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#wpfveqewdr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#wpfveqewdr .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#wpfveqewdr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wpfveqewdr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wpfveqewdr .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#wpfveqewdr .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#wpfveqewdr .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#wpfveqewdr .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#wpfveqewdr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#wpfveqewdr .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#wpfveqewdr .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#wpfveqewdr .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#wpfveqewdr .gt_center {
+  text-align: center;
+}
+
+#wpfveqewdr .gt_left {
+  text-align: left;
+}
+
+#wpfveqewdr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wpfveqewdr .gt_font_normal {
+  font-weight: normal;
+}
+
+#wpfveqewdr .gt_font_bold {
+  font-weight: bold;
+}
+
+#wpfveqewdr .gt_font_italic {
+  font-style: italic;
+}
+
+#wpfveqewdr .gt_super {
+  font-size: 65%;
+}
+
+#wpfveqewdr .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="wpfveqewdr" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>recline_frequency</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Change column names
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#lqiwgtnqau .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#lqiwgtnqau .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#lqiwgtnqau .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lqiwgtnqau .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lqiwgtnqau .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#lqiwgtnqau .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lqiwgtnqau .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#lqiwgtnqau .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#lqiwgtnqau .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#lqiwgtnqau .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#lqiwgtnqau .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#lqiwgtnqau .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lqiwgtnqau .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lqiwgtnqau .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#lqiwgtnqau .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#lqiwgtnqau .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#lqiwgtnqau .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#lqiwgtnqau .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#lqiwgtnqau .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#lqiwgtnqau .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#lqiwgtnqau .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#lqiwgtnqau .gt_center {
+  text-align: center;
+}
+
+#lqiwgtnqau .gt_left {
+  text-align: left;
+}
+
+#lqiwgtnqau .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lqiwgtnqau .gt_font_normal {
+  font-weight: normal;
+}
+
+#lqiwgtnqau .gt_font_bold {
+  font-weight: bold;
+}
+
+#lqiwgtnqau .gt_font_italic {
+  font-style: italic;
+}
+
+#lqiwgtnqau .gt_super {
+  font-size: 65%;
+}
+
+#lqiwgtnqau .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="lqiwgtnqau" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_center'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_center gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Align columns
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#qcwfxbiosr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#qcwfxbiosr .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#qcwfxbiosr .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qcwfxbiosr .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qcwfxbiosr .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#qcwfxbiosr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qcwfxbiosr .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#qcwfxbiosr .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#qcwfxbiosr .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#qcwfxbiosr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#qcwfxbiosr .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#qcwfxbiosr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qcwfxbiosr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qcwfxbiosr .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#qcwfxbiosr .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#qcwfxbiosr .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#qcwfxbiosr .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#qcwfxbiosr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#qcwfxbiosr .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#qcwfxbiosr .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#qcwfxbiosr .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#qcwfxbiosr .gt_center {
+  text-align: center;
+}
+
+#qcwfxbiosr .gt_left {
+  text-align: left;
+}
+
+#qcwfxbiosr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qcwfxbiosr .gt_font_normal {
+  font-weight: normal;
+}
+
+#qcwfxbiosr .gt_font_bold {
+  font-weight: bold;
+}
+
+#qcwfxbiosr .gt_font_italic {
+  font-style: italic;
+}
+
+#qcwfxbiosr .gt_super {
+  font-size: 65%;
+}
+
+#qcwfxbiosr .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="qcwfxbiosr" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Add a title
+
+
+```r
+smry %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dttcshryhp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#dttcshryhp .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#dttcshryhp .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dttcshryhp .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dttcshryhp .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#dttcshryhp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dttcshryhp .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#dttcshryhp .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#dttcshryhp .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#dttcshryhp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#dttcshryhp .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#dttcshryhp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dttcshryhp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dttcshryhp .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#dttcshryhp .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#dttcshryhp .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#dttcshryhp .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#dttcshryhp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#dttcshryhp .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#dttcshryhp .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#dttcshryhp .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#dttcshryhp .gt_center {
+  text-align: center;
+}
+
+#dttcshryhp .gt_left {
+  text-align: left;
+}
+
+#dttcshryhp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dttcshryhp .gt_font_normal {
+  font-weight: normal;
+}
+
+#dttcshryhp .gt_font_bold {
+  font-weight: bold;
+}
+
+#dttcshryhp .gt_font_italic {
+  font-style: italic;
+}
+
+#dttcshryhp .gt_super {
+  font-size: 65%;
+}
+
+#dttcshryhp .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="dttcshryhp" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>23</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+<td class='gt_row gt_right gt_striped'>25</td>
+<td class='gt_row gt_right gt_striped'>30</td>
+<td class='gt_row gt_right gt_striped'>36</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>22</td>
+<td class='gt_row gt_right'>18</td>
+<td class='gt_row gt_right'>17</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13</td>
+<td class='gt_row gt_right gt_striped'>22</td>
+<td class='gt_row gt_right gt_striped'>26</td>
+<td class='gt_row gt_right gt_striped'>28</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10</td>
+<td class='gt_row gt_right'>21</td>
+<td class='gt_row gt_right'>29</td>
+<td class='gt_row gt_right'>12</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24</td>
+<td class='gt_row gt_right gt_striped'>17</td>
+<td class='gt_row gt_right gt_striped'>20</td>
+<td class='gt_row gt_right gt_striped'>18</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19</td>
+<td class='gt_row gt_right'>39</td>
+<td class='gt_row gt_right'>40</td>
+<td class='gt_row gt_right'>29</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>16</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14</td>
+<td class='gt_row gt_right'>30</td>
+<td class='gt_row gt_right'>15</td>
+<td class='gt_row gt_right'>27</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+<td class='gt_row gt_right gt_striped'>21</td>
+<td class='gt_row gt_right gt_striped'>14</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Format columns
+
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?")
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#gljzjadfcs .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#gljzjadfcs .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#gljzjadfcs .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gljzjadfcs .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gljzjadfcs .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#gljzjadfcs .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#gljzjadfcs .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#gljzjadfcs .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#gljzjadfcs .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#gljzjadfcs .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#gljzjadfcs .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#gljzjadfcs .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gljzjadfcs .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gljzjadfcs .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#gljzjadfcs .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#gljzjadfcs .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#gljzjadfcs .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#gljzjadfcs .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#gljzjadfcs .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#gljzjadfcs .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#gljzjadfcs .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#gljzjadfcs .gt_center {
+  text-align: center;
+}
+
+#gljzjadfcs .gt_left {
+  text-align: left;
+}
+
+#gljzjadfcs .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gljzjadfcs .gt_font_normal {
+  font-weight: normal;
+}
+
+#gljzjadfcs .gt_font_bold {
+  font-weight: bold;
+}
+
+#gljzjadfcs .gt_font_italic {
+  font-style: italic;
+}
+
+#gljzjadfcs .gt_super {
+  font-size: 65%;
+}
+
+#gljzjadfcs .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="gljzjadfcs" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24&percnt;</td>
+<td class='gt_row gt_right'>21&percnt;</td>
+<td class='gt_row gt_right'>19&percnt;</td>
+<td class='gt_row gt_right'>23&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+<td class='gt_row gt_right gt_striped'>25&percnt;</td>
+<td class='gt_row gt_right gt_striped'>30&percnt;</td>
+<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10&percnt;</td>
+<td class='gt_row gt_right'>22&percnt;</td>
+<td class='gt_row gt_right'>18&percnt;</td>
+<td class='gt_row gt_right'>17&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13&percnt;</td>
+<td class='gt_row gt_right gt_striped'>22&percnt;</td>
+<td class='gt_row gt_right gt_striped'>26&percnt;</td>
+<td class='gt_row gt_right gt_striped'>28&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10&percnt;</td>
+<td class='gt_row gt_right'>21&percnt;</td>
+<td class='gt_row gt_right'>29&percnt;</td>
+<td class='gt_row gt_right'>12&percnt;</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24&percnt;</td>
+<td class='gt_row gt_right gt_striped'>17&percnt;</td>
+<td class='gt_row gt_right gt_striped'>20&percnt;</td>
+<td class='gt_row gt_right gt_striped'>18&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19&percnt;</td>
+<td class='gt_row gt_right'>39&percnt;</td>
+<td class='gt_row gt_right'>40&percnt;</td>
+<td class='gt_row gt_right'>29&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>16&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14&percnt;</td>
+<td class='gt_row gt_right'>30&percnt;</td>
+<td class='gt_row gt_right'>15&percnt;</td>
+<td class='gt_row gt_right'>27&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+<td class='gt_row gt_right gt_striped'>21&percnt;</td>
+<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+</tr>
+</tbody>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Add a source note
+
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %&gt;% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#urhagbpvip .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#urhagbpvip .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#urhagbpvip .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#urhagbpvip .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#urhagbpvip .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#urhagbpvip .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#urhagbpvip .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#urhagbpvip .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#urhagbpvip .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#urhagbpvip .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#urhagbpvip .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#urhagbpvip .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#urhagbpvip .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#urhagbpvip .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#urhagbpvip .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#urhagbpvip .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#urhagbpvip .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#urhagbpvip .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#urhagbpvip .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#urhagbpvip .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#urhagbpvip .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#urhagbpvip .gt_center {
+  text-align: center;
+}
+
+#urhagbpvip .gt_left {
+  text-align: left;
+}
+
+#urhagbpvip .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#urhagbpvip .gt_font_normal {
+  font-weight: normal;
+}
+
+#urhagbpvip .gt_font_bold {
+  font-weight: bold;
+}
+
+#urhagbpvip .gt_font_italic {
+  font-style: italic;
+}
+
+#urhagbpvip .gt_super {
+  font-size: 65%;
+}
+
+#urhagbpvip .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="urhagbpvip" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right'>24&percnt;</td>
+<td class='gt_row gt_right'>21&percnt;</td>
+<td class='gt_row gt_right'>19&percnt;</td>
+<td class='gt_row gt_right'>23&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+<td class='gt_row gt_right gt_striped'>25&percnt;</td>
+<td class='gt_row gt_right gt_striped'>30&percnt;</td>
+<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right'>10&percnt;</td>
+<td class='gt_row gt_right'>22&percnt;</td>
+<td class='gt_row gt_right'>18&percnt;</td>
+<td class='gt_row gt_right'>17&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped'>13&percnt;</td>
+<td class='gt_row gt_right gt_striped'>22&percnt;</td>
+<td class='gt_row gt_right gt_striped'>26&percnt;</td>
+<td class='gt_row gt_right gt_striped'>28&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right'>10&percnt;</td>
+<td class='gt_row gt_right'>21&percnt;</td>
+<td class='gt_row gt_right'>29&percnt;</td>
+<td class='gt_row gt_right'>12&percnt;</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped'>24&percnt;</td>
+<td class='gt_row gt_right gt_striped'>17&percnt;</td>
+<td class='gt_row gt_right gt_striped'>20&percnt;</td>
+<td class='gt_row gt_right gt_striped'>18&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right'>19&percnt;</td>
+<td class='gt_row gt_right'>39&percnt;</td>
+<td class='gt_row gt_right'>40&percnt;</td>
+<td class='gt_row gt_right'>29&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>16&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right'>14&percnt;</td>
+<td class='gt_row gt_right'>30&percnt;</td>
+<td class='gt_row gt_right'>15&percnt;</td>
+<td class='gt_row gt_right'>27&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+<td class='gt_row gt_right gt_striped'>21&percnt;</td>
+<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan='6' class='gt_sourcenote'>Data from <a href="https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/">fivethirtyeight</a></td>
+</tr>
+</tfoot>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# Color cells
+
+```r
+smry %&gt;% 
+  mutate_at(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`), ~./100) %&gt;% 
+  group_by(gender) %&gt;% 
+  gt() %&gt;% 
+  tab_spanner(label = "Age Range",
+              columns = vars(`18-29`, `30-44`, `45-60`, `&gt; 60`)) %&gt;% 
+  fmt_percent(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+              decimals = 0) %&gt;% 
+  cols_label(recline_frequency = "Recline") %&gt;% 
+  data_color(vars(`18-29`, `30-44`, `45-60`, `&gt; 60`),
+             colors = scales::col_numeric(palette = c(c("#FFFFFF", "#FF0000")), domain = NULL)) %&gt;% 
+  cols_align(align = "left", columns = vars(recline_frequency)) %&gt;% 
+  tab_header(title = "Airline Passengers",
+             subtitle = "Leg space is limited, what do you do?") %&gt;% 
+  tab_source_note(source_note = md("Data from [fivethirtyeight](https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/)"))
+```
+
+---
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#sexfckvuoo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+}
+
+#sexfckvuoo .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#sexfckvuoo .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 1px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sexfckvuoo .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 1px;
+  padding-bottom: 4px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sexfckvuoo .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#sexfckvuoo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sexfckvuoo .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#sexfckvuoo .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#sexfckvuoo .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#sexfckvuoo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#sexfckvuoo .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#sexfckvuoo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sexfckvuoo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sexfckvuoo .gt_row {
+  padding: 10px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#sexfckvuoo .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#sexfckvuoo .gt_stub.gt_row {
+  background-color: #FFFFFF;
+}
+
+#sexfckvuoo .gt_summary_row {
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 6px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#sexfckvuoo .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#sexfckvuoo .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#sexfckvuoo .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#sexfckvuoo .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#sexfckvuoo .gt_center {
+  text-align: center;
+}
+
+#sexfckvuoo .gt_left {
+  text-align: left;
+}
+
+#sexfckvuoo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sexfckvuoo .gt_font_normal {
+  font-weight: normal;
+}
+
+#sexfckvuoo .gt_font_bold {
+  font-weight: bold;
+}
+
+#sexfckvuoo .gt_font_italic {
+  font-style: italic;
+}
+
+#sexfckvuoo .gt_super {
+  font-size: 65%;
+}
+
+#sexfckvuoo .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="sexfckvuoo" style="overflow-x:auto;"><!--gt table start-->
+<table class='gt_table'>
+<thead>
+<tr>
+<th colspan='5' class='gt_heading gt_title gt_font_normal gt_center' >Airline Passengers</th>
+</tr>
+<tr>
+<th colspan='5' class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border' >Leg space is limited, what do you do?</th>
+</tr>
+</thead>
+<tr>
+<th class='gt_col_heading gt_center' rowspan='2' colspan='1'>Recline</th>
+<th class='gt_col_heading gt_column_spanner gt_center' rowspan='1' colspan='4'>Age Range</th>
+</tr>
+<tr>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>18-29</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>30-44</th>
+<th class='gt_col_heading gt_right' rowspan='1' colspan='1'>45-60</th>
+<th class='gt_col_heading gt_NA' rowspan='1' colspan='1'>&gt; 60</th>
+</tr>
+<tbody class='gt_table_body'>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Female</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Never</td>
+<td class='gt_row gt_right' style="background-color:#FF9678;color:#000000FF;">24&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFE1D6;color:#000000FF;">19&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFA286;color:#000000FF;">23&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Once in a while</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9E81;color:#000000FF;">25&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF896A;color:#000000FF;">30&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>About half the time</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFB39B;color:#000000FF;">22&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFE8E0;color:#000000FF;">18&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFD1C1;color:#000000FF;">17&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Usually</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE9E1;color:#000000FF;">13&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFB39B;color:#000000FF;">22&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFAA90;color:#000000FF;">26&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF7857;color:#000000FF;">28&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Always</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF9273;color:#000000FF;">29&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFF7F5;color:#000000FF;">12&percnt;</td>
+</tr>
+<tr class='gt_group_heading_row'>
+<td colspan='5' class='gt_group_heading'>Male</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Never</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9678;color:#000000FF;">24&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD6C8;color:#000000FF;">17&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD9CB;color:#000000FF;">20&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFC9B7;color:#000000FF;">18&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Once in a while</td>
+<td class='gt_row gt_right' style="background-color:#FFBDA7;color:#000000FF;">19&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">39&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">40&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF6F4D;color:#000000FF;">29&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>About half the time</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF7F5;color:#000000FF;">16&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left'>Usually</td>
+<td class='gt_row gt_right' style="background-color:#FFE2D7;color:#000000FF;">14&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF7857;color:#000000FF;">30&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">15&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF8160;color:#000000FF;">27&percnt;</td>
+</tr>
+<tr>
+<td class='gt_row gt_left gt_striped'>Always</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFEBE3;color:#000000FF;">14&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD1C1;color:#000000FF;">21&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE8E0;color:#000000FF;">14&percnt;</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan='6' class='gt_sourcenote'>Data from <a href="https://fivethirtyeight.com/features/airplane-etiquette-recline-seat/">fivethirtyeight</a></td>
+</tr>
+</tfoot>
+</table>
+<!--gt table end-->
+</div>
+
+---
+# What else?
+.pull-left[
+* Lots more it can do, and lots more in development
+* See the [website](https://gt.rstudio.com)
+]
+
+--
+.pull-right[
+gtcars case study is worth going through
+![](https://gt.rstudio.com/articles/images/gtcars.svg)
+]
+
+
+---
+class: da center middle
+# APA Manuscripts 
+## 10:35 - 11:00 am
+
+---
+# {papaja}
+
+Despite having been around for  about 4 years 
+[{papaja}](https://github.com/crsh/papaja) is still not on CRAN. 
+
+More evidence that some of the best packages are not on CRAN.
+
+
+--
+Install with devtools
+
+
+```r
+devtools::install_github("crsh/papaja")
+```
+
+---
+# WIP
+
+The package is seemingly perpetually under development. What does this mean?
+
+--
+* Re-install regularly.
+
+--
+* Not everything may work perfect - don't worry though, most things do
+
+--
+* You may want to peruse the current [issues](https://github.com/crsh/papaja/issues)
+  + If you run into one (and you're sure it's an issue) consider opening one
+  yourself
+  + Bonus - the developer is very kind, so even if you open up a silly 
+  issue, he's likely to be understanding
+
+---
+# Use the template
+
+.pull-left[
+![](img/new-rmd.png)
+]
+
+.pull-right[
+![](img/from-template.png)
+]
+
+---
+# YAML
+A few more options than the default
+
+&lt;div&gt;
+&lt;img src = img/papaja-yaml.png height = 450&gt;
+&lt;/div&gt;
+
+
+---
+# First thing - Render!
+
+&lt;div&gt;
+&lt;img src = img/papaja-pdf1.png height = 450&gt;
+&lt;/div&gt;
+
+---
+# Modifications
+* Obvious ones
+  + title
+  + author &amp; author info
+  + abstract
+  + keywords
+
+--
+* Less obvious
+  + `shorttitle` (running head)
+  + `authornote` (can fully delete or modify)
+  + `wordcount` (fairly useless at this point imo)
+  + `bibliography` (we'll talk more about this momentarily)
+  + `linenumbers`
+  + floats 
+  + mask (for blind peer-review)
+  + `classoption`
+
+---
+# Let's play for a minute!
+Modify some of the options on the previous slide. 
+
+Specifically, try changing `classoption` from `man` to `jou`. Try other things
+too.
+
+
+---
+# Add some LaTeX options
+
+```
+header-includes:
+  - \raggedbottom
+  - \setlength{\parskip}{0pt}
+```
+
+This will help .gray[(save you lots of time googling)] remove the extra space
+between paragraphs.
+
+
+---
 class: da center middle
 # git/GitHub 
 ## An Introduction
 
 &lt;br&gt;
 
-### 10:15 - 11:00
+### 11:00 - 11:40am
 
 More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
 
@@ -120,8 +3550,15 @@ That's what we'll do today!
 
 ---
 class: jmr center middle
-# .gitignore
+# Using GitHub
 
+### 11:35 - 11:45am
+
+---
+
+# Example
+
+### [tidyLPA](https://github.com/data-edu/tidyLPA)
 
 ---
 # Ignoring Files
@@ -131,8 +3568,20 @@ class: jmr center middle
 
 ---
 class: inverse center middle
-# Wrap up
+# Wrapping up
 
+### 11:45am - 12:00pm
+
+Daniel Anderson
+- [daniela@uoregon.edu](mailto:daniela@uoregon.edu)
+- [@datalorax_](https://twitter.com/datalorax_)
+Joshua Rosenberg
+-[jmrosenberg@utk.edu](mailto:jmrosenberg@utk.edu)
+-[@jrosenberg6432][https://twitter.com/jrosenberg6432]
+
+Mailing list: [rr-in-edu@googlegroups.com](rr-in-edu@googlegroups.com)
+
+**Questions? Ideas? Thank you!**
 
 ---
 class: inverse center middle
