@@ -97,7 +97,7 @@ include_graphics("img/thefam.jpg")
 ]
 
 ```{r, out.width = "350px", echo = FALSE, fig.align = "center"}
-include_graphics("img/theforo")
+include_graphics("img/kr-joro.jpg")
 ```
 
 ---
@@ -630,36 +630,42 @@ class: jr center middle
 ---
 # Rendering R Markdown documents
 
-### Modify the YAML
+### Moify the YAML
 Get the same document to render to different formats by modifying the YAML to output HTML, PDF, and .docx
 
-From:
+From.pull-left[
+### From
 
-```
+```{}
 ---
 title: "My Document"
 author: "Stephanie Lawson"
 output: html_document
 ---
 ```
+]
 
-To:
 
-```
+.pull-right[
+### To
+
+```{}
 ---
 title: "My Document"
 author: "Stephanie Lawson"
 output: pdf_document
 ---
 ```
+]
 
----
 
 # Rendering to
 
 
 
----
+ HTML-----
+
+# Rendering to PDF-
 # Final Product
 
 .pull-left[
@@ -1104,9 +1110,9 @@ too.
 
 
 ---
-# Add some LaTeX option
+# Add some LaTeX options
 
-``s`
+```
 header-includes:
   - \raggedbottom
   - \setlength{\parskip}{0pt}
