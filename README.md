@@ -1,4 +1,4 @@
-# rr_aera19
+# AERA Workshop: Transparent and Reproducible Research with R 
 
 The proposal is [here](https://github.com/ResearchTransparency/rr_aera19/blob/master/proposal/combined-modified.pdf).
 
