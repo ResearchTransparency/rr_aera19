@@ -669,21 +669,25 @@ title: "My Document"
 author: "Stephanie Lawson"
 output: 
   html_document:
-    sadf
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
 ---
+```
 
 ---
 
 # Rendering to PDF
 
 ```
-
-```---
+---
 title: "My Document"
 author: "Stephanie Lawson"
 output: 
   pdf_document:
-    sadf
+    toc: true
+    number_sections: true
 ---
 
 ---
@@ -696,9 +700,7 @@ output:
 ---
 title: "My Document"
 author: "Stephanie Lawson"
-output: 
-  word_document:
-    sadf
+output: word_document
 ---
 ```
 
