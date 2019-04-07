@@ -1,0 +1,199 @@
+---
+title: "Transparent and Reproducible Research with R"
+subtitle: "And a bit of git/GitHub"
+author: 
+  - "Daniel Anderson "
+  - "Joshua M Rosenberg"
+date: "April 7, 2019"
+output:
+  xaringan::moon_reader:
+    css: ["default", "uo", "uo-fonts", "custom.css"]
+    lib_dir: libs
+    nature:
+      chakra: libs/remark.min.js
+      highlightStyle: atelier-dune-light
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "https://platform.twitter.com/widgets.js"
+---
+class: inverse
+background-image:url(https://media.giphy.com/media/yoJC2A59OCZHs1LXvW/giphy.gif)
+background-size:contain
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(knitr)
+opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+---
+# Agenda 
+
+# Last two hours
+- Advanced R Markdown functionality (10:15 - 11:00 minutes)
+  - Formatting tables (20 min.) <!-- DA -->
+  - Creating manuscripts to submit for publication (via {papaja}; 25 min.)
+
+- Use of git/GitHub for version control and collaboration (11:00 - 11:45)
+  - Introduction to GitHub, RStudio interface, and GitKraken GUI (20
+  min.) <!-- DA -->
+  - Making changes, committing them, and pushing them to the repository (15 min.) <!-- DA -->
+  - Use of GitHub (and ignoring specific files via `.gitignore`; 10 min.) <!-- JMR -->
+
+- Wrap-up/ideas for next steps/staying in touch (11:45 - 12:00)
+
+---
+class: da center middle
+# git/GitHub 
+## An Introduction
+
+<br>
+
+### 10:15 - 11:00
+
+More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
+
+---
+class: inverse middle
+background-image:url(img/final-doc.png)
+background-size:contain
+
+.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
+
+
+---
+### From swcarpentry
+![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
+
+We can think of the changes as separate from the document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
+
+This means there are many possible versions of the same document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
+
+Unless there are conflicts, two changes from the same document can be merged
+together
+
+<!-- Show repo for NCME pres & talk about publishing -->
+
+---
+class: inverse middle center
+# How?
+That's what we'll do today!
+
+---
+# Some basic terminology
+* Version Control System
+  + A tool to help us track changes. *git* is one such system.
+
+--
+* Commit
+  + Changes that have been made to the file(s)
+
+--
+* Repository (repo)
+  + Entire project (including history)
+
+--
+* Clone
+  + Download files locally
+
+--
+* Pull
+  + Get latest changes
+
+--
+* Push
+  + Send latest commits to remote repo
+
+---
+# Demo (30 minutes)
+### Goal: Get your work from this morning in a GitHub repo!
+* Create new repo
+* Clone it locally
+* Add your files
+* Commit
+* Push
+* Publish
+
+---
+class: jmr center middle
+# .gitignore
+
+
+---
+# Ignoring Files
+* When we initialized the repo, we started it with a `.gitignore` file
+* The `.gitignore` file tells the repo not to track certain files
+  + e.g., proprietary data
+
+---
+class: inverse center middle
+# Wrap up
+
+
+---
+class: inverse center middle
+# Appendix
+
+
+---
+class: inverse middle center
+# Citations
+
+---
+## Citations
+To include references in your paper, you must:
+* Create an external .bib file using LaTeX formatting (we'll get to this)
+* Include `bibliography: nameOfYourBibFile.bib` in your YAML front matter.
+* Refer to the citations in text using `@`
+
+---
+# Creating a .bib doc
+
+![](../img/googleScholarSearch.png)
+
+--
+<div>
+<img src = ../img/googleCite.png height = 300>
+</div>
+
+
+---
+![](img/googleBibTex.png)
+
+--
+
+![](img/bibEntry.png)
+
+
+---
+# In text citations
+
+```{r inTextCitesTable, echo = FALSE}
+style <- c("@Briggs11", "[see @Baldwin2014; @Caruso2000]", "[@Linn02, p. 9]", 
+          "[-@Goldhaber08]")
+out <- c("Briggs and Weeks (2011)", "(see Baldwin et al. 2014; Caruso 2000)",
+         "(Linn and Haug 2002, 9)", "(2008)")
+knitr::kable(data.frame(style, out), 
+        col.names = c("Citation Style", "Output"),
+        format = "html")
+```
+<br>
+
+Note this is not APA. However, references are included automatically at the end of the document. Include `# References` as the last line of your document to give it a title.
+
+---
+## A few real examples
+![](img/intext_ref1.png)
+![](img/intext_ref2.png)
+![](img/intext_ref3.png)
+
+---
+## References
+![](img/references.png)
+
