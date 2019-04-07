@@ -667,7 +667,10 @@ class: jmr center middle
 
 # Rendering and documents
 
-## 9:30 - 10:00am-
+## 9:30 - 10:00am
+
+---
+
 # Rendering R Markdown documents
 
 ## Modify the YAML
@@ -702,6 +705,8 @@ output: pdf_document
 
 # Rendering to HTML
 
+* Try publishing to R Pubs!
+
 ```
 ---
 title: "My Document"
@@ -733,8 +738,6 @@ This is another amazing package by Yihui Xie. See more about it
 [here](https://yihui.name/tinytex/)
 
 ---
-
-ndering to PDF
 
 ```
 ---
