@@ -547,7 +547,9 @@ class: jmr center middle
 
 # Example
 
-### [tidyLPA](https://github.com/data-edu/tidyLPA)
+### tidyLPA
+
+[tidyLPA R package](https://github.com/data-edu/tidyLPA)
 
 ---
 # Ignoring Files
