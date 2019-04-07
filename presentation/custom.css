@@ -52,11 +52,13 @@
   font-size: 0.8em;
 }
 
+
 .title-slide h1 {
   padding-top: 180px;
 }
 
 .title-slide {
-  background-image: url('https://raw.githubusercontent.com/ResearchTransparency/rr_aera19/master/presentation/img/uo-ut-logo.png');
+  background-image: url(img/uo-ut-logo.png);
   background-position: 95% 95%;
+  background-size: 250px;
 }
