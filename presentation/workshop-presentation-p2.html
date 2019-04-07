@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Transparent and Reproducible Research with R (Part 2)</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Daniel Anderson" />
+    <meta name="author" content="Joshua M Rosenberg" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/uo.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/uo-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Transparent and Reproducible Research with R (Part 2)
+## And a bit of git/GitHub
+### Daniel Anderson
+### Joshua M Rosenberg
+### April 7, 2019
+
+---
+
+
+
+
+# Agenda 
+
+# Last two hours
+- Advanced R Markdown functionality (10:15 - 11:00 minutes)
+  - Formatting tables (20 min.) &lt;!-- DA --&gt;
+  - Creating manuscripts to submit for publication (via {papaja}; 25 min.)
+
+- Use of git/GitHub for version control and collaboration (11:00 - 11:45)
+  - Introduction to GitHub, RStudio interface, and GitKraken GUI (20
+  min.) &lt;!-- DA --&gt;
+  - Making changes, committing them, and pushing them to the repository (15 min.) &lt;!-- DA --&gt;
+  - Use of GitHub (and ignoring specific files via `.gitignore`; 10 min.) &lt;!-- JMR --&gt;
+
+- Wrap-up/ideas for next steps/staying in touch (11:45 - 12:00)
+
+---
+class: da center middle
+# git/GitHub 
+## An Introduction
+
+&lt;br&gt;
+
+### 10:15 - 11:00
+
+More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
+
+---
+class: inverse middle
+background-image:url(img/final-doc.png)
+background-size:contain
+
+.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
+
+
+---
+### From swcarpentry
+![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
+
+We can think of the changes as separate from the document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
+
+This means there are many possible versions of the same document
+
+---
+![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
+
+Unless there are conflicts, two changes from the same document can be merged
+together
+
+&lt;!-- Show repo for NCME pres &amp; talk about publishing --&gt;
+
+---
+class: inverse middle center
+# How?
+That's what we'll do today!
+
+---
+# Some basic terminology
+* Version Control System
+  + A tool to help us track changes. *git* is one such system.
+
+--
+* Commit
+  + Changes that have been made to the file(s)
+
+--
+* Repository (repo)
+  + Entire project (including history)
+
+--
+* Clone
+  + Download files locally
+
+--
+* Pull
+  + Get latest changes
+
+--
+* Push
+  + Send latest commits to remote repo
+
+---
+# Demo (30 minutes)
+### Goal: Get your work from this morning in a GitHub repo!
+* Create new repo
+* Clone it locally
+* Add your files
+* Commit
+* Push
+* Publish
+
+---
+class: jmr center middle
+# .gitignore
+
+
+---
+# Ignoring Files
+* When we initialized the repo, we started it with a `.gitignore` file
+* The `.gitignore` file tells the repo not to track certain files
+  + e.g., proprietary data
+
+---
+class: inverse center middle
+# Wrap up
+
+
+---
+class: inverse center middle
+# Appendix
+
+
+---
+class: inverse middle center
+# Citations
+
+---
+## Citations
+To include references in your paper, you must:
+* Create an external .bib file using LaTeX formatting (we'll get to this)
+* Include `bibliography: nameOfYourBibFile.bib` in your YAML front matter.
+* Refer to the citations in text using `@`
+
+---
+# Creating a .bib doc
+
+![](../img/googleScholarSearch.png)
+
+--
+&lt;div&gt;
+&lt;img src = ../img/googleCite.png height = 300&gt;
+&lt;/div&gt;
+
+
+---
+![](img/googleBibTex.png)
+
+--
+
+![](img/bibEntry.png)
+
+
+---
+# In text citations
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Citation Style &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Output &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; @Briggs11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Briggs and Weeks (2011) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [see @Baldwin2014; @Caruso2000] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (see Baldwin et al. 2014; Caruso 2000) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [@Linn02, p. 9] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Linn and Haug 2002, 9) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [-@Goldhaber08] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (2008) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br&gt;
+
+Note this is not APA. However, references are included automatically at the end of the document. Include `# References` as the last line of your document to give it a title.
+
+---
+## A few real examples
+![](img/intext_ref1.png)
+![](img/intext_ref2.png)
+![](img/intext_ref3.png)
+
+---
+## References
+![](img/references.png)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"chakra": "libs/remark.min.js",
+"highlightStyle": "atelier-dune-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
