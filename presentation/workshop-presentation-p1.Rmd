@@ -663,8 +663,7 @@ output: pdf_document
 # Rendering to HTML
 
 ```
-
-```---
+---
 title: "My Document"
 author: "Stephanie Lawson"
 output: 
@@ -689,14 +688,13 @@ output:
     toc: true
     number_sections: true
 ---
+```
 
 ---
 
 # Rendering to .docx
 
 ```
-
-``
 ---
 title: "My Document"
 author: "Stephanie Lawson"
@@ -704,6 +702,7 @@ output: word_document
 ---
 ```
 
+---
 # Final Product
 
 .pull-left[
@@ -724,9 +723,36 @@ class: jmr center middle
 # Public work
 ## And different output formats
 
-### 9:30
+### 9:35 - 9:45 am
+---
+
+# Public work
+
+.pull-left[
+### Benefits
+* Working in the public has potential benefits:
+  * People know what your expertise is
+  * Potential colleagues can reach out to you for collaborations
+  * Allow others to build upon your work
+]
+
+.  * Build a network
+pull-right[
+### Dilemmas
+* Working in the public has *some* potential dilemmas/drawbacks to manage:
+  
+]
+-* Sometimes difficult to share pre-prints (due to copyright issues)
+  * Getting 'scooped'
+  * Often difficult to share data--
+
+# Open Science Framework
 
 ---
+- Offers a platform in which you can store *private* data
+- Allows you to import GitHub repositories (which can be public)
+- Has an Application Programming Interface (API) to connect with R
+
 # {tinytex}
 * Need a tex (pronounced tek) distribution
   + My recommendation for this class, and probs everything you'll ever need: 
