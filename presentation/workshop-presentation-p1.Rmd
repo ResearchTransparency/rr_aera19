@@ -287,6 +287,7 @@ class: jmr center middle
 # Open science and R Markdown basics 
 
 ### 8:35 - 8:45 am
+
 ---
 
 # Open science and public work
@@ -294,24 +295,22 @@ class: jmr center middle
 .pull-left[
 ### Benefits
 * Working in the public has potential benefits:
-  * People know what your expertise is
   * Potential colleagues can reach out to you
-  * Allow others to build upon your work
   * Garner interest from editors/senior colleagues
+  * Know where to find your own work (not trivial!)
+  * Exercise your *open science* muscles
 ]
 
-.  * Know where to find your own work (not trivial!)
-  * Exercise your *open science* muscles
-pull-right[
+.pull-right[
 ### Dilemmas
 * Working in the public has *some* potential dilemmas/drawbacks to manage:
-  * Sometimes difficult to share pre-prints (due to copyright issues)
-  * Getting 'scooped'
-  *? Often difficult to share data
+  * Sometimes difficult to share pre-prints
+  * Difficulty sharing data
+  * Pushback from colleagues/mentors/gatekeeperes
 ]
---  * Pushback from colleagues/mentors/gatekeeperes
--
 
+
+---
 # Open Science Framework
 
 - Offers a platform in which you can store *private* data
@@ -343,7 +342,7 @@ From within your R Studio Project:
 class: inverse center middle
 # Create new a R Markdown doc
 
-### ### Try it out!
+### Try it out!
 
 
 # YAML Front Matter
@@ -719,7 +718,7 @@ output:
 
 ---
 
-# Re# Rendering to a PDF
+# Rendering to a PDF
 * Need a tex (pronounced tek) distribution
   + Our recommendation for this workshop with probably everything you'll ever need: 
     {tinytex}
