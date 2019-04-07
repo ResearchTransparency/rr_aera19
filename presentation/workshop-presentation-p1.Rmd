@@ -630,13 +630,13 @@ class: jr center middle
 ---
 # Rendering R Markdown documents
 
-### Moify the YAML
+## Modify the YAML
 Get the same document to render to different formats by modifying the YAML to output HTML, PDF, and .docx
 
-From.pull-left[
+.pull-left[
 ### From
 
-```{}
+```
 ---
 title: "My Document"
 author: "Stephanie Lawson"
@@ -649,7 +649,7 @@ output: html_document
 .pull-right[
 ### To
 
-```{}
+```
 ---
 title: "My Document"
 author: "Stephanie Lawson"
@@ -658,14 +658,50 @@ output: pdf_document
 ```
 ]
 
+---
 
-# Rendering to
+# Rendering to HTML
 
+```
 
+```---
+title: "My Document"
+author: "Stephanie Lawson"
+output: 
+  html_document:
+    sadf
+---
 
- HTML-----
+---
 
-# Rendering to PDF-
+# Rendering to PDF
+
+```
+
+```---
+title: "My Document"
+author: "Stephanie Lawson"
+output: 
+  pdf_document:
+    sadf
+---
+
+---
+
+# Rendering to .docx
+
+```
+
+``
+---
+title: "My Document"
+author: "Stephanie Lawson"
+output: 
+  word_document:
+    sadf
+---
+```
+
 # Final Product
 
 .pull-left[
