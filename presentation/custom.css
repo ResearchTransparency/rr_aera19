@@ -52,7 +52,6 @@
   font-size: 0.8em;
 }
 
-
 .title-slide h1 {
   padding-top: 180px;
 }
@@ -61,4 +60,5 @@
   background-image: url(img/uo-ut-logo.png);
   background-position: 95% 95%;
   background-size: 250px;
+    border: 10px solid #FF8200;
 }
