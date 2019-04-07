@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Daniel Anderson" />
     <meta name="author" content="Joshua M Rosenberg" />
+    <meta name="date" content="2019-04-07" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/uo.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/uo-fonts.css" rel="stylesheet" />
@@ -90,18 +91,18 @@ flying
 
 ```
 ## # A tibble: 1,040 x 27
-##    respondent_id gender age   height children_under_… household_income
-##            &lt;dbl&gt; &lt;chr&gt;  &lt;ord&gt; &lt;ord&gt;  &lt;lgl&gt;            &lt;ord&gt;           
-##  1    3436139758 &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   NA               &lt;NA&gt;            
-##  2    3434278696 Male   30-44 "6'3\… TRUE             &lt;NA&gt;            
-##  3    3434275578 Male   30-44 "5'8\… FALSE            $100,000 - $149…
-##  4    3434268208 Male   30-44 "5'11… FALSE            $0 - $24,999    
-##  5    3434250245 Male   30-44 "5'7\… FALSE            $50,000 - $99,9…
-##  6    3434245875 Male   30-44 "5'9\… TRUE             $25,000 - $49,9…
-##  7    3434235351 Male   30-44 "6'2\… TRUE             &lt;NA&gt;            
-##  8    3434218031 Male   30-44 "6'0\… TRUE             $0 - $24,999    
-##  9    3434213681 &lt;NA&gt;   &lt;NA&gt;  "6'0\… TRUE             &lt;NA&gt;            
-## 10    3434172894 Male   30-44 "5'6\… FALSE            $0 - $24,999    
+##    respondent_id gender age   height children_under_18 household_income
+##            &lt;dbl&gt; &lt;chr&gt;  &lt;ord&gt; &lt;ord&gt;  &lt;lgl&gt;             &lt;ord&gt;           
+##  1    3436139758 &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   NA                &lt;NA&gt;            
+##  2    3434278696 Male   30-44 "6'3\… TRUE              &lt;NA&gt;            
+##  3    3434275578 Male   30-44 "5'8\… FALSE             $100,000 - $149…
+##  4    3434268208 Male   30-44 "5'11… FALSE             $0 - $24,999    
+##  5    3434250245 Male   30-44 "5'7\… FALSE             $50,000 - $99,9…
+##  6    3434245875 Male   30-44 "5'9\… TRUE              $25,000 - $49,9…
+##  7    3434235351 Male   30-44 "6'2\… TRUE              &lt;NA&gt;            
+##  8    3434218031 Male   30-44 "6'0\… TRUE              $0 - $24,999    
+##  9    3434213681 &lt;NA&gt;   &lt;NA&gt;  "6'0\… TRUE              &lt;NA&gt;            
+## 10    3434172894 Male   30-44 "5'6\… FALSE             $0 - $24,999    
 ## # … with 1,030 more rows, and 21 more variables: education &lt;ord&gt;,
 ## #   location &lt;chr&gt;, frequency &lt;ord&gt;, recline_frequency &lt;ord&gt;,
 ## #   recline_obligation &lt;lgl&gt;, recline_rude &lt;ord&gt;, recline_eliminate &lt;lgl&gt;,
@@ -245,23 +246,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -269,23 +270,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -336,17 +337,17 @@ smry %&gt;%
 
 #bbwxtmlkgs .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #bbwxtmlkgs .gt_footnote {
@@ -596,23 +597,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -620,23 +621,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -687,17 +688,17 @@ smry %&gt;%
 
 #uanvzffarx .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #uanvzffarx .gt_footnote {
@@ -942,23 +943,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -966,23 +967,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -1033,17 +1034,17 @@ smry %&gt;%
 
 #jdlunlcpbf .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #jdlunlcpbf .gt_footnote {
@@ -1291,23 +1292,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -1315,23 +1316,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -1382,17 +1383,17 @@ smry %&gt;%
 
 #riywaplmia .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #riywaplmia .gt_footnote {
@@ -1641,23 +1642,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -1665,23 +1666,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -1732,17 +1733,17 @@ smry %&gt;%
 
 #kzxeuvesub .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #kzxeuvesub .gt_footnote {
@@ -1993,23 +1994,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2017,23 +2018,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2084,17 +2085,17 @@ smry %&gt;%
 
 #bnufdhskxa .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #bnufdhskxa .gt_footnote {
@@ -2356,23 +2357,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2380,23 +2381,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2447,17 +2448,17 @@ smry %&gt;%
 
 #trhmfbkgik .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #trhmfbkgik .gt_footnote {
@@ -2534,76 +2535,76 @@ smry %&gt;%
 </tr>
 <tr>
 <td class='gt_row gt_left'>Never</td>
-<td class='gt_row gt_right'>24&percnt;</td>
-<td class='gt_row gt_right'>21&percnt;</td>
-<td class='gt_row gt_right'>19&percnt;</td>
-<td class='gt_row gt_right'>23&percnt;</td>
+<td class='gt_row gt_right'>24%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>23%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Once in a while</td>
-<td class='gt_row gt_right gt_striped'>36&percnt;</td>
-<td class='gt_row gt_right gt_striped'>25&percnt;</td>
-<td class='gt_row gt_right gt_striped'>30&percnt;</td>
-<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+<td class='gt_row gt_right gt_striped'>25%</td>
+<td class='gt_row gt_right gt_striped'>30%</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>About half the time</td>
-<td class='gt_row gt_right'>10&percnt;</td>
-<td class='gt_row gt_right'>22&percnt;</td>
-<td class='gt_row gt_right'>18&percnt;</td>
-<td class='gt_row gt_right'>17&percnt;</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>22%</td>
+<td class='gt_row gt_right'>18%</td>
+<td class='gt_row gt_right'>17%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Usually</td>
-<td class='gt_row gt_right gt_striped'>13&percnt;</td>
-<td class='gt_row gt_right gt_striped'>22&percnt;</td>
-<td class='gt_row gt_right gt_striped'>26&percnt;</td>
-<td class='gt_row gt_right gt_striped'>28&percnt;</td>
+<td class='gt_row gt_right gt_striped'>13%</td>
+<td class='gt_row gt_right gt_striped'>22%</td>
+<td class='gt_row gt_right gt_striped'>26%</td>
+<td class='gt_row gt_right gt_striped'>28%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Always</td>
-<td class='gt_row gt_right'>10&percnt;</td>
-<td class='gt_row gt_right'>21&percnt;</td>
-<td class='gt_row gt_right'>29&percnt;</td>
-<td class='gt_row gt_right'>12&percnt;</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>29%</td>
+<td class='gt_row gt_right'>12%</td>
 </tr>
 <tr class='gt_group_heading_row'>
 <td colspan='5' class='gt_group_heading'>Male</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Never</td>
-<td class='gt_row gt_right gt_striped'>24&percnt;</td>
-<td class='gt_row gt_right gt_striped'>17&percnt;</td>
-<td class='gt_row gt_right gt_striped'>20&percnt;</td>
-<td class='gt_row gt_right gt_striped'>18&percnt;</td>
+<td class='gt_row gt_right gt_striped'>24%</td>
+<td class='gt_row gt_right gt_striped'>17%</td>
+<td class='gt_row gt_right gt_striped'>20%</td>
+<td class='gt_row gt_right gt_striped'>18%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Once in a while</td>
-<td class='gt_row gt_right'>19&percnt;</td>
-<td class='gt_row gt_right'>39&percnt;</td>
-<td class='gt_row gt_right'>40&percnt;</td>
-<td class='gt_row gt_right'>29&percnt;</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>39%</td>
+<td class='gt_row gt_right'>40%</td>
+<td class='gt_row gt_right'>29%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>About half the time</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>16&percnt;</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>16%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Usually</td>
-<td class='gt_row gt_right'>14&percnt;</td>
-<td class='gt_row gt_right'>30&percnt;</td>
-<td class='gt_row gt_right'>15&percnt;</td>
-<td class='gt_row gt_right'>27&percnt;</td>
+<td class='gt_row gt_right'>14%</td>
+<td class='gt_row gt_right'>30%</td>
+<td class='gt_row gt_right'>15%</td>
+<td class='gt_row gt_right'>27%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Always</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>14&percnt;</td>
-<td class='gt_row gt_right gt_striped'>21&percnt;</td>
-<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+<td class='gt_row gt_right gt_striped'>21%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
 </tr>
 </tbody>
 </table>
@@ -2720,23 +2721,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2744,23 +2745,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -2811,17 +2812,17 @@ smry %&gt;%
 
 #iqvmcgvqrl .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #iqvmcgvqrl .gt_footnote {
@@ -2898,76 +2899,76 @@ smry %&gt;%
 </tr>
 <tr>
 <td class='gt_row gt_left'>Never</td>
-<td class='gt_row gt_right'>24&percnt;</td>
-<td class='gt_row gt_right'>21&percnt;</td>
-<td class='gt_row gt_right'>19&percnt;</td>
-<td class='gt_row gt_right'>23&percnt;</td>
+<td class='gt_row gt_right'>24%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>23%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Once in a while</td>
-<td class='gt_row gt_right gt_striped'>36&percnt;</td>
-<td class='gt_row gt_right gt_striped'>25&percnt;</td>
-<td class='gt_row gt_right gt_striped'>30&percnt;</td>
-<td class='gt_row gt_right gt_striped'>36&percnt;</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
+<td class='gt_row gt_right gt_striped'>25%</td>
+<td class='gt_row gt_right gt_striped'>30%</td>
+<td class='gt_row gt_right gt_striped'>36%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>About half the time</td>
-<td class='gt_row gt_right'>10&percnt;</td>
-<td class='gt_row gt_right'>22&percnt;</td>
-<td class='gt_row gt_right'>18&percnt;</td>
-<td class='gt_row gt_right'>17&percnt;</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>22%</td>
+<td class='gt_row gt_right'>18%</td>
+<td class='gt_row gt_right'>17%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Usually</td>
-<td class='gt_row gt_right gt_striped'>13&percnt;</td>
-<td class='gt_row gt_right gt_striped'>22&percnt;</td>
-<td class='gt_row gt_right gt_striped'>26&percnt;</td>
-<td class='gt_row gt_right gt_striped'>28&percnt;</td>
+<td class='gt_row gt_right gt_striped'>13%</td>
+<td class='gt_row gt_right gt_striped'>22%</td>
+<td class='gt_row gt_right gt_striped'>26%</td>
+<td class='gt_row gt_right gt_striped'>28%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Always</td>
-<td class='gt_row gt_right'>10&percnt;</td>
-<td class='gt_row gt_right'>21&percnt;</td>
-<td class='gt_row gt_right'>29&percnt;</td>
-<td class='gt_row gt_right'>12&percnt;</td>
+<td class='gt_row gt_right'>10%</td>
+<td class='gt_row gt_right'>21%</td>
+<td class='gt_row gt_right'>29%</td>
+<td class='gt_row gt_right'>12%</td>
 </tr>
 <tr class='gt_group_heading_row'>
 <td colspan='5' class='gt_group_heading'>Male</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Never</td>
-<td class='gt_row gt_right gt_striped'>24&percnt;</td>
-<td class='gt_row gt_right gt_striped'>17&percnt;</td>
-<td class='gt_row gt_right gt_striped'>20&percnt;</td>
-<td class='gt_row gt_right gt_striped'>18&percnt;</td>
+<td class='gt_row gt_right gt_striped'>24%</td>
+<td class='gt_row gt_right gt_striped'>17%</td>
+<td class='gt_row gt_right gt_striped'>20%</td>
+<td class='gt_row gt_right gt_striped'>18%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Once in a while</td>
-<td class='gt_row gt_right'>19&percnt;</td>
-<td class='gt_row gt_right'>39&percnt;</td>
-<td class='gt_row gt_right'>40&percnt;</td>
-<td class='gt_row gt_right'>29&percnt;</td>
+<td class='gt_row gt_right'>19%</td>
+<td class='gt_row gt_right'>39%</td>
+<td class='gt_row gt_right'>40%</td>
+<td class='gt_row gt_right'>29%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>About half the time</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>16&percnt;</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>16%</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Usually</td>
-<td class='gt_row gt_right'>14&percnt;</td>
-<td class='gt_row gt_right'>30&percnt;</td>
-<td class='gt_row gt_right'>15&percnt;</td>
-<td class='gt_row gt_right'>27&percnt;</td>
+<td class='gt_row gt_right'>14%</td>
+<td class='gt_row gt_right'>30%</td>
+<td class='gt_row gt_right'>15%</td>
+<td class='gt_row gt_right'>27%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Always</td>
-<td class='gt_row gt_right gt_striped'>11&percnt;</td>
-<td class='gt_row gt_right gt_striped'>14&percnt;</td>
-<td class='gt_row gt_right gt_striped'>21&percnt;</td>
-<td class='gt_row gt_right gt_striped'>14&percnt;</td>
+<td class='gt_row gt_right gt_striped'>11%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
+<td class='gt_row gt_right gt_striped'>21%</td>
+<td class='gt_row gt_right gt_striped'>14%</td>
 </tr>
 </tbody>
 <tfoot>
@@ -3090,23 +3091,23 @@ smry %&gt;%
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -3114,23 +3115,23 @@ smry %&gt;%
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
-  /* row_group.background.color */
+  /* stub_group.background.color */
   font-size: 16px;
-  /* row_group.font.size */
+  /* stub_group.font.size */
   font-weight: initial;
-  /* row_group.font.weight */
+  /* stub_group.font.weight */
   border-top-style: solid;
-  /* row_group.border.top.style */
+  /* stub_group.border.top.style */
   border-top-width: 2px;
-  /* row_group.border.top.width */
+  /* stub_group.border.top.width */
   border-top-color: #A8A8A8;
-  /* row_group.border.top.color */
+  /* stub_group.border.top.color */
   border-bottom-style: solid;
-  /* row_group.border.bottom.style */
+  /* stub_group.border.bottom.style */
   border-bottom-width: 2px;
-  /* row_group.border.bottom.width */
+  /* stub_group.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* row_group.border.bottom.color */
+  /* stub_group.border.bottom.color */
   vertical-align: middle;
 }
 
@@ -3181,17 +3182,17 @@ smry %&gt;%
 
 #alotjnrefa .gt_table_body {
   border-top-style: solid;
-  /* table_body.border.top.style */
+  /* field.border.top.style */
   border-top-width: 2px;
-  /* table_body.border.top.width */
+  /* field.border.top.width */
   border-top-color: #A8A8A8;
-  /* table_body.border.top.color */
+  /* field.border.top.color */
   border-bottom-style: solid;
-  /* table_body.border.bottom.style */
+  /* field.border.bottom.style */
   border-bottom-width: 2px;
-  /* table_body.border.bottom.width */
+  /* field.border.bottom.width */
   border-bottom-color: #A8A8A8;
-  /* table_body.border.bottom.color */
+  /* field.border.bottom.color */
 }
 
 #alotjnrefa .gt_footnote {
@@ -3268,76 +3269,76 @@ smry %&gt;%
 </tr>
 <tr>
 <td class='gt_row gt_left'>Never</td>
-<td class='gt_row gt_right' style="background-color:#FF9678;color:#000000FF;">24&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFE1D6;color:#000000FF;">19&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFA286;color:#000000FF;">23&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FF9678;color:#000000FF;">24%</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21%</td>
+<td class='gt_row gt_right' style="background-color:#FFE1D6;color:#000000FF;">19%</td>
+<td class='gt_row gt_right' style="background-color:#FFA286;color:#000000FF;">23%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Once in a while</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF9E81;color:#000000FF;">25&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF896A;color:#000000FF;">30&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9E81;color:#000000FF;">25%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF896A;color:#000000FF;">30%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF0000;color:#FFFFFFFF;">36%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>About half the time</td>
-<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFB39B;color:#000000FF;">22&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFE8E0;color:#000000FF;">18&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFD1C1;color:#000000FF;">17&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10%</td>
+<td class='gt_row gt_right' style="background-color:#FFB39B;color:#000000FF;">22%</td>
+<td class='gt_row gt_right' style="background-color:#FFE8E0;color:#000000FF;">18%</td>
+<td class='gt_row gt_right' style="background-color:#FFD1C1;color:#000000FF;">17%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Usually</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFE9E1;color:#000000FF;">13&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFB39B;color:#000000FF;">22&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFAA90;color:#000000FF;">26&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF7857;color:#000000FF;">28&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE9E1;color:#000000FF;">13%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFB39B;color:#000000FF;">22%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFAA90;color:#000000FF;">26%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF7857;color:#000000FF;">28%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Always</td>
-<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF9273;color:#000000FF;">29&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFF7F5;color:#000000FF;">12&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">10%</td>
+<td class='gt_row gt_right' style="background-color:#FFBBA4;color:#000000FF;">21%</td>
+<td class='gt_row gt_right' style="background-color:#FF9273;color:#000000FF;">29%</td>
+<td class='gt_row gt_right' style="background-color:#FFF7F5;color:#000000FF;">12%</td>
 </tr>
 <tr class='gt_group_heading_row'>
 <td colspan='5' class='gt_group_heading'>Male</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Never</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FF9678;color:#000000FF;">24&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFD6C8;color:#000000FF;">17&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFD9CB;color:#000000FF;">20&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFC9B7;color:#000000FF;">18&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FF9678;color:#000000FF;">24%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD6C8;color:#000000FF;">17%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD9CB;color:#000000FF;">20%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFC9B7;color:#000000FF;">18%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Once in a while</td>
-<td class='gt_row gt_right' style="background-color:#FFBDA7;color:#000000FF;">19&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">39&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">40&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF6F4D;color:#000000FF;">29&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFBDA7;color:#000000FF;">19%</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">39%</td>
+<td class='gt_row gt_right' style="background-color:#FF0000;color:#FFFFFFFF;">40%</td>
+<td class='gt_row gt_right' style="background-color:#FF6F4D;color:#000000FF;">29%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>About half the time</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFF7F5;color:#000000FF;">16&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF7F5;color:#000000FF;">16%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFFFFF;color:#000000FF;">11%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left'>Usually</td>
-<td class='gt_row gt_right' style="background-color:#FFE2D7;color:#000000FF;">14&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF7857;color:#000000FF;">30&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">15&percnt;</td>
-<td class='gt_row gt_right' style="background-color:#FF8160;color:#000000FF;">27&percnt;</td>
+<td class='gt_row gt_right' style="background-color:#FFE2D7;color:#000000FF;">14%</td>
+<td class='gt_row gt_right' style="background-color:#FF7857;color:#000000FF;">30%</td>
+<td class='gt_row gt_right' style="background-color:#FFFFFF;color:#000000FF;">15%</td>
+<td class='gt_row gt_right' style="background-color:#FF8160;color:#000000FF;">27%</td>
 </tr>
 <tr>
 <td class='gt_row gt_left gt_striped'>Always</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFEBE3;color:#000000FF;">14&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFD1C1;color:#000000FF;">21&percnt;</td>
-<td class='gt_row gt_right gt_striped' style="background-color:#FFE8E0;color:#000000FF;">14&percnt;</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFF8F5;color:#000000FF;">11%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFEBE3;color:#000000FF;">14%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFD1C1;color:#000000FF;">21%</td>
+<td class='gt_row gt_right gt_striped' style="background-color:#FFE8E0;color:#000000FF;">14%</td>
 </tr>
 </tbody>
 <tfoot>
