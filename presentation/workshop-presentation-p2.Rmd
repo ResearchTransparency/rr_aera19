@@ -1,5 +1,5 @@
 ---
-title: "Transparent and Reproducible Research with R"
+title: "Transparent and Reproducible Research with R (Part 2)"
 subtitle: "And a bit of git/GitHub"
 author: 
   - "Daniel Anderson "
@@ -16,9 +16,6 @@ output:
       countIncrementalSlides: false
       beforeInit: "https://platform.twitter.com/widgets.js"
 ---
-class: inverse
-background-image:url(https://media.giphy.com/media/yoJC2A59OCZHs1LXvW/giphy.gif)
-background-size:contain
 
 ```{r setup, include = FALSE}
 library(tidyverse)
@@ -26,7 +23,6 @@ library(knitr)
 opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
----
 # Agenda 
 
 # Last two hours
