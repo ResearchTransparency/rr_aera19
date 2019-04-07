@@ -283,7 +283,9 @@ Outside of reproducibility, you may want to use R Markdown to:
 ---
 class: jmr center middle
 # R Markdown basics 
-## Code Chunks & he# 8:45 - 9:00
+## Code Chunks & headers
+
+### 8:45 - 9:00
 
 
 ---
@@ -379,19 +381,19 @@ b <- 5
 a + b * (exp(a)/b)
 ```
 
-
-
 ---
 class: da center middle
 # R Markdown basics 
-## ListHeadings, l & c,nk options
+## Headings, lists, chunk options, and inline code
 
-<b, and inline coder> 9:00 - 9:05
 
-30am--
+### 9:00 - 9:30am
+
+
+---
 # Headings and Lists 
 
-### Not Not R-lists
+### Not R-lists
 
 .pull-left[
 
@@ -424,7 +426,7 @@ class: da center middle
 
 
 ---
-ho and eval
+# echo and eval
 
 .pull-left[
 
@@ -602,8 +604,8 @@ knitr::kable(data.frame(ops, args, default, result)[9:15, ],
 
 .footnote[For complete documentation, see http://yihui.name/knitr/options/]
 
-
----# Inline code
+---
+# Inline code
 
 A single back tick followed by `r` produces inline code to be evaluated.
 
@@ -622,12 +624,12 @@ This is *extremely* useful in writing reports. Never have to update any numbers 
 
 ![](img/ell_means.png)
 
-
-------
+---
 class: jr center middle
 # Rendering and sharing documents
 
-# Fi# Rendering R Markdown documents
+---
+# Rendering R Markdown documents
 
 ### Modify the YAML
 Get the same document to render to different formats by modifying the YAML to output HTML, PDF, and .docx
@@ -654,12 +656,12 @@ output: pdf_document
 
 ---
 
-# Rendering to HTML
+# Rendering to
 
 
 
 ---
-nal Product
+# Final Product
 
 .pull-left[
 <div >
@@ -679,7 +681,9 @@ class: jmr center middle
 # Public work
 ## And different output formats
 
-### 9:20 -3--
+### 9:30
+
+---
 # {tinytex}
 * Need a tex (pronounced tek) distribution
   + My recommendation for this class, and probs everything you'll ever need: 
@@ -695,7 +699,7 @@ This is another amazing package by Yihui Xie. See more about it
 [here](https://yihui.name/tinytex/)
 
 ---
-# Fus: da center middle
+class: da center middle
 # R Markdown Tables 
 
 
@@ -1119,159 +1123,3 @@ class: inverse center middle
 # Break
 
 ### 10:00 - 10:15
-
----
-class: da center middle
-# git/GitHub 
-## An Introduction
-
-<br>
-
-### 10:15 - 11:00
-
-More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
-
----
-class: inverse middle
-background-image:url(img/final-doc.png)
-background-size:contain
-
-.footnote[“Piled Higher and Deeper” by Jorge Cham, http://www.phdcomics.com]
-
-
----
-### From swcarpentry
-![](http://swcarpentry.github.io/git-novice/fig/play-changes.svg)
-
-We can think of the changes as separate from the document
-
----
-![](http://swcarpentry.github.io/git-novice/fig/versions.svg)
-
-This means there are many possible versions of the same document
-
----
-![](http://swcarpentry.github.io/git-novice/fig/merge.svg)
-
-Unless there are conflicts, two changes from the same document can be merged
-together
-
-<!-- Show repo for NCME pres & talk about publishing -->
-
----
-class: inverse middle center
-# How?
-That's what we'll do today!
-
----
-# Some basic terminology
-* Version Control System
-  + A tool to help us track changes. *git* is one such system.
-
---
-* Commit
-  + Changes that have been made to the file(s)
-
---
-* Repository (repo)
-  + Entire project (including history)
-
---
-* Clone
-  + Download files locally
-
---
-* Pull
-  + Get latest changes
-
---
-* Push
-  + Send latest commits to remote repo
-
----
-# Demo (30 minutes)
-### Goal: Get your work from this morning in a GitHub repo!
-* Create new repo
-* Clone it locally
-* Add your files
-* Commit
-* Push
-* Publish
-
----
-class: jmr center middle
-# .gitignore
-
-
----
-# Ignoring Files
-* When we initialized the repo, we started it with a `.gitignore` file
-* The `.gitignore` file tells the repo not to track certain files
-  + e.g., proprietary data
-
----
-class: inverse center middle
-# Wrap up
-
-
----
-class: inverse center middle
-# Appendix
-
-
----
-class: inverse middle center
-# Citations
-
----
-## Citations
-To include references in your paper, you must:
-* Create an external .bib file using LaTeX formatting (we'll get to this)
-* Include `bibliography: nameOfYourBibFile.bib` in your YAML front matter.
-* Refer to the citations in text using `@`
-
----
-# Creating a .bib doc
-
-![](../img/googleScholarSearch.png)
-
---
-<div>
-<img src = ../img/googleCite.png height = 300>
-</div>
-
-
----
-![](img/googleBibTex.png)
-
---
-
-![](img/bibEntry.png)
-
-
----
-# In text citations
-
-```{r inTextCitesTable, echo = FALSE}
-style <- c("@Briggs11", "[see @Baldwin2014; @Caruso2000]", "[@Linn02, p. 9]", 
-          "[-@Goldhaber08]")
-out <- c("Briggs and Weeks (2011)", "(see Baldwin et al. 2014; Caruso 2000)",
-         "(Linn and Haug 2002, 9)", "(2008)")
-knitr::kable(data.frame(style, out), 
-        col.names = c("Citation Style", "Output"),
-        format = "html")
-```
-<br>
-
-Note this is not APA. However, references are included automatically at the end of the document. Include `# References` as the last line of your document to give it a title.
-
----
-## A few real examples
-![](img/intext_ref1.png)
-![](img/intext_ref2.png)
-![](img/intext_ref3.png)
-
----
-## References
-![](img/references.png)
-
