@@ -45,7 +45,7 @@ class: da center middle
 
 <br>
 
-### 10:15 - 11:00
+### 10:15 - 11:00am
 
 More info can be found here: http://www.datalorax.com/vita/ds/ds1-slides/w4p2/
 
@@ -120,6 +120,7 @@ That's what we'll do today!
 class: jmr center middle
 # .gitignore
 
+### 11:35 - 11:45am
 
 ---
 # Ignoring Files
@@ -131,6 +132,18 @@ class: jmr center middle
 class: inverse center middle
 # Wrap up
 
+### 11:45am - 12:00pm
+
+Daniel Anderson
+- [daniela@uoregon.edu](mailto:daniela@uoregon.edu)
+- [@datalorax_](https://twitter.com/datalorax_)
+Joshua Rosenberg
+-[jmrosenberg@utk.edu](mailto:jmrosenberg@utk.edu)
+-[@jrosenberg6432][https://twitter.com/jrosenberg6432]
+
+Mailing list: [rr-in-edu@googlegroups.com](rr-in-edu@googlegroups.com)
+
+**Questions? Ideas? Thank you!**
 
 ---
 class: inverse center middle
