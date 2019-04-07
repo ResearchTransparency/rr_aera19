@@ -52,8 +52,12 @@
   font-size: 0.8em;
 }
 
+
 .title-slide h1 {
   padding-top: 180px;
 }
 
-https://brand.utk.edu/wp-content/uploads/sites/8/2015/04/University_-_CenteredLogo_RGB_1.gif
+.title-slide {
+  background-image: url(img/uo-ut-logo.png);
+  background-position: 95% 95%;
+  background-size: 250px;
